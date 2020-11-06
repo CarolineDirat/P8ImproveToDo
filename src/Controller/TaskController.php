@@ -4,10 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Form\TaskType;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class TaskController extends AbstractController
 {
@@ -73,14 +73,14 @@ class TaskController extends AbstractController
     {
         $task->toggle(!$task->isDone());
         $this->getDoctrine()->getManager()->flush();
-        
+
         $message = sprintf('La tâche %s a bien été marquée comme non terminée.', $task->getTitle());
-        
-        if(true === $task->isDone()) {
+
+        if (true === $task->isDone()) {
             $message = sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle());
         }
-        
-        $this->addFlash('success',$message);
+
+        $this->addFlash('success', $message);
 
         return $this->redirectToRoute('task_list');
     }
