@@ -7,13 +7,14 @@ use App\Form\TaskType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends AbstractController
 {
     /**
      * @Route("/tasks", name="task_list")
      */
-    public function list()
+    public function list(): Response
     {
         return $this->render('task/list.html.twig', ['tasks' => $this->getDoctrine()->getRepository(Task::class)->findAll()]);
     }
@@ -21,7 +22,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/create", name="task_create")
      */
-    public function create(Request $request)
+    public function create(Request $request): Response
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
@@ -45,7 +46,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/edit", name="task_edit")
      */
-    public function edit(Task $task, Request $request)
+    public function edit(Task $task, Request $request): Response
     {
         $form = $this->createForm(TaskType::class, $task);
 
@@ -68,7 +69,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
      */
-    public function toggleState(Task $task)
+    public function toggleState(Task $task): Response
     {
         $task->toggle(!$task->isDone());
         $this->getDoctrine()->getManager()->flush();
@@ -87,7 +88,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
      */
-    public function delete(Task $task)
+    public function delete(Task $task): Response
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($task);
