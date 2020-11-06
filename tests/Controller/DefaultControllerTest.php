@@ -1,18 +1,18 @@
 <?php
 
-namespace Tests\AppBundle\Controller;
+namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
-    public function testIndex()
+    public function testIndex(): void
     {
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/');
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertContains('Welcome to Symfony', $crawler->filter('#container h1')->text());
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
+        $this->assertContains('http://localhost/login', $crawler->filter('body a')->text());
     }
 }
