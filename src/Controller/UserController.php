@@ -14,7 +14,7 @@ class UserController extends AbstractController
     /**
      * @Route("/users", name="user_list")
      */
-    public function listAction()
+    public function list()
     {
         return $this->render('user/list.html.twig', ['users' => $this->getDoctrine()->getRepository(User::class)->findAll()]);
     }
@@ -22,7 +22,7 @@ class UserController extends AbstractController
     /**
      * @Route("/users/create", name="user_create")
      */
-    public function createAction(Request $request, UserPasswordEncoderInterface $userPasswordEncoder)
+    public function create(Request $request, UserPasswordEncoderInterface $userPasswordEncoder)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -48,7 +48,7 @@ class UserController extends AbstractController
     /**
      * @Route("/users/{id}/edit", name="user_edit")
      */
-    public function editAction(User $user, Request $request, UserPasswordEncoderInterface $userPasswordEncoder)
+    public function edit(User $user, Request $request, UserPasswordEncoderInterface $userPasswordEncoder)
     {
         $form = $this->createForm(UserType::class, $user);
 
