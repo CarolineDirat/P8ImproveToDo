@@ -5,7 +5,7 @@ security:
             # Use native password encoder
             # This value auto-selects the best possible hashing algorithm
             # (i.e. Sodium when available).
-            algorithm: auto
+            algorithm: 'auto'
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         users:
@@ -27,10 +27,13 @@ security:
             pattern: ^/
             form_login:
                 login_path: login
-                check_path: login_check
+                check_path: login
                 always_use_default_target_path:  true
                 default_target_path:  /
-            logout: ~
+                csrf_token_generator: security.csrf.token_manager
+            logout:
+                path:   logout
+                target: login
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
