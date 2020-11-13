@@ -47,16 +47,33 @@ class Task
         $this->isDone = false;
     }
 
+    /**
+     * getId.
+     *
+     * @return int
+     */
     public function getId(): int
     {
         return $this->id;
     }
 
+    /**
+     * getCreatedAt.
+     *
+     * @return DateTime
+     */
     public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
 
+    /**
+     * setCreatedAt.
+     *
+     * @param DateTime $createdAt
+     *
+     * @return self
+     */
     public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
@@ -64,11 +81,23 @@ class Task
         return $this;
     }
 
+    /**
+     * getTitle.
+     *
+     * @return string
+     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
+    /**
+     * setTitle.
+     *
+     * @param string $title
+     *
+     * @return self
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -76,11 +105,23 @@ class Task
         return $this;
     }
 
+    /**
+     * getContent.
+     *
+     * @return string
+     */
     public function getContent(): string
     {
         return $this->content;
     }
 
+    /**
+     * setContent.
+     *
+     * @param string $content
+     *
+     * @return self
+     */
     public function setContent(string $content): self
     {
         $this->content = $content;
@@ -88,11 +129,23 @@ class Task
         return $this;
     }
 
+    /**
+     * isDone.
+     *
+     * @return bool
+     */
     public function isDone(): bool
     {
         return $this->isDone;
     }
 
+    /**
+     * toggle task status.
+     *
+     * @param bool $flag
+     *
+     * @return self
+     */
     public function toggle(bool $flag): self
     {
         $this->isDone = $flag;

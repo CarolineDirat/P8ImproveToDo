@@ -39,16 +39,33 @@ class User implements UserInterface
      */
     private string $email;
 
+    /**
+     * getId.
+     *
+     * @return int
+     */
     public function getId(): int
     {
         return $this->id;
     }
 
+    /**
+     * getUsername.
+     *
+     * @return string
+     */
     public function getUsername(): string
     {
         return $this->username;
     }
 
+    /**
+     * setUsername.
+     *
+     * @param string $username
+     *
+     * @return self
+     */
     public function setUsername(string $username): self
     {
         $this->username = $username;
@@ -56,16 +73,31 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * getSalt.
+     */
     public function getSalt()
     {
         return null;
     }
 
+    /**
+     * getPassword.
+     *
+     * @return string
+     */
     public function getPassword(): string
     {
         return $this->password;
     }
 
+    /**
+     * setPassword.
+     *
+     * @param string $password
+     *
+     * @return self
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -73,11 +105,23 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * getEmail.
+     *
+     * @return string
+     */
     public function getEmail(): string
     {
         return $this->email;
     }
 
+    /**
+     * setEmail.
+     *
+     * @param string $email
+     *
+     * @return self
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -85,11 +129,19 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * getRoles.
+     *
+     * @return array<string>
+     */
     public function getRoles(): array
     {
         return ['ROLE_USER'];
     }
 
+    /**
+     * eraseCredentials.
+     */
     public function eraseCredentials(): void
     {
     }

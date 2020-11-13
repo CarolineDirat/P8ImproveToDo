@@ -13,7 +13,11 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
     /**
+     * list all users.
+     *
      * @Route("/users", name="user_list")
+     *
+     * @return Response
      */
     public function list(): Response
     {
@@ -21,7 +25,14 @@ class UserController extends AbstractController
     }
 
     /**
+     * create a user.
+     *
      * @Route("/users/create", name="user_create")
+     *
+     * @param Request                      $request
+     * @param UserPasswordEncoderInterface $userPasswordEncoder
+     *
+     * @return Response
      */
     public function create(Request $request, UserPasswordEncoderInterface $userPasswordEncoder): Response
     {
@@ -47,7 +58,15 @@ class UserController extends AbstractController
     }
 
     /**
+     * edit a user.
+     *
      * @Route("/users/{id}/edit", name="user_edit")
+     *
+     * @param User                         $user
+     * @param Request                      $request
+     * @param UserPasswordEncoderInterface $userPasswordEncoder
+     *
+     * @return Response
      */
     public function edit(User $user, Request $request, UserPasswordEncoderInterface $userPasswordEncoder): Response
     {

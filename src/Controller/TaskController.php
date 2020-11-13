@@ -12,7 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class TaskController extends AbstractController
 {
     /**
+     * list all tasks.
+     *
      * @Route("/tasks", name="task_list")
+     *
+     * @return Response
      */
     public function list(): Response
     {
@@ -20,7 +24,13 @@ class TaskController extends AbstractController
     }
 
     /**
+     * create a task.
+     *
      * @Route("/tasks/create", name="task_create")
+     *
+     * @param Request $request
+     *
+     * @return Response
      */
     public function create(Request $request): Response
     {
@@ -44,7 +54,14 @@ class TaskController extends AbstractController
     }
 
     /**
+     * edit a task.
+     *
      * @Route("/tasks/{id}/edit", name="task_edit")
+     *
+     * @param Task    $task
+     * @param Request $request
+     *
+     * @return Response
      */
     public function edit(Task $task, Request $request): Response
     {
@@ -67,7 +84,13 @@ class TaskController extends AbstractController
     }
 
     /**
+     * toggleState: edit task's status.
+     *
      * @Route("/tasks/{id}/toggle", name="task_toggle")
+     *
+     * @param Task $task
+     *
+     * @return Response
      */
     public function toggleState(Task $task): Response
     {
@@ -86,7 +109,13 @@ class TaskController extends AbstractController
     }
 
     /**
+     * delete a task.
+     *
      * @Route("/tasks/{id}/delete", name="task_delete")
+     *
+     * @param Task $task
+     *
+     * @return Response
      */
     public function delete(Task $task): Response
     {
