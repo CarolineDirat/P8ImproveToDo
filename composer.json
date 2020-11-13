@@ -30,6 +30,7 @@
     "require-dev": {
         "behat/behat": "^3.8",
         "behat/mink-extension": "^2.3",
+        "behat/mink-goutte-driver": "^1.2",
         "phpstan/phpstan": "^0.12.54",
         "symfony/browser-kit": "4.4.*",
         "symfony/css-selector": "4.4.*",
