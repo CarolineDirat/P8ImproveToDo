@@ -17,6 +17,9 @@
     "behat/mink-goutte-driver": {
         "version": "v1.2.1"
     },
+    "behat/mink-selenium2-driver": {
+        "version": "v1.4.0"
+    },
     "behat/transliterator": {
         "version": "v1.3.0"
     },
@@ -113,6 +116,9 @@
     },
     "guzzlehttp/psr7": {
         "version": "1.7.0"
+    },
+    "instaclick/php-webdriver": {
+        "version": "1.4.7"
     },
     "laminas/laminas-code": {
         "version": "3.4.1"
