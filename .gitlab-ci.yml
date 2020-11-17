@@ -24,35 +24,27 @@ before_script:
   - docker-php-ext-install pdo pdo_mysql zip
   - curl -sS https://getcomposer.org/installer | php
   - mv composer.phar /usr/local/bin/composer
+  - composer install --prefer-dist --no-ansi --no-interaction --no-progress
 
 
 stages:
-  - build
   - test
   - static_analysis
-
-build:
-  stage: build
-  script: composer install --prefer-dist --no-ansi --no-interaction --no-progress
 
 phpunit-test:
   stage: test
   script:
     - php bin/console cache:clear --env=test
-    - php bin/console doctrine:database:drop --if-exists --force --env=test
+    #- php bin/console doctrine:database:drop --if-exists --force --env=test
     - php bin/console doctrine:database:create --env=test
     - php bin/console doctrine:migrations:migrate --env=test --no-interaction
     #- php bin/console doctrine:fixture:load --no-interaction --env=test 
     - php bin/phpunit --coverage-text --colors=never
-  dependencies:
-    - build
 
 behat-test:
   stage: test
   script:
     - echo "I don't know how run behat yet..."
-  dependencies:
-    - build
 
 phpstan:
   stage: static_analysis
