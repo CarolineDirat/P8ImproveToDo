@@ -1,13 +1,12 @@
 image: php:7.4-cli
 
 variables:
-  - APP_DOMAIN: $APP_DOMAIN
-  - DATABASE_URL: $DATABASE_URL
-  - MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
-  - MYSQL_DATABASE: imrovetodo_gitlab
-  - MYSQL_USER: gitlab
-  - MYSQL_PASSWORD: $MYSQL_PASSWORD
-  - APP_DEBUG: 0
+  APP_DOMAIN: $APP_DOMAIN
+  DATABASE_URL: $DATABASE_URL
+  MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+  MYSQL_DATABASE: "imrovetodo_gitlab"
+  MYSQL_USER: "gitlab"
+  MYSQL_PASSWORD: $MYSQL_PASSWORD
 
 cache:
   paths:
@@ -37,7 +36,7 @@ build:
 
 phpstan:
   stage: static_analysis
-  script: ./vendor/bin/phpstan analyse src tests --lrvel=6
+  script: ./vendor/bin/phpstan analyse src tests --level=6
   dependencies:
     - build
 
