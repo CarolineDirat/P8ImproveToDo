@@ -27,8 +27,8 @@ before_script:
 
 stages:
   - build
-  - static_analysis
   - test
+  - static_analysis
 
 build:
   stage: build
