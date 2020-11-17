@@ -13,7 +13,8 @@ cache:
     - vendor/
 
 services:
-    - mysql:latest
+    - name: mysql:5.7
+      alias: mysql
 
 before_script:
   - apt update -y
