@@ -49,6 +49,8 @@ behat-test:
 
 phpstan:
   stage: static_analysis
-  script: ./vendor/bin/phpstan analyse src tests --level=6
+  script: 
+    - php bin/phpunit tests/Controller/DefaultControllerTest.php
+    - ./vendor/bin/phpstan analyse
   dependencies:
     - phpunit-test
