@@ -4,14 +4,18 @@ namespace App\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * @internal
+ * @coversNothing
+ */
 class PagesTest extends WebTestCase
 {
     /**
-     * testPageIsSuccessFull
-     * 
+     * testPageIsSuccessFull.
+     *
      * @dataProvider provideUrls
      *
-     * @param  string $url
+     * @param string $url
      */
     public function testPageIsSuccessFull(string $url): void
     {
@@ -21,9 +25,9 @@ class PagesTest extends WebTestCase
 
         $this->assertTrue($client->getResponse()->isSuccessful());
     }
-    
+
     /**
-     * provideUrls
+     * provideUrls.
      *
      * @return array<array<string>>
      */
