@@ -14,7 +14,6 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
-phpstan.neon
 php-cs-fixer.phar
 .php_cs.dist
 .php_cs.cache
