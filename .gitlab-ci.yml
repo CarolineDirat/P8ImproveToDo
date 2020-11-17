@@ -34,12 +34,6 @@ build:
   stage: build
   script: composer install --prefer-dist --no-ansi --no-interaction --no-progress
 
-phpstan:
-  stage: static_analysis
-  script: ./vendor/bin/phpstan analyse src tests --level=6
-  dependencies:
-    - test
-
 phpunit-test:
   stage: test
   script:
@@ -58,3 +52,9 @@ behat-test:
     - ./vendor/bin/behat
   dependencies:
     - build
+
+phpstan:
+  stage: static_analysis
+  script: ./vendor/bin/phpstan analyse src tests --level=6
+  dependencies:
+    - phpunit-test
