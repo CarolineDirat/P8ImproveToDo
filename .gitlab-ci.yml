@@ -1,0 +1,61 @@
+image: php:7.4-cli
+
+variables:
+  - APP_DOMAIN: $APP_DOMAIN
+  - DATABASE_URL: $DATABASE_URL
+  - MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+  - MYSQL_DATABASE: imrovetodo_gitlab
+  - MYSQL_USER: gitlab
+  - MYSQL_PASSWORD: $MYSQL_PASSWORD
+  - APP_DEBUG: 0
+
+cache:
+  paths:
+    - vendor/
+
+services:
+    - mysql:latest
+
+before_script:
+  - apt update -y
+  - pecl install xdebug
+  - docker-php-ext-enable xdebug
+  - apt install -y libzip-dev zip
+  - docker-php-ext-install pdo pdo_mysql zip
+  - curl -sS https://getcomposer.org/installer | php
+  - mv composer.phar /usr/local/bin/composer
+
+
+stages:
+  - build
+  - static_analysis
+  - test
+
+build:
+  stage: build
+  script: composer install --prefer-dist --no-ansi --no-interaction --no-progress
+
+phpstan:
+  stage: static_analysis
+  script: ./vendor/bin/phpstan analyse src tests --lrvel=6
+  dependencies:
+    - build
+
+phpunit-test:
+  stage: test
+  script:
+    - php bin/console cache:clear --env=test
+    - php bin/console doctrine:database:drop --if-exists --force --env=test
+    - php bin/console doctrine:database:create --env=test
+    - php bin/console doctrine:migrations:migrate --env=test --no-interaction
+    #- php bin/console doctrine:fixture:load --no-interaction --env=test 
+    - php bin/phpunit --coverage-text --colors=never
+  dependencies:
+    - build
+
+behat-test:
+  stage: test
+  script:
+    - ./vendor/bin/behat
+  dependencies:
+    - build
