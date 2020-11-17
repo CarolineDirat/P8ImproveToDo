@@ -33,6 +33,7 @@ stages:
   - static_analysis
 
 phpunit-test:
+  image: mysql
   stage: test
   script:
     - mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql "$MYSQL_DATABASE"
