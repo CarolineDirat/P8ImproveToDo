@@ -38,7 +38,7 @@ phpstan:
   stage: static_analysis
   script: ./vendor/bin/phpstan analyse src tests --level=6
   dependencies:
-    - build
+    - test
 
 phpunit-test:
   stage: test
