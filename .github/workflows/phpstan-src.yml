@@ -3,7 +3,7 @@ name: static_analysis
 on: [push]
 
 jobs:
-  phpstan:
+  phpstan_src:
     name: phpstan
     runs-on: ubuntu-latest
     steps:
