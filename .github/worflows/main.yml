@@ -28,23 +28,3 @@ jobs:
       - name: The PHP Security Checker
         uses: symfonycorp/security-checker-action@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-
-  phpstan:
-    name: phpstan
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout project
-        uses: actions/checkout@v2
-      - name: Run phpstan
-        uses: actions-x/phpstan@v1
-        with:
-          installComposer: 1
