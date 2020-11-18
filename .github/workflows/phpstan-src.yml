@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   phpstan_src:
-    name: phpstan
+    name: phpstan_src
     runs-on: ubuntu-latest
     steps:
       - name: Checkout project v2
