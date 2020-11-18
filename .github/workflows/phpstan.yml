@@ -1,4 +1,4 @@
-name: Test
+name: static_analysis
 
 on: [push]
 
@@ -23,5 +23,5 @@ jobs:
       - name: Run phpstan
         uses: actions-x/phpstan@v1
         with:
-          configPath: ci-phpstan.neon
+          configPath: phpstan-ci-src.neon
           # installComposer: 1
