@@ -32,13 +32,19 @@ stages:
   - static_analysis
   - test
 
-phpstan:
+phpstan_src:
+  stage: static_analysis
+  script: 
+    - php bin/console cache:clear
+    - ./vendor/bin/phpstan analyse -c phpstan-ci-src.neon #--no-progress
+
+phpstan_tests:
   stage: static_analysis
   script: 
     - php bin/console cache:clear
     - composer require --dev phpunit/phpunit ^9 
     - php -d memory_limit=-1
-    - ./vendor/bin/phpstan analyse -c ci-phpstan.neon #--no-progress
+    - ./vendor/bin/phpstan analyse -c phpstan-ci-tests.neon #--no-progress
 
 phpunit-test:
   stage: test

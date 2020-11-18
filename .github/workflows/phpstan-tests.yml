@@ -9,19 +9,15 @@ jobs:
     steps:
       - name: Checkout project v2
         uses: actions/checkout@v2
-      
-      - name: Checkout project v1
-        uses: actions/checkout@v1
-      
+            
       # composer-installer-action
       - uses: actions/checkout@master
       - uses: nanasess/composer-installer-action@master
       - run: composer install
-      # - run: composer require phpunit/phpunit --dev ^9
+      - run: composer require phpunit/phpunit --dev ^9
       - run: php -d memory_limit=-1
 
-      - name: Run phpstan on src
+      - name: Run phpstan on tests
         uses: actions-x/phpstan@v1
         with:
-          configPath: phpstan-ci-src.neon
-          # installComposer: 1
+          configPath: phpstan-ci-tests.neon

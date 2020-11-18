@@ -1,0 +1,22 @@
+name: static_analysis
+
+on: [push]
+
+jobs:
+  phpstan:
+    name: phpstan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project v2
+        uses: actions/checkout@v2
+            
+      # composer-installer-action
+      - uses: actions/checkout@master
+      - uses: nanasess/composer-installer-action@master
+      - run: composer install
+      - run: php -d memory_limit=-1
+
+      - name: Run phpstan on src
+        uses: actions-x/phpstan@v1
+        with:
+          configPath: phpstan-ci-src.neon
