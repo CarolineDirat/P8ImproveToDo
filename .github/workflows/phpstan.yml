@@ -13,4 +13,4 @@ jobs:
         uses: actions-x/phpstan@v1
         with:
           installComposer: 1
-          configPath: .github/phpstan.neon
+          configPath: github-phpstan.neon
