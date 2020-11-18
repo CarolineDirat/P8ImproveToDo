@@ -7,15 +7,16 @@ jobs:
     name: phpstan
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout project
+      - name: Checkout project v2
         uses: actions/checkout@v2
       
-      #- uses: actions/checkout@v1
+      - name: Checkout project v1
+        uses: actions/checkout@v1
       
       - name: Composer install
-        uses: docker://composer:1.9.1
+        uses: pxgamer/composer-action@master
         with:
-          args: install
+          command: install --optimize-autoloader --prefer-dist
 
       - uses: pxgamer/phpunit-action@master
         with:
