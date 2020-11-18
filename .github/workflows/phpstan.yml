@@ -13,10 +13,9 @@ jobs:
       - name: Checkout project v1
         uses: actions/checkout@v1
       
-      - name: Composer install
-        uses: pxgamer/composer-action@master
-        with:
-          command: install --optimize-autoloader --prefer-dist
+      - uses: actions/checkout@master
+      - uses: nanasess/composer-installer-action@master
+      - run: composer install
 
       - uses: pxgamer/phpunit-action@master
         with:
