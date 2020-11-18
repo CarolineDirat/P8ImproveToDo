@@ -29,8 +29,17 @@ before_script:
 
 
 stages:
-  - test
   - static_analysis
+  - test
+
+phpstan:
+  stage: static_analysis
+  script: 
+    - php bin/console cache:clear
+    - php bin/phpunit tests/Controller/DefaultControllerTest.php
+    - ./vendor/bin/phpstan analyse --no-progress
+  dependencies:
+    - phpunit-test
 
 phpunit-test:
   stage: test
@@ -47,10 +56,3 @@ behat-test:
   script:
     - echo "I don't know how run behat yet..."
 
-phpstan:
-  stage: static_analysis
-  script: 
-    - php bin/phpunit tests/Controller/DefaultControllerTest.php
-    - ./vendor/bin/phpstan analyse
-  dependencies:
-    - phpunit-test
