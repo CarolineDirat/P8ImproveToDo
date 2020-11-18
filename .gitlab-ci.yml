@@ -37,7 +37,7 @@ phpstan:
   script: 
     - php bin/console cache:clear
     - php bin/phpunit tests/Controller/DefaultControllerTest.php
-    - php vendor/bin/phpstan analyse -c phpstan.neon #--no-progress
+    - ./vendor/bin/phpstan analyse -c phpstan.neon #--no-progress
 
 phpunit-test:
   stage: test
