@@ -13,18 +13,14 @@ jobs:
       - name: Checkout project v1
         uses: actions/checkout@v1
       
-      # GitHub Action for PHPUnit
+      # composer-installer-action
       - uses: actions/checkout@master
       - uses: nanasess/composer-installer-action@master
       - run: composer install
-
-      - uses: pxgamer/phpunit-action@master
-        with:
-          # If there isn't a PHPUnit config, specify files or directories to test
-          command: tests/Controller/DefaultControllerTest.php
+      - run: composer require phpunit/phpunit --dev ^9
 
       - name: Run phpstan
         uses: actions-x/phpstan@v1
         with:
-          configPath: phpstan.neon
+          configPath: ci-phpstan.neon
           # installComposer: 1

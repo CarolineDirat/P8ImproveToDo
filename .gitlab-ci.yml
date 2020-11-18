@@ -36,9 +36,9 @@ phpstan:
   stage: static_analysis
   script: 
     - php bin/console cache:clear
-    - php bin/phpunit tests/Controller/DefaultControllerTest.php
+    - composer require --dev phpunit/phpunit ^9 
     - php -d memory_limit=-1
-    - ./vendor/bin/phpstan analyse -c phpstan.neon #--no-progress
+    - ./vendor/bin/phpstan analyse -c ci-phpstan.neon #--no-progress
 
 phpunit-test:
   stage: test
