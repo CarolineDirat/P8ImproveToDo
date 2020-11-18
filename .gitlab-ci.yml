@@ -38,8 +38,6 @@ phpstan:
     - php bin/console cache:clear
     - php bin/phpunit tests/Controller/DefaultControllerTest.php
     - ./vendor/bin/phpstan analyse --no-progress
-  dependencies:
-    - phpunit-test
 
 phpunit-test:
   stage: test
