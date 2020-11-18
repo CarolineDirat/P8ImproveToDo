@@ -10,14 +10,13 @@ jobs:
       - name: Checkout project v2
         uses: actions/checkout@v2
       
-      - name: Install dependencies
-        uses: php-actions/composer@v1
-        run: composer install --prefer-dist --no-progress --no-suggest
-
-      # PHPUnit for Symfony
-      - name: Install PHPUnit
-        uses: chindit/actions-phpunit-symfony@master
-        run: phpunit install
+      - name: Checkout project v1
+        uses: actions/checkout@v1
+      
+      # GitHub Action for PHPUnit
+      - uses: actions/checkout@master
+      - uses: nanasess/composer-installer-action@master
+      - run: composer install
 
       - uses: pxgamer/phpunit-action@master
         with:
@@ -28,4 +27,4 @@ jobs:
         uses: actions-x/phpstan@v1
         with:
           configPath: phpstan.neon
-          installComposer: 1
+          # installComposer: 1
