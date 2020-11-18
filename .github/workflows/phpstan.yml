@@ -18,6 +18,7 @@ jobs:
       - uses: nanasess/composer-installer-action@master
       - run: composer install
       - run: composer require phpunit/phpunit --dev ^9
+      - run: php -d memory_limit=-1
 
       - name: Run phpstan
         uses: actions-x/phpstan@v1
