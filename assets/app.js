@@ -1,3 +1,5 @@
+/*eslint quotes: ["error", "single"]*/
+
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -10,8 +12,8 @@ import './styles/app.scss';
 
 // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
 // import $ from 'jquery';
-var $ = require('jquery');
+const $ = require('jquery');
 
 require('bootstrap');
 
-console.log('Hello Webpack Encore! Edit me in assets/app.js');
+// console.log('Hello Webpack Encore! Edit me in assets/app.js');
