@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Form\TaskType;
+use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +22,24 @@ class TaskController extends AbstractController
     public function list(): Response
     {
         return $this->render('task/list.html.twig', ['tasks' => $this->getDoctrine()->getRepository(Task::class)->findAll()]);
+    }
+    
+    /**
+     * list done tasks
+     * 
+     * @Route("/tasks/done", name="task_list_done")
+     *
+     * @return Response
+     */
+    public function listDone(TaskRepository $taskRepository): Response
+    {
+        return $this->render(
+            'task/list.html.twig',
+            [
+                'tasks' => $taskRepository->findList(true),
+                'title' => 'Liste des tâches terminées',
+            ]
+        );
     }
 
     /**
@@ -86,13 +105,14 @@ class TaskController extends AbstractController
     /**
      * toggleState: edit task's status.
      *
-     * @Route("/tasks/{id}/toggle", name="task_toggle")
+     * @Route("/tasks/{id}/toggle/{fromList}", name="task_toggle")
      *
      * @param Task $task
+     * @param string|null $formListIsDone
      *
      * @return Response
      */
-    public function toggleState(Task $task): Response
+    public function toggleState(Task $task, ?string $fromList = null): Response
     {
         $task->toggle(!$task->isDone());
         $this->getDoctrine()->getManager()->flush();
@@ -104,6 +124,14 @@ class TaskController extends AbstractController
         }
 
         $this->addFlash('success', $message);
+
+        switch ($fromList) {
+            case 'done':
+                return $this->redirectToRoute('task_list_done');
+            
+            case 'waiting':
+                return $this->redirectToRoute('task_list_waiting');
+        }
 
         return $this->redirectToRoute('task_list');
     }
