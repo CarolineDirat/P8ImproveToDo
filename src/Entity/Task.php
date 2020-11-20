@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -25,6 +26,11 @@ class Task
     private DateTime $createdAt;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    private DateTime $updatedAt;
+
+    /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Vous devez saisir un titre.")
      */
@@ -44,6 +50,7 @@ class Task
     public function __construct()
     {
         $this->createdAt = new Datetime();
+        $this->updatedAt = new DateTime();
         $this->isDone = false;
     }
 
@@ -60,9 +67,9 @@ class Task
     /**
      * getCreatedAt.
      *
-     * @return DateTime
+     * @return DateTimeInterface
      */
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
@@ -70,13 +77,36 @@ class Task
     /**
      * setCreatedAt.
      *
-     * @param DateTime $createdAt
+     * @param DateTimeInterface $createdAt
      *
      * @return self
      */
-    public function setCreatedAt(DateTime $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+    
+    /**
+     * getUpdatedAt
+     *
+     * @return DateTimeInterface
+     */
+    public function getUpdatedAt(): ?DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+    
+    /**
+     * setUpdatedAt
+     *
+     * @param DateTimeInterface $updatedAt
+     * @return self
+     */
+    public function setUpdatedAt(DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
