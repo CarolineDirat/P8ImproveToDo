@@ -8,15 +8,15 @@
     </div>
     <div class="row">
 
-        <h1 class="col-12 justify-content-start my-4">Liste des tâches</h1>
+        <h1 class="col-12 justify-content-start my-4">Liste des tâches terminées</h1>
 
         {% for task in tasks %}
-        <div class="col-sm-4 col-lg-4 col-md-4">
+        <div id="tasks-list-{{ task.id }}" class="col-sm-4 col-lg-4 col-md-4">
             <div class="card my-3">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <h4><a href="{{ path('task_edit', {'id': task.id }) }}">{{ task.title }}</a></h4>
-                        <h4>
+                        <h4 id="icon-toggle-{{ task.id }}">
                             {% if task.isDone %}
                                 <svg width="1.6em" height="1.6em" viewBox="0 0 16 16" class="bi bi-check2-square text-success" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M15.354 2.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L8 9.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
@@ -31,11 +31,12 @@
                     </div>
                     <p>{{ task.content }}</p>
                     <div class="d-flex justify-content-around flex-wrap row">
-                        <form action="{{ path('task_toggle', {'id': task.id }) }}">
-                            <button class="btn btn-info btn-sm mt-1">
-                                {% if not task.isDone %}Marquer comme faite{% else %}Marquer non terminée{% endif %}
-                            </button>
-                        </form>
+                        <a type="button" href="{{ path('task_toggle_ajax', {'id': task.id }) }}" 
+                           class="btn btn-info btn-sm mt-1 toggle-link"
+                           data-token="{{ csrf_token('toggle-token-' ~ task.id) }}"
+                           data-taskid="{{ task.id }}">
+                            {% if not task.isDone %}Marquer comme faite{% else %}Marquer non terminée{% endif %}
+                        </a>
                         <form action="{{ path('task_delete', {'id': task.id }) }}" >
                             <button class="btn btn-danger btn-sm mt-1">Supprimer</button>
                         </form>
