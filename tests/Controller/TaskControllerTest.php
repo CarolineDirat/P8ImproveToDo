@@ -43,17 +43,27 @@ class TaskControllerTest extends WebTestCase
         $this->client->getCookieJar()->set($cookie);
     }
 
-    public function testListDone(): void
+    /**
+    * @dataProvider provideIsDone
+    */
+    public function testList(string $isDone, string $title): void
     {
         $user = self::$container->get(UserRepository::class)->findOneBy(['username' => 'user1']);
 
         $this->logIn($user);
 
-        $crawler = $this->client->request('GET', '/tasks/done');
+        $crawler = $this->client->request('GET', '/tasks'.$isDone);
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $this->assertSame('Liste des tâches terminées', $crawler->filter('h1')->text());
+        $this->assertSame($title, $crawler->filter('h1')->text());
+    }
 
+    public function provideIsDone(): array
+    {
+        return [
+            ['/false', 'Liste des tâches non terminées'],
+            ['/true', 'Liste des tâches terminées'],
+        ];
     }
 
     /**
@@ -134,8 +144,8 @@ class TaskControllerTest extends WebTestCase
     public function provideAjax(): array
     {
         return [
-            ['/done', '/tasks/2/toggle-ajax', 2, false],
-            ['/waiting', '/tasks/1/toggle-ajax', 1, true],
+            ['/true', '/tasks/2/toggle-ajax', 2, false],
+            ['/false', '/tasks/1/toggle-ajax', 1, true],
         ];
     }
 }

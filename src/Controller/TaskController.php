@@ -16,7 +16,7 @@ class TaskController extends AbstractController
     /**
      * list all tasks.
      *
-     * @Route("/tasks", name="task_list")
+     * @Route("/tasks", name="task_list_all")
      *
      * @return Response
      */
@@ -26,37 +26,27 @@ class TaskController extends AbstractController
     }
 
     /**
-     * list done tasks.
+     * list done or waiting tasks.
      *
-     * @Route("/tasks/done", name="task_list_done")
-     *
-     * @return Response
-     */
-    public function listDone(TaskRepository $taskRepository): Response
-    {
-        return $this->render(
-            'task/list_is.html.twig',
-            [
-                'tasks' => $taskRepository->findList(true),
-                'title' => 'Liste des tâches terminées',
-            ]
-        );
-    }
-
-    /**
-     * list waiting tasks.
-     *
-     * @Route("/tasks/waiting", name="task_list_waiting")
+     * @Route("/tasks/{isDone}", name="task_list")
      *
      * @return Response
      */
-    public function listWaiting(TaskRepository $taskRepository): Response
-    {
+    public function list(TaskRepository $taskRepository, string $isDone): Response
+    {        
+        $title = 'Liste des tâches non terminées';
+        $state = false;
+        
+        if ('true' === $isDone) {
+            $title = 'Liste des tâches terminées';
+            $state = true;
+        }
+        
         return $this->render(
             'task/list_is.html.twig',
             [
-                'tasks' => $taskRepository->findList(false),
-                'title' => 'Liste des tâches non terminées',
+                'tasks' => $taskRepository->findList($state),
+                'title' => $title,
             ]
         );
     }
@@ -85,7 +75,7 @@ class TaskController extends AbstractController
 
             $this->addFlash('success', 'La tâche a bien été ajoutée.');
 
-            return $this->redirectToRoute('task_list');
+            return $this->redirectToRoute('task_list_all');
         }
 
         return $this->render('task/create.html.twig', ['form' => $form->createView()]);
@@ -112,7 +102,7 @@ class TaskController extends AbstractController
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
 
-            return $this->redirectToRoute('task_list');
+            return $this->redirectToRoute('task_list_all');
         }
 
         return $this->render('task/edit.html.twig', [
@@ -143,7 +133,7 @@ class TaskController extends AbstractController
 
         $this->addFlash('success', $message);
 
-        return $this->redirectToRoute('task_list');
+        return $this->redirectToRoute('task_list_all');
     }
 
     /**
@@ -205,6 +195,6 @@ class TaskController extends AbstractController
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
 
-        return $this->redirectToRoute('task_list');
+        return $this->redirectToRoute('task_list_all');
     }
 }
