@@ -3,11 +3,25 @@
 namespace App\DataFixtures;
 
 use App\Entity\Task;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    /**
+    * encoder
+    *
+    * @var UserPasswordEncoderInterface
+    */
+    private UserPasswordEncoderInterface $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager): void
     {
         // 51 tasks, 25 are done
@@ -20,6 +34,12 @@ class AppFixtures extends Fixture
             }
             $manager->persist($task);
         }
+
+        $user = new User();
+        $user->setUsername('user1');
+        $user->setPassword($this->encoder->encodePassword($user, 'password'));
+        $user->setEmail('user1@email.com');
+        $manager->persist($user);
 
         $manager->flush();
     }
