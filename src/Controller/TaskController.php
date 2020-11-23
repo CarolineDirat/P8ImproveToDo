@@ -35,9 +35,28 @@ class TaskController extends AbstractController
     public function listDone(TaskRepository $taskRepository): Response
     {
         return $this->render(
-            'task/list_done.html.twig',
+            'task/list_is.html.twig',
             [
                 'tasks' => $taskRepository->findList(true),
+                'title' => 'Liste des tâches terminées',
+            ]
+        );
+    }
+
+    /**
+     * list waiting tasks.
+     *
+     * @Route("/tasks/waiting", name="task_list_waiting")
+     *
+     * @return Response
+     */
+    public function listWaiting(TaskRepository $taskRepository): Response
+    {
+        return $this->render(
+            'task/list_is.html.twig',
+            [
+                'tasks' => $taskRepository->findList(false),
+                'title' => 'Liste des tâches non terminées',
             ]
         );
     }

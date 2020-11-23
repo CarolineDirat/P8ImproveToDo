@@ -135,7 +135,7 @@ class TaskControllerTest extends WebTestCase
     {
         return [
             ['/done', '/tasks/2/toggle-ajax', 2, false],
-            //['/waiting', '/tasks/1/toggle-ajax', 1, true],
+            ['/waiting', '/tasks/1/toggle-ajax', 1, true],
         ];
     }
 }

@@ -8,7 +8,7 @@
     </div>
     <div class="row">
 
-        <h1 class="col-12 justify-content-start my-4">Liste des tâches terminées</h1>
+        <h1 class="col-12 justify-content-start my-4">{{ title }}</h1>
 
         {% for task in tasks %}
         <div id="tasks-list-{{ task.id }}" class="col-sm-4 col-lg-4 col-md-4">
@@ -45,7 +45,7 @@
         </div>
         {% else %}
             <div class="alert alert-warning" role="alert">
-                Il n'y a pas encore de tâche enregistrée. <a href="{{ path('task_create') }}" class="btn btn-warning ">Créer une tâche</a>
+                Il n'y a pas encore de tâche enregistrée.
             </div>
         {% endfor %}
     </div>
