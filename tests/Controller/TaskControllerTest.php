@@ -43,6 +43,18 @@ class TaskControllerTest extends WebTestCase
         $this->client->getCookieJar()->set($cookie);
     }
 
+    public function testListAll(): void
+    {
+        $user = self::$container->get(UserRepository::class)->findOneBy(['username' => 'user1']);
+
+        $this->logIn($user);
+
+        $crawler = $this->client->request('GET', '/tasks');
+
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
+        $this->assertSame('Liste des tâches', $crawler->filter('h1')->text());
+    }
+
     /**
     * @dataProvider provideIsDone
     */
@@ -52,7 +64,7 @@ class TaskControllerTest extends WebTestCase
 
         $this->logIn($user);
 
-        $crawler = $this->client->request('GET', '/tasks'.$isDone);
+        $crawler = $this->client->request('GET', '/tasks/filter'.$isDone);
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         $this->assertSame($title, $crawler->filter('h1')->text());
@@ -110,7 +122,7 @@ class TaskControllerTest extends WebTestCase
         $user = self::$container->get(UserRepository::class)->findOneBy(['username' => 'user1']);
         $this->logIn($user);
         
-        $crawler = $this->client->request('GET', '/tasks'.$list);
+        $crawler = $this->client->request('GET', '/tasks/filter'.$list);
 
         // checks the task with $id is in the page
         $this->assertSelectorExists('a[href="'.$uri.'"]');

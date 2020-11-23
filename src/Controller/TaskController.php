@@ -22,13 +22,19 @@ class TaskController extends AbstractController
      */
     public function listAll(): Response
     {
-        return $this->render('task/list.html.twig', ['tasks' => $this->getDoctrine()->getRepository(Task::class)->findAll()]);
+        return $this->render(
+            'task/list.html.twig',
+            ['tasks' => $this
+                ->getDoctrine()
+                ->getRepository(Task::class)
+                ->findBy([], ['updatedAt' => 'DESC'])]
+        );
     }
 
     /**
      * list done or waiting tasks.
      *
-     * @Route("/tasks/{isDone}", name="task_list")
+     * @Route("/tasks/filter/{isDone}", name="task_list")
      *
      * @return Response
      */

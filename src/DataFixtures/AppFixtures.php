@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Task;
 use App\Entity\User;
+use DateInterval;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -29,6 +30,8 @@ class AppFixtures extends Fixture
             $task = new Task();
             $task->setTitle('Tâche n°'.$i);
             $task->setContent('Texte du contenu de la tâche n°'.$i);
+            $duration = 'PT'.(string) $i.'H';
+            $task->setUpdatedAt($task->getUpdatedAt()->add(new DateInterval($duration)));
             if (0 === $i % 2) {
                 $task->toggle(true);
             }
