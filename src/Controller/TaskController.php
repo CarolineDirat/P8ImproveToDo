@@ -24,10 +24,10 @@ class TaskController extends AbstractController
     {
         return $this->render('task/list.html.twig', ['tasks' => $this->getDoctrine()->getRepository(Task::class)->findAll()]);
     }
-    
+
     /**
-     * list done tasks
-     * 
+     * list done tasks.
+     *
      * @Route("/tasks/done", name="task_list_done")
      *
      * @return Response
@@ -41,7 +41,6 @@ class TaskController extends AbstractController
             ]
         );
     }
-    
 
     /**
      * create a task.
@@ -130,7 +129,7 @@ class TaskController extends AbstractController
 
     /**
      * toggleState: edit task's status form AJAX request.
-     * it's called by tasks list page for done or not done tasks
+     * it's called by tasks list page for done or not done tasks.
      *
      * @Route("/tasks/{id}/toggle-ajax", name="task_toggle_ajax")
      *
@@ -144,7 +143,6 @@ class TaskController extends AbstractController
         $data = json_decode($request->getContent(), true);
 
         if ($this->isCsrfTokenValid('toggle-token-'.$task->getId(), $data['_token'])) {
-
             $task->toggle(!$task->isDone());
             $this->getDoctrine()->getManager()->flush();
 
@@ -157,7 +155,7 @@ class TaskController extends AbstractController
             return $this->json(
                 [
                     'message' => $message,
-                    'taskId' => $task->getId()
+                    'taskId' => $task->getId(),
                 ],
                 200,
                 ['Content-Type' => 'application/json']

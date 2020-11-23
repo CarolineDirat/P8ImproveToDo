@@ -87,9 +87,9 @@ class Task
 
         return $this;
     }
-    
+
     /**
-     * getUpdatedAt
+     * getUpdatedAt.
      *
      * @return DateTimeInterface
      */
@@ -97,11 +97,12 @@ class Task
     {
         return $this->updatedAt;
     }
-    
+
     /**
-     * setUpdatedAt
+     * setUpdatedAt.
      *
      * @param DateTimeInterface $updatedAt
+     *
      * @return self
      */
     public function setUpdatedAt(DateTimeInterface $updatedAt): self

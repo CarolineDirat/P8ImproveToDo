@@ -12,15 +12,16 @@ class TaskRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Task::class);
     }
-    
+
     /**
-     * findList
+     * findList.
      *
-     * @param  bool $isDone
+     * @param bool $isDone
+     *
      * @return array<Task>
      */
     public function findList(bool $isDone): array
-    {        
+    {
         return $this
             ->createQueryBuilder('t')
             ->where('t.isDone = :isDone')
@@ -28,6 +29,6 @@ class TaskRepository extends ServiceEntityRepository
             ->orderBy('t.updatedAt', 'DESC')
             ->getQuery()
             ->getArrayResult()
-        ;        
+        ;
     }
 }
