@@ -19,8 +19,7 @@ $(function () {
             dataType: 'json',
             contentType: 'application/json',
             data: JSON.stringify({
-                '_token': $(this).data('token'),
-                'taskId': $(this).data('taskid')
+                '_token': $(this).data('token')
             })
         }).done(function(data) {
             deleteTask(data);
