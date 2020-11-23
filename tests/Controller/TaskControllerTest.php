@@ -6,6 +6,7 @@ use App\DataFixtures\AppFixtures;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -14,25 +15,12 @@ class TaskControllerTest extends WebTestCase
 {
     use FixturesTrait;
 
-    private $client = null;
+    private ?KernelBrowser $client = null;
 
     public function setUp(): void
     {
         $this->client = static::createClient();
         $this->loadFixtures([AppFixtures::class]);
-    }
-
-    public function testListDone(): void
-    {
-        $user = self::$container->get(UserRepository::class)->findOneBy(['username' => 'user1']);
-
-        $this->logIn($user);
-
-        $crawler = $this->client->request('GET', '/tasks/done');
-
-        $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $this->assertSame('Liste des tâches terminées', $crawler->filter('h1')->text());
-
     }
 
     private function logIn(User $user)
@@ -52,5 +40,54 @@ class TaskControllerTest extends WebTestCase
 
         $cookie = new Cookie($session->getName(), $session->getId());
         $this->client->getCookieJar()->set($cookie);
+    }
+
+    public function testListDone(): void
+    {
+        $user = self::$container->get(UserRepository::class)->findOneBy(['username' => 'user1']);
+
+        $this->logIn($user);
+
+        $crawler = $this->client->request('GET', '/tasks/done');
+
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
+        $this->assertSame('Liste des tâches terminées', $crawler->filter('h1')->text());
+
+    }
+
+    /**
+    * @dataProvider provideTaskId
+    */
+    public function testToggleState(string $id): void
+    {
+        $user = self::$container->get(UserRepository::class)->findOneBy(['username' => 'user1']);
+
+        $this->logIn($user);
+        
+        $crawler = $this->client->request('GET', '/tasks');
+
+        $crawler = $this->client->submitForm('toggle-form-'.$id);
+
+        $this->assertResponseRedirects('/tasks');
+        $crawler = $this->client->followRedirect();
+
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
+
+        $this->assertSelectorExists('.alert-success');
+        $this->assertSame('Liste des tâches', $crawler->filter('h1')->text());
+    }
+    
+    /**
+     * provideTaskId
+     *
+     * @param  int $id
+     * @return array
+     */
+    public function provideTaskId(): array
+    {
+        return [
+            ['1'],
+            ['2'],
+        ];
     }
 }
