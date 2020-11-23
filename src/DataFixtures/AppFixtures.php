@@ -8,7 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         // 51 tasks, 25 are done
         for ($i = 1; $i <= 51; ++$i) {

@@ -14,7 +14,7 @@ class TaskRepositoryTest extends KernelTestCase
 {
     use FixturesTrait;
 
-    public function testFindListDone()
+    public function testFindListDone(): void
     {
         self::bootKernel();
         $this->loadFixtures([AppFixtures::class]);
@@ -26,7 +26,7 @@ class TaskRepositoryTest extends KernelTestCase
         $this->assertEquals(25, $tasks);
     }
 
-    public function testFindListNotDone()
+    public function testFindListNotDone(): void
     {
         self::bootKernel();
         $this->loadFixtures([AppFixtures::class]);

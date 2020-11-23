@@ -9,7 +9,7 @@ use Symfony\Component\Validator\ConstraintViolation;
 
 class TaskTest extends WebTestCase
 {
-    public function testCreatedAt()
+    public function testCreatedAt(): void
     {
         $task = new Task();
         $this->assertInstanceOf(DateTime::class, $task->getCreatedAt());
@@ -18,7 +18,7 @@ class TaskTest extends WebTestCase
         $this->assertEquals($createdAt, $task->getCreatedAt());
     }
 
-    public function testUpdatedAt()
+    public function testUpdatedAt(): void
     {
         $task = new Task();
         $this->assertInstanceOf(DateTime::class, $task->getUpdatedAt());
@@ -27,7 +27,7 @@ class TaskTest extends WebTestCase
         $this->assertEquals($updatedAt, $task->getUpdatedAt());
     }
 
-    public function testTitle()
+    public function testTitle(): void
     {
         $task = new Task();
         $title = 'Titre de la tâche';
@@ -35,7 +35,7 @@ class TaskTest extends WebTestCase
         $this->assertEquals($title, $task->getTitle());
     }
 
-    public function testContent()
+    public function testContent(): void
     {
         $task = new Task();
         $content = 'Texte du contenu de la tâche';
@@ -43,7 +43,7 @@ class TaskTest extends WebTestCase
         $this->assertEquals($content, $task->getContent());
     }
 
-    public function testIsDone()
+    public function testIsDone(): void
     {
         $task = new Task();
         $this->assertEquals(false, $task->isDone());
@@ -51,7 +51,7 @@ class TaskTest extends WebTestCase
         $this->assertEquals(true, $task->isDone());
     }
 
-    public function getValidTask()
+    public function getValidTask(): Task
     {
         return (new Task())
             ->setTitle('Titre de la tâche')
@@ -59,7 +59,7 @@ class TaskTest extends WebTestCase
         ;
     }
 
-    public function assertHasErrors(Task $task, int $number = 0)
+    public function assertHasErrors(Task $task, int $number = 0): void
     {
         self::bootKernel();
         $errors = self::$container->get('validator')->validate($task);
@@ -71,17 +71,17 @@ class TaskTest extends WebTestCase
         $this->assertCount($number, $errors, implode(', ', $messages));
     }
 
-    public function testValidTask()
+    public function testValidTask(): void
     {
         $this->assertHasErrors($this->getValidTask(), 0);
     }
 
-    public function testInvalidBlankTitleTask()
+    public function testInvalidBlankTitleTask(): void
     {
         $this->assertHasErrors($this->getValidTask()->setTitle(''), 1);
     }
 
-    public function testInvalidBlankContentTask()
+    public function testInvalidBlankContentTask(): void
     {
         $this->assertHasErrors($this->getValidTask()->setContent(''), 1);
     }

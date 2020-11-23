@@ -67,9 +67,9 @@ class Task
     /**
      * getCreatedAt.
      *
-     * @return DateTimeInterface
+     * @return DateTime
      */
-    public function getCreatedAt(): DateTimeInterface
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
@@ -77,11 +77,11 @@ class Task
     /**
      * setCreatedAt.
      *
-     * @param DateTimeInterface $createdAt
+     * @param DateTime $createdAt
      *
      * @return self
      */
-    public function setCreatedAt(DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -91,9 +91,9 @@ class Task
     /**
      * getUpdatedAt.
      *
-     * @return DateTimeInterface
+     * @return DateTime
      */
-    public function getUpdatedAt(): ?DateTimeInterface
+    public function getUpdatedAt(): ?DateTime
     {
         return $this->updatedAt;
     }
@@ -101,11 +101,11 @@ class Task
     /**
      * setUpdatedAt.
      *
-     * @param DateTimeInterface $updatedAt
+     * @param DateTime $updatedAt
      *
      * @return self
      */
-    public function setUpdatedAt(DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
