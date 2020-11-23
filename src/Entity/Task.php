@@ -31,7 +31,7 @@ class Task
     private DateTime $updatedAt;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", unique=true)
      * @Assert\NotBlank(message="Vous devez saisir un titre.")
      */
     private string $title;
