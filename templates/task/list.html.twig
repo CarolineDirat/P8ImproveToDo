@@ -4,7 +4,11 @@
 
 {% block body %}
     <div class="row">
-        <a href="{{ path('task_create') }}" class="btn btn-info ml-3">Créer une tâche</a>
+        <div class="col-12 d-flex flex-wrap">
+            <a href="{{ path('task_create') }}" class="btn btn-info mx-3 mt-2">Créer une tâche</a>
+            <a href="{{ path('task_list', {'isDone': 'false'}) }}" class="btn btn-secondary mr-2 mt-2">Consulter la liste des tâches à faire</a>
+            <a href="{{ path('task_list', {'isDone': 'true'}) }}" class="btn btn-secondary mt-2">Consulter la liste des tâches terminées</a>
+        </div>
     </div>
     <div class="row">
 
