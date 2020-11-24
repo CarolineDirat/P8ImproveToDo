@@ -1,18 +1,17 @@
 <?php
 
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use Behat\MinkExtension\Context\MinkAwareContext;
 use Behat\MinkExtension\Context\MinkContext;
-use Behat\MinkExtension\Context\RawMinkContext;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 /**
  * Defines application features from the specific context.
  */
-class FeatureContext extends RawMinkContext implements Context
-{    
+class FeatureContext extends MinkContext
+{
     /**
      * Initializes context.
      *
@@ -24,34 +23,33 @@ class FeatureContext extends RawMinkContext implements Context
     {
     }
 
-     /**
-     * @Given I am on the login page
-     * 
-     * @throws Exception
+    /**
+     * @Given I am authenticated user as :username with :passsword
      */
-    public function iAmOnTheLoginPage(): void
+    public function iAmAuthenticatedUserAsWith(string $username, string $password)
     {
-        $this->visitPath("/login");
+        $this->visit('/login');
+        $this->fillField('username', $username);
+        $this->fillField('password', $password);
+        $this->pressButton('Se connecter');
     }
 
     /**
-     * @When I request the list of users from :uri
+     * @Given I am on the home page
      */
-    public function iRequestTheListOfUsersFrom(string $uri): void
+    public function iAmOnTheHomePage()
     {
-        $this->visitPath($uri);
+        $this->visit('/');
     }
 
     /**
      * @Then I see the page with the title :h1
-     * 
-     * @throws Exception
      */
-    public function iSeeThePageWithTheTitle(string $h1): void
+    public function iSeeThePageWithTheTitle($h1)
     {
         $title = $this->getSession()->getPage()->find('css', 'h1');
         if ($h1 !== $title->getText()) {
-            throw new Exception("La page obtenue ne contient pas le titre 'Liste des utilisateurs'");
+            throw new Exception("La page obtenue ne contient pas le titre '".$h1."'");
         }
     }
 }
