@@ -7,6 +7,9 @@ use DateTime;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Validator\ConstraintViolation;
 
+/**
+ * @internal
+ */
 class TaskTest extends WebTestCase
 {
     public function testCreatedAt(): void
@@ -64,7 +67,7 @@ class TaskTest extends WebTestCase
         self::bootKernel();
         $errors = self::$container->get('validator')->validate($task);
         $messages = [];
-        /**@var ConstraintViolation $error */
+        /*@var ConstraintViolation $error */
         foreach ($errors as $error) {
             $messages[] = $error->getPropertyPath().' => '.$error->getMessage();
         }

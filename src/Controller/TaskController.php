@@ -24,10 +24,12 @@ class TaskController extends AbstractController
     {
         return $this->render(
             'task/list.html.twig',
-            ['tasks' => $this
-                ->getDoctrine()
-                ->getRepository(Task::class)
-                ->findBy([], ['updatedAt' => 'DESC'])]
+            [
+                'tasks' => $this
+                    ->getDoctrine()
+                    ->getRepository(Task::class)
+                    ->findBy([], ['updatedAt' => 'DESC']), 
+            ]
         );
     }
 
@@ -39,15 +41,15 @@ class TaskController extends AbstractController
      * @return Response
      */
     public function list(TaskRepository $taskRepository, string $isDone): Response
-    {        
+    {
         $title = 'Liste des tâches non terminées';
         $state = false;
-        
+
         if ('true' === $isDone) {
             $title = 'Liste des tâches terminées';
             $state = true;
         }
-        
+
         return $this->render(
             'task/list_is.html.twig',
             [

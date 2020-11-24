@@ -12,6 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
+/**
+ * @internal
+ */
 class TaskControllerTest extends WebTestCase
 {
     use FixturesTrait;
@@ -22,25 +25,6 @@ class TaskControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
         $this->loadFixtures([AppFixtures::class]);
-    }
-
-    private function logIn(User $user): void
-    {
-        $session = self::$container->get('session');
-
-        $firewallName = 'main';
-        // if you don't define multiple connected firewalls, the context defaults to the firewall name
-        // See https://symfony.com/doc/current/reference/configuration/security.html#firewall-context
-        $firewallContext = 'main';
-
-        // you may need to use a different token class depending on your application.
-        // for example, when using Guard authentication you must instantiate PostAuthenticationGuardToken
-        $token = new UsernamePasswordToken($user, null, $firewallName, $user->getRoles());
-        $session->set('_security_'.$firewallContext, serialize($token));
-        $session->save();
-
-        $cookie = new Cookie($session->getName(), $session->getId());
-        $this->client->getCookieJar()->set($cookie);
     }
 
     public function testListAll(): void
@@ -56,8 +40,8 @@ class TaskControllerTest extends WebTestCase
     }
 
     /**
-    * @dataProvider provideIsDone
-    */
+     * @dataProvider provideIsDone
+     */
     public function testList(string $isDone, string $title): void
     {
         $user = self::$container->get(UserRepository::class)->findOneBy(['username' => 'user1']);
@@ -69,9 +53,9 @@ class TaskControllerTest extends WebTestCase
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         $this->assertSame($title, $crawler->filter('h1')->text());
     }
-    
+
     /**
-     * provideIsDone
+     * provideIsDone.
      *
      * @return array<array<string>>
      */
@@ -84,14 +68,14 @@ class TaskControllerTest extends WebTestCase
     }
 
     /**
-    * @dataProvider provideTaskId
-    */
+     * @dataProvider provideTaskId
+     */
     public function testToggleState(string $id): void
     {
         $user = self::$container->get(UserRepository::class)->findOneBy(['username' => 'user1']);
 
         $this->logIn($user);
-        
+
         $crawler = $this->client->request('GET', '/tasks');
 
         $crawler = $this->client->submitForm('toggle-form-'.$id);
@@ -104,9 +88,9 @@ class TaskControllerTest extends WebTestCase
         $this->assertSelectorExists('.alert-success');
         $this->assertSame('Liste des tâches', $crawler->filter('h1')->text());
     }
-    
+
     /**
-     * provideTaskId
+     * provideTaskId.
      *
      * @return array<array<string>>
      */
@@ -119,14 +103,13 @@ class TaskControllerTest extends WebTestCase
     }
 
     /**
-    * @dataProvider provideAjax
-    */
+     * @dataProvider provideAjax
+     */
     public function testToggleStateAjax(string $list, string $uri, int $id, bool $isDone): void
     {
-
         $user = self::$container->get(UserRepository::class)->findOneBy(['username' => 'user1']);
         $this->logIn($user);
-        
+
         $crawler = $this->client->request('GET', '/tasks/filter'.$list);
 
         // checks the task with $id is in the page
@@ -152,9 +135,9 @@ class TaskControllerTest extends WebTestCase
         $task = self::$container->get(TaskRepository::class)->find($id);
         $this->assertEquals($isDone, $task->isDone());
     }
-    
+
     /**
-     * provideAjax
+     * provideAjax.
      *
      * @return array<array<mixed>>
      */
@@ -164,5 +147,24 @@ class TaskControllerTest extends WebTestCase
             ['/true', '/tasks/2/toggle-ajax', 2, false],
             ['/false', '/tasks/1/toggle-ajax', 1, true],
         ];
+    }
+
+    private function logIn(User $user): void
+    {
+        $session = self::$container->get('session');
+
+        $firewallName = 'main';
+        // if you don't define multiple connected firewalls, the context defaults to the firewall name
+        // See https://symfony.com/doc/current/reference/configuration/security.html#firewall-context
+        $firewallContext = 'main';
+
+        // you may need to use a different token class depending on your application.
+        // for example, when using Guard authentication you must instantiate PostAuthenticationGuardToken
+        $token = new UsernamePasswordToken($user, null, $firewallName, $user->getRoles());
+        $session->set('_security_'.$firewallContext, serialize($token));
+        $session->save();
+
+        $cookie = new Cookie($session->getName(), $session->getId());
+        $this->client->getCookieJar()->set($cookie);
     }
 }
