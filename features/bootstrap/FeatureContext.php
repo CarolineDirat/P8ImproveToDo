@@ -1,10 +1,6 @@
 <?php
 
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Behat\Context\Context;
-use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;
-use Behat\MinkExtension\Context\MinkAwareContext;
 use Behat\MinkExtension\Context\MinkContext;
 use WebDriver\Exception\NoAlertOpenError;
 
@@ -68,14 +64,14 @@ class FeatureContext extends MinkContext
     public function iConfirmThePopup(): void
     {
         $i = 0;
-        while($i < 2) {
+        while ($i < 2) {
             try {
                 $this->getSession()->getDriver()->getWebDriverSession()->accept_alert();
+
                 break;
-            }
-            catch(NoAlertOpenError $e) {
+            } catch (NoAlertOpenError $e) {
                 sleep(1);
-                $i++;
+                ++$i;
             }
         }
     }

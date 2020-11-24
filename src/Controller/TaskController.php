@@ -28,7 +28,7 @@ class TaskController extends AbstractController
                 'tasks' => $this
                     ->getDoctrine()
                     ->getRepository(Task::class)
-                    ->findBy([], ['updatedAt' => 'DESC']), 
+                    ->findBy([], ['updatedAt' => 'DESC']),
             ]
         );
     }
