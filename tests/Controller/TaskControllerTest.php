@@ -24,7 +24,7 @@ class TaskControllerTest extends WebTestCase
         $this->loadFixtures([AppFixtures::class]);
     }
 
-    private function logIn(User $user)
+    private function logIn(User $user): void
     {
         $session = self::$container->get('session');
 
@@ -69,7 +69,12 @@ class TaskControllerTest extends WebTestCase
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         $this->assertSame($title, $crawler->filter('h1')->text());
     }
-
+    
+    /**
+     * provideIsDone
+     *
+     * @return array<array<string>>
+     */
     public function provideIsDone(): array
     {
         return [
@@ -151,7 +156,7 @@ class TaskControllerTest extends WebTestCase
     /**
      * provideAjax
      *
-     * @return array<array<string>>
+     * @return array<array<mixed>>
      */
     public function provideAjax(): array
     {
