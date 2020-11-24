@@ -6,6 +6,7 @@ use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\MinkAwareContext;
 use Behat\MinkExtension\Context\MinkContext;
+use WebDriver\Exception\NoAlertOpenError;
 
 /**
  * Defines application features from the specific context.
@@ -45,11 +46,37 @@ class FeatureContext extends MinkContext
     /**
      * @Then I see the page with the title :h1
      */
-    public function iSeeThePageWithTheTitle($h1)
+    public function iSeeThePageWithTheTitle(string $h1): void
     {
         $title = $this->getSession()->getPage()->find('css', 'h1');
         if ($h1 !== $title->getText()) {
-            throw new Exception("La page obtenue ne contient pas le titre '".$h1."'");
+            throw new Exception('La page obtenue ne contient pas le titre "'.$h1.'"');
+        }
+    }
+
+    /**
+     * @Then I see the alert message :class
+     */
+    public function iSeeTheAlertMessage(string $class): void
+    {
+        $this->getSession()->getPage()->find('css', $class);
+    }
+
+    /**
+     * @Then I confirm the popup
+     */
+    public function iConfirmThePopup(): void
+    {
+        $i = 0;
+        while($i < 2) {
+            try {
+                $this->getSession()->getDriver()->getWebDriverSession()->accept_alert();
+                break;
+            }
+            catch(NoAlertOpenError $e) {
+                sleep(1);
+                $i++;
+            }
         }
     }
 }
