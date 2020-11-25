@@ -19,4 +19,6 @@ jobs:
       - name: Run phpstan on src
         uses: actions-x/phpstan@v1
         with:
-          configPath: phpstan-ci-src.neon
+          useBundled: 1
+          level: 6
+          paths: src
