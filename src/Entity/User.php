@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -18,26 +20,67 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @var int
      */
     private int $id;
 
     /**
      * @ORM\Column(type="string", length=25, unique=true)
+     * 
      * @Assert\NotBlank(message="Vous devez saisir un nom d'utilisateur.")
+     * @Assert\Length(min=3, minMessage="Votre nom d'utilisateur doit contenir au moins {{ limit }} caractères")
+     * 
+     * @var string
      */
     private string $username;
 
     /**
      * @ORM\Column(type="string")
+     * 
+     * @Assert\NotBlank(message="Vous devez saisir un mot de passe.")
+     * @Assert\Length(min=8, minMessage="Votre mot de passe doit contenir au moins {{ limit }} caractères")
+     * 
+     * @var string
      */
     private string $password;
 
     /**
      * @ORM\Column(type="string", length=60, unique=true)
+     * 
      * @Assert\NotBlank(message="Vous devez saisir une adresse email.")
      * @Assert\Email(message="Le format de l'adresse n'est pas correcte.")
+     * 
+     * @var string
      */
     private string $email;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * 
+     * @var DateTimeInterface
+     */
+    private DateTimeInterface $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * 
+     * @var DateTimeInterface
+     */
+    private DateTimeInterface $updatedAt;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     * 
+     * @var array<string>
+     */
+    private array $roles = [];
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTime();
+        $this->updatedAt = new DateTime();
+    }
 
     /**
      * getId.
@@ -130,19 +173,89 @@ class User implements UserInterface
     }
 
     /**
+     * eraseCredentials.
+     * 
+     * @see UserInterface
+     */
+    public function eraseCredentials(): void
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+    
+    /**
+     * getCreatedAt
+     *
+     * @return DateTimeInterface
+     */
+    public function getCreatedAt(): DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+    
+    /**
+     * setCreatedAt
+     *
+     * @param DateTimeInterface $createdAt
+     * 
+     * @return self
+     */
+    public function setCreatedAt(DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+    
+    /**
+     * getUpdatedAt
+     *
+     * @return DateTimeInterface
+     */
+    public function getUpdatedAt(): DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+    
+    /**
+     * setUpdatedAt
+     *
+     * @param DateTimeInterface  $updatedAt
+     * 
+     * @return self
+     */
+    public function setUpdatedAt(DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+    
+    /**
      * getRoles.
      *
      * @return array<string>
      */
     public function getRoles(): array
     {
-        return ['ROLE_USER'];
-    }
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
 
+        return array_unique($roles);
+    }
+    
     /**
-     * eraseCredentials.
+     * setRoles
+     *
+     * @param  array<string> $roles
+     * 
+     * @return self
      */
-    public function eraseCredentials(): void
+    public function setRoles(array $roles): self
     {
+        $this->roles = $roles;
+
+        return $this;
     }
 }
