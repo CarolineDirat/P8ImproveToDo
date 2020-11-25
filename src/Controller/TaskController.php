@@ -7,6 +7,7 @@ use App\Form\AppFormFactoryInterface;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
 use DateTime;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -120,7 +121,7 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $task->setUpdatedAt(new DateTime());
+            $task->setUpdatedAt(new DateTimeImmutable());
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');

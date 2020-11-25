@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use DateTime;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -20,14 +22,14 @@ class Task
     private int $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime_immutable")
      */
-    private DateTime $createdAt;
+    private DateTimeImmutable $createdAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime_immutable")
      */
-    private DateTime $updatedAt;
+    private DateTimeImmutable $updatedAt;
 
     /**
      * @ORM\Column(type="string", unique=true)
@@ -48,8 +50,8 @@ class Task
 
     public function __construct()
     {
-        $this->createdAt = new Datetime();
-        $this->updatedAt = new DateTime();
+        $this->createdAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTimeImmutable();
         $this->isDone = false;
     }
 
@@ -66,9 +68,9 @@ class Task
     /**
      * getCreatedAt.
      *
-     * @return DateTime
+     * @return DateTimeImmutable
      */
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -76,11 +78,11 @@ class Task
     /**
      * setCreatedAt.
      *
-     * @param DateTime $createdAt
+     * @param DateTimeImmutable $createdAt
      *
      * @return self
      */
-    public function setCreatedAt(DateTime $createdAt): self
+    public function setCreatedAt(DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -90,9 +92,9 @@ class Task
     /**
      * getUpdatedAt.
      *
-     * @return DateTime
+     * @return DateTimeImmutable
      */
-    public function getUpdatedAt(): DateTime
+    public function getUpdatedAt(): DateTimeImmutable
     {
         return $this->updatedAt;
     }
@@ -100,11 +102,11 @@ class Task
     /**
      * setUpdatedAt.
      *
-     * @param DateTime $updatedAt
+     * @param DateTimeImmutable $updatedAt
      *
      * @return self
      */
-    public function setUpdatedAt(DateTime $updatedAt): self
+    public function setUpdatedAt(DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
