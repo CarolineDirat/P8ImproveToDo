@@ -21,4 +21,4 @@ jobs:
         uses: actions-x/phpstan@v1
         with:
           useBundled: 1
-          configPath: phpstan-tests.yml
+          configPath: phpstan-ci-tests.neon
