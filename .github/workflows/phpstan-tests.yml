@@ -20,4 +20,5 @@ jobs:
       - name: Run phpstan on tests
         uses: actions-x/phpstan@v1
         with:
+          useBundled: 1
           configPath: phpstan-ci-tests.neon

@@ -2,4 +2,7 @@ parameters:
 	level: 6
 	paths:
 		- tests
+	ignoreErrors:
+		- '#Cannot call method [a-zA-Z]+\(\) on object\|null\.#'
+	reportUnmatchedIgnoredErrors: false
 	

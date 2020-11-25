@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Form\TaskType;
+use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,13 +16,47 @@ class TaskController extends AbstractController
     /**
      * list all tasks.
      *
-     * @Route("/tasks", name="task_list")
+     * @Route("/tasks", name="task_list_all")
      *
      * @return Response
      */
-    public function list(): Response
+    public function listAll(): Response
     {
-        return $this->render('task/list.html.twig', ['tasks' => $this->getDoctrine()->getRepository(Task::class)->findAll()]);
+        return $this->render(
+            'task/list.html.twig',
+            [
+                'tasks' => $this
+                    ->getDoctrine()
+                    ->getRepository(Task::class)
+                    ->findBy([], ['updatedAt' => 'DESC']),
+            ]
+        );
+    }
+
+    /**
+     * list done or waiting tasks.
+     *
+     * @Route("/tasks/filter/{isDone}", name="task_list")
+     *
+     * @return Response
+     */
+    public function list(TaskRepository $taskRepository, string $isDone): Response
+    {
+        $title = 'Liste des tâches non terminées';
+        $state = false;
+
+        if ('true' === $isDone) {
+            $title = 'Liste des tâches terminées';
+            $state = true;
+        }
+
+        return $this->render(
+            'task/list_is.html.twig',
+            [
+                'tasks' => $taskRepository->findList($state),
+                'title' => $title,
+            ]
+        );
     }
 
     /**
@@ -47,7 +83,7 @@ class TaskController extends AbstractController
 
             $this->addFlash('success', 'La tâche a bien été ajoutée.');
 
-            return $this->redirectToRoute('task_list');
+            return $this->redirectToRoute('task_list_all');
         }
 
         return $this->render('task/create.html.twig', ['form' => $form->createView()]);
@@ -74,7 +110,7 @@ class TaskController extends AbstractController
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
 
-            return $this->redirectToRoute('task_list');
+            return $this->redirectToRoute('task_list_all');
         }
 
         return $this->render('task/edit.html.twig', [
@@ -105,7 +141,49 @@ class TaskController extends AbstractController
 
         $this->addFlash('success', $message);
 
-        return $this->redirectToRoute('task_list');
+        return $this->redirectToRoute('task_list_all');
+    }
+
+    /**
+     * toggleState: edit task's status form AJAX request.
+     * it's called by tasks list page for done or not done tasks.
+     *
+     * @Route("/tasks/{id}/toggle-ajax", name="task_toggle_ajax")
+     *
+     * @param Task    $task
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function toggleStateAjax(Task $task, Request $request): JsonResponse
+    {
+        $data = json_decode((string) $request->getContent(), true);
+
+        if ($this->isCsrfTokenValid('toggle-token-'.$task->getId(), $data['_token'])) {
+            $task->toggle(!$task->isDone());
+            $this->getDoctrine()->getManager()->flush();
+
+            $message = sprintf('La tâche %s est maintenant marquée comme non terminée.', $task->getTitle());
+
+            if (true === $task->isDone()) {
+                $message = sprintf('La tâche %s est maintenant marquée comme faite.', $task->getTitle());
+            }
+
+            return $this->json(
+                [
+                    'message' => $message,
+                    'taskId' => $task->getId(),
+                ],
+                200,
+                ['Content-Type' => 'application/json']
+            );
+        }
+
+        return $this->json(
+            ['message' => 'Accès refusé.'],
+            403,
+            ['Content-Type' => 'application/json']
+        );
     }
 
     /**
@@ -125,6 +203,6 @@ class TaskController extends AbstractController
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
 
-        return $this->redirectToRoute('task_list');
+        return $this->redirectToRoute('task_list_all');
     }
 }
