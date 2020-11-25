@@ -17,4 +17,6 @@
 php-cs-fixer.phar
 .php_cs.dist
 .php_cs.cache
-node_modules
+
+selenium.jar
+geckodriver.exe
