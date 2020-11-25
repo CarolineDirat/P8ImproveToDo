@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\AppFormFactoryInterface;
 use App\Form\UserType;
 use App\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,7 +13,19 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
-{
+{    
+    /**
+     * addFormFactory
+     *
+     * @var AppFormFactoryInterface
+     */
+    private AppFormFactoryInterface $appFormFactory;
+
+    public function __construct(AppFormFactoryInterface $appFormFactory)
+    {
+        $this->appFormFactory = $appFormFactory;
+    }
+
     /**
      * list all users.
      *
@@ -37,7 +50,7 @@ class UserController extends AbstractController
     public function new(Request $request, UserServiceInterface $userService): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->appFormFactory->create('user', $user);
 
         $form->handleRequest($request);
 
@@ -64,7 +77,7 @@ class UserController extends AbstractController
      */
     public function edit(User $user, Request $request, UserPasswordEncoderInterface $userPasswordEncoder): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->appFormFactory->create('user', $user);
 
         $form->handleRequest($request);
 
