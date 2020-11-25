@@ -19,19 +19,20 @@ class TaskControllerTest extends WebTestCase
 {
     use FixturesTrait;
 
-    private ?KernelBrowser $client = null;
+    private KernelBrowser $client;
+
+    private User $user;
 
     public function setUp(): void
     {
         $this->client = static::createClient();
         $this->loadFixtures([AppFixtures::class]);
+        $this->user = self::$container->get(UserRepository::class)->findOneBy(['username' => 'user1']);
     }
 
     public function testListAll(): void
     {
-        $user = self::$container->get(UserRepository::class)->findOneBy(['username' => 'user1']);
-
-        $this->logIn($user);
+        $this->logIn($this->user);
 
         $crawler = $this->client->request('GET', '/tasks');
 
@@ -44,9 +45,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testList(string $isDone, string $title): void
     {
-        $user = self::$container->get(UserRepository::class)->findOneBy(['username' => 'user1']);
-
-        $this->logIn($user);
+        $this->logIn($this->user);
 
         $crawler = $this->client->request('GET', '/tasks/filter'.$isDone);
 
@@ -72,9 +71,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testToggleState(string $id): void
     {
-        $user = self::$container->get(UserRepository::class)->findOneBy(['username' => 'user1']);
-
-        $this->logIn($user);
+        $this->logIn($this->user);
 
         $crawler = $this->client->request('GET', '/tasks');
 
@@ -107,8 +104,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testToggleStateAjax(string $list, string $uri, int $id, bool $isDone): void
     {
-        $user = self::$container->get(UserRepository::class)->findOneBy(['username' => 'user1']);
-        $this->logIn($user);
+        $this->logIn($this->user);
 
         $crawler = $this->client->request('GET', '/tasks/filter'.$list);
 
@@ -132,8 +128,13 @@ class TaskControllerTest extends WebTestCase
         $this->assertSelectorNotExists('a[href="'.$uri.'"]');
 
         // checks the task's state has been changed
-        $task = self::$container->get(TaskRepository::class)->find($id);
-        $this->assertEquals($isDone, $task->isDone());
+        $taskRepository = self::$container->get(TaskRepository::class);
+        if ($taskRepository instanceof TaskRepository) {
+            $task = $taskRepository->find($id);
+            $this->assertEquals($isDone, $task->isDone());
+        } else {
+            $this->assertTrue(false);
+        }
     }
 
     /**

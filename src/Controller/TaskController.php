@@ -157,7 +157,7 @@ class TaskController extends AbstractController
      */
     public function toggleStateAjax(Task $task, Request $request): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
+        $data = json_decode((string) $request->getContent(), true);
 
         if ($this->isCsrfTokenValid('toggle-token-'.$task->getId(), $data['_token'])) {
             $task->toggle(!$task->isDone());
