@@ -70,7 +70,7 @@ class FeatureContext extends MinkContext
 
                 break;
             } catch (NoAlertOpenError $e) {
-                sleep(1);
+                usleep(1000);
                 ++$i;
             }
         }
