@@ -128,13 +128,8 @@ class TaskControllerTest extends WebTestCase
         $this->assertSelectorNotExists('a[href="'.$uri.'"]');
 
         // checks the task's state has been changed
-        $taskRepository = self::$container->get(TaskRepository::class);
-        if ($taskRepository instanceof TaskRepository) {
-            $task = $taskRepository->find($id);
-            $this->assertEquals($isDone, $task->isDone());
-        } else {
-            $this->assertTrue(false);
-        }
+        $task = self::$container->get(TaskRepository::class)->find($id);
+        $this->assertEquals($isDone, $task->isDone());
     }
 
     /**
