@@ -11,6 +11,7 @@
         "doctrine/doctrine-bundle": "^2.1",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.7",
+        "phpdocumentor/reflection-docblock": "^5.2",
         "sensio/framework-extra-bundle": "^5.6",
         "symfony/apache-pack": "^1.0",
         "symfony/asset": "4.4.*",
@@ -21,8 +22,11 @@
         "symfony/framework-bundle": "4.4.*",
         "symfony/mailer": "4.4.*",
         "symfony/monolog-bundle": "^3.6",
+        "symfony/property-access": "4.4.*",
+        "symfony/property-info": "4.4.*",
         "symfony/security-bundle": "4.4.*",
         "symfony/security-csrf": "4.4.*",
+        "symfony/serializer": "4.4.*",
         "symfony/twig-bundle": "4.4.*",
         "symfony/validator": "4.4.*",
         "symfony/yaml": "4.4.*"
@@ -32,6 +36,8 @@
         "behat/mink-extension": "^2.3",
         "behat/mink-goutte-driver": "^1.2",
         "behat/mink-selenium2-driver": "^1.4",
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "liip/test-fixtures-bundle": "^1.10",
         "phpstan/phpstan": "^0.12.54",
         "symfony/browser-kit": "4.4.*",
         "symfony/css-selector": "4.4.*",
@@ -75,6 +81,12 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "reset-database": [
+            "php bin/console doctrine:database:drop --if-exists -f",
+            "php bin/console doctrine:database:create",
+            "php bin/console doctrine:migrations:migrate",
+            "php bin/console doctrine:fixtures:load -n"
         ]
     },
     "conflict": {

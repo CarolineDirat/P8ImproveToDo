@@ -25,7 +25,12 @@ class Task
     private DateTime $createdAt;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="datetime")
+     */
+    private DateTime $updatedAt;
+
+    /**
+     * @ORM\Column(type="string", unique=true)
      * @Assert\NotBlank(message="Vous devez saisir un titre.")
      */
     private string $title;
@@ -44,6 +49,7 @@ class Task
     public function __construct()
     {
         $this->createdAt = new Datetime();
+        $this->updatedAt = new DateTime();
         $this->isDone = false;
     }
 
@@ -77,6 +83,30 @@ class Task
     public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * getUpdatedAt.
+     *
+     * @return DateTime
+     */
+    public function getUpdatedAt(): DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * setUpdatedAt.
+     *
+     * @param DateTime $updatedAt
+     *
+     * @return self
+     */
+    public function setUpdatedAt(DateTime $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
