@@ -4,9 +4,10 @@ namespace App\Service;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserService implements UserServiceInterface
@@ -30,15 +31,15 @@ class UserService implements UserServiceInterface
     /**
      * session.
      *
-     * @var Session<mixed>
+     * @var FlashBagInterface
      */
-    private Session $session;
+    private FlashBagInterface $flashBag;
 
-    public function __construct(ManagerRegistry $managerRegistry, UserPasswordEncoderInterface $encoder)
+    public function __construct(ManagerRegistry $managerRegistry, UserPasswordEncoderInterface $encoder, FlashBagInterface $flashBag)
     {
         $this->managerRegistry = $managerRegistry;
         $this->encoder = $encoder;
-        $this->session = new Session(new NativeSessionStorage(), new AttributeBag());
+        $this->flashBag = $flashBag;
     }
 
     /**
@@ -63,9 +64,9 @@ class UserService implements UserServiceInterface
             $em->persist($user);
             $em->flush();
 
-            $this->session->getFlashBag()->add('success', "L'utilisateur a bien été ajouté.");
+            $this->flashBag->add('success', "L'utilisateur a bien été ajouté.");
         } else {
-            $this->session->getFlashBag()->add('error', "L'utilisateur n'a pas pu être ajouté.");
+            $this->flashBag->add('error', "L'utilisateur n'a pas pu être ajouté.");
         }
     }
 }
