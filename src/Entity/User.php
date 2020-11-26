@@ -55,14 +55,14 @@ class User implements UserInterface
     private string $email;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime_immutable")
      *
      * @var DatetimeImmutable
      */
     private DateTimeImmutable $createdAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime_immutable")
      *
      * @var DatetimeImmutable
      */
