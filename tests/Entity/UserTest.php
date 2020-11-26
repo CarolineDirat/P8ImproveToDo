@@ -5,6 +5,7 @@ namespace App\Tests\Entity;
 use App\Entity\User;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\ConstraintViolation;
 
 /**
@@ -23,7 +24,12 @@ class UserTest extends WebTestCase
     public function testPassword(): void
     {
         $user = new User();
-        $password = password_hash('password', PASSWORD_BCRYPT);
+        $user->setPassword('password');
+        self::bootKernel();
+        $container = self::$container;
+        /** @var UserPasswordEncoderInterface $encoder */
+        $encoder = $container->get('security.user_password_encoder.generic');
+        $password = $encoder->encodePassword($user, $user->getPassword());
         $user->setPassword($password);
         $this->assertEquals($password, $user->getPassword());
     }
@@ -82,7 +88,7 @@ class UserTest extends WebTestCase
         self::bootKernel();
         $errors = self::$container->get('validator')->validate($user);
         $messages = [];
-        /*@var ConstraintViolation $error */
+        /** @var ConstraintViolation $error */
         foreach ($errors as $error) {
             $messages[] = $error->getPropertyPath().' => '.$error->getMessage();
         }
