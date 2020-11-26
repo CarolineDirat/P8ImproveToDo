@@ -10,25 +10,25 @@ use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserService implements UserServiceInterface
-{    
+{
     const APP_ROLES = ['ROLE_USER', 'ROLE_ADMIN'];
 
     /**
-     * managerRegistry
+     * managerRegistry.
      *
      * @var ManagerRegistry
      */
     private ManagerRegistry $managerRegistry;
-    
+
     /**
-     * encoder
+     * encoder.
      *
      * @var UserPasswordEncoderInterface
      */
     private UserPasswordEncoderInterface $encoder;
-    
+
     /**
-     * session
+     * session.
      *
      * @var Session<mixed>
      */
@@ -40,7 +40,7 @@ class UserService implements UserServiceInterface
         $this->encoder = $encoder;
         $this->session = new Session(new NativeSessionStorage(), new AttributeBag());
     }
-    
+
     /**
      * processNewUser
      * Save a new user in database, with form data.
@@ -58,7 +58,6 @@ class UserService implements UserServiceInterface
         $role = $form->get('role')->getData();
 
         if (in_array($role, self::APP_ROLES)) {
-
             $user->setRoles([$role]);
 
             $em->persist($user);

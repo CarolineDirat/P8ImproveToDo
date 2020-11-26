@@ -34,8 +34,8 @@ class UserTest extends WebTestCase
         $email = 'email.test@domain.com';
         $user->setEmail($email);
         $this->assertEquals($email, $user->getEmail());
-    }    
-    
+    }
+
     public function testCreatedAt(): void
     {
         $user = new User();

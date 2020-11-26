@@ -26,51 +26,51 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=25, unique=true)
-     * 
+     *
      * @Assert\NotBlank(message="Vous devez saisir un nom d'utilisateur.")
      * @Assert\Length(min=3, minMessage="Votre nom d'utilisateur doit contenir au moins {{ limit }} caractères")
-     * 
+     *
      * @var string
      */
     private string $username;
 
     /**
      * @ORM\Column(type="string")
-     * 
+     *
      * @Assert\NotBlank(message="Vous devez saisir un mot de passe.")
      * @Assert\Length(min=8, minMessage="Votre mot de passe doit contenir au moins {{ limit }} caractères")
-     * 
+     *
      * @var string
      */
     private string $password;
 
     /**
      * @ORM\Column(type="string", length=60, unique=true)
-     * 
+     *
      * @Assert\NotBlank(message="Vous devez saisir une adresse email.")
      * @Assert\Email(message="Le format de l'adresse n'est pas correcte.")
-     * 
+     *
      * @var string
      */
     private string $email;
 
     /**
      * @ORM\Column(type="datetime")
-     * 
+     *
      * @var DatetimeImmutable
      */
     private DateTimeImmutable $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
-     * 
+     *
      * @var DatetimeImmutable
      */
     private DatetimeImmutable $updatedAt;
 
     /**
      * @ORM\Column(type="array", nullable=true)
-     * 
+     *
      * @var array<string>
      */
     private array $roles = [];
@@ -173,7 +173,7 @@ class User implements UserInterface
 
     /**
      * eraseCredentials.
-     * 
+     *
      * @see UserInterface
      */
     public function eraseCredentials(): void
@@ -181,9 +181,9 @@ class User implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-    
+
     /**
-     * getCreatedAt
+     * getCreatedAt.
      *
      * @return DateTimeImmutable
      */
@@ -191,12 +191,12 @@ class User implements UserInterface
     {
         return $this->createdAt;
     }
-    
+
     /**
-     * setCreatedAt
+     * setCreatedAt.
      *
      * @param DateTimeImmutable $createdAt
-     * 
+     *
      * @return self
      */
     public function setCreatedAt(DateTimeImmutable $createdAt): self
@@ -205,9 +205,9 @@ class User implements UserInterface
 
         return $this;
     }
-    
+
     /**
-     * getUpdatedAt
+     * getUpdatedAt.
      *
      * @return DateTimeImmutable
      */
@@ -215,12 +215,12 @@ class User implements UserInterface
     {
         return $this->updatedAt;
     }
-    
+
     /**
-     * setUpdatedAt
+     * setUpdatedAt.
      *
      * @param DateTimeImmutable $updatedAt
-     * 
+     *
      * @return self
      */
     public function setUpdatedAt(DateTimeImmutable $updatedAt): self
@@ -229,7 +229,7 @@ class User implements UserInterface
 
         return $this;
     }
-    
+
     /**
      * getRoles.
      *
@@ -243,12 +243,12 @@ class User implements UserInterface
 
         return array_unique($roles);
     }
-    
+
     /**
-     * setRoles
+     * setRoles.
      *
-     * @param  array<string> $roles
-     * 
+     * @param array<string> $roles
+     *
      * @return self
      */
     public function setRoles(array $roles): self

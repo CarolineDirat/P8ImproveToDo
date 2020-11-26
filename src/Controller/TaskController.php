@@ -4,9 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Form\AppFormFactoryInterface;
-use App\Form\TaskType;
 use App\Repository\TaskRepository;
-use DateTime;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TaskController extends AbstractController
 {
     /**
-     * addFormFactory
+     * addFormFactory.
      *
      * @var AppFormFactoryInterface
      */

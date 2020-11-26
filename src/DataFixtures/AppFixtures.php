@@ -5,7 +5,6 @@ namespace App\DataFixtures;
 use App\Entity\Task;
 use App\Entity\User;
 use DateInterval;
-use DateTime;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -28,7 +27,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $date = (new DateTimeImmutable())->sub(new DateInterval('PT60H'));
-        
+
         // 51 tasks, 25 are done
         for ($i = 1; $i <= 51; ++$i) {
             $task = new Task();

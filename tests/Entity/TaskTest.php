@@ -3,7 +3,6 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Task;
-use DateTime;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Validator\ConstraintViolation;

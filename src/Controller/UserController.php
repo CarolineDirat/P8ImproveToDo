@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\AppFormFactoryInterface;
-use App\Form\UserType;
 use App\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,9 +12,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
-{    
+{
     /**
-     * addFormFactory
+     * addFormFactory.
      *
      * @var AppFormFactoryInterface
      */
@@ -43,7 +42,7 @@ class UserController extends AbstractController
      *
      * @Route("/users/create", name="user_create")
      *
-     * @param Request                      $request
+     * @param Request $request
      *
      * @return Response
      */
@@ -55,7 +54,6 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $userService->processNewUser($form);
 
             return $this->redirectToRoute('user_list');
