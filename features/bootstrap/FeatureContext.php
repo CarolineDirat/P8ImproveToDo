@@ -1,8 +1,9 @@
 <?php
 
-use Behat\Behat\Context\Context;
+use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\MinkContext;
 use WebDriver\Exception\NoAlertOpenError;
+use Behat\Mink\Driver\Selenium2Driver;
 
 /**
  * Defines application features from the specific context.
@@ -64,9 +65,13 @@ class FeatureContext extends MinkContext
     public function iConfirmThePopup(): void
     {
         $i = 0;
-        while ($i < 2) {
+        while ($i < 5) {
             try {
-                $this->getSession()->getDriver()->getWebDriverSession()->accept_alert();
+                /**
+                 * @var Selenium2Driver $driver
+                 */
+                $driver = $this->getSession()->getDriver();
+                $driver->getWebDriverSession()->accept_alert();
 
                 break;
             } catch (NoAlertOpenError $e) {
@@ -74,5 +79,13 @@ class FeatureContext extends MinkContext
                 ++$i;
             }
         }
+    }
+
+    /**
+     * @When I fill in the following
+     */
+    public function iFillInTheFollowing(TableNode $table): void
+    {
+        $this->fillFields($table);
     }
 }
