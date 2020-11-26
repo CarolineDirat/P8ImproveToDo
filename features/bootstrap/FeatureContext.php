@@ -1,9 +1,9 @@
 <?php
 
 use Behat\Gherkin\Node\TableNode;
+use Behat\Mink\Driver\Selenium2Driver;
 use Behat\MinkExtension\Context\MinkContext;
 use WebDriver\Exception\NoAlertOpenError;
-use Behat\Mink\Driver\Selenium2Driver;
 
 /**
  * Defines application features from the specific context.

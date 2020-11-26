@@ -3,14 +3,9 @@
 namespace App\Tests\Controller;
 
 use App\DataFixtures\AppFixtures;
-use App\Entity\User;
-use App\Repository\TaskRepository;
-use App\Repository\UserRepository;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\BrowserKit\Cookie;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 /**
  * @internal
@@ -34,7 +29,7 @@ class UserControllerTest extends WebTestCase
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         $this->assertSame('Liste des utilisateurs', $crawler->filter('h1')->text());
     }
-    
+
     public function testNew(): void
     {
         $crawler = $this->client->request('GET', '/users/create');
@@ -47,11 +42,11 @@ class UserControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/users/create');
         $buttonCrawlerNode = $crawler->selectButton('Ajouter');
         $form = $buttonCrawlerNode->form([
-                'user[username]' => 'user',
-                'user[password][first]' => 'password',
-                'user[password][second]' => 'password',
-                'user[email]' => 'user@mail.com',
-                'user[role]' => 'ROLE_USER',
+            'user[username]' => 'user',
+            'user[password][first]' => 'password',
+            'user[password][second]' => 'password',
+            'user[email]' => 'user@mail.com',
+            'user[role]' => 'ROLE_USER',
         ]);
         $this->client->submit($form);
         $this->assertResponseRedirects('/users');
@@ -64,14 +59,14 @@ class UserControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/users/create');
         $buttonCrawlerNode = $crawler->selectButton('Ajouter');
 
-        $this->expectException('InvalidArgumentException');        
-        
+        $this->expectException('InvalidArgumentException');
+
         $buttonCrawlerNode->form([
-                'user[username]' => 'user',
-                'user[password][first]' => 'password',
-                'user[password][second]' => 'password',
-                'user[email]' => 'user@mail.com',
-                'user[role]' => 'admin',
+            'user[username]' => 'user',
+            'user[password][first]' => 'password',
+            'user[password][second]' => 'password',
+            'user[email]' => 'user@mail.com',
+            'user[role]' => 'admin',
         ]);
     }
 }
