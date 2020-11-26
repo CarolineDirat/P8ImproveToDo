@@ -2,8 +2,7 @@
 
 namespace App\Entity;
 
-use DateTime;
-use DateTimeInterface;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -58,16 +57,16 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="datetime")
      * 
-     * @var DateTimeInterface
+     * @var DatetimeImmutable
      */
-    private DateTimeInterface $createdAt;
+    private DateTimeImmutable $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
      * 
-     * @var DateTimeInterface
+     * @var DatetimeImmutable
      */
-    private DateTimeInterface $updatedAt;
+    private DatetimeImmutable $updatedAt;
 
     /**
      * @ORM\Column(type="array", nullable=true)
@@ -78,8 +77,8 @@ class User implements UserInterface
 
     public function __construct()
     {
-        $this->createdAt = new DateTime();
-        $this->updatedAt = new DateTime();
+        $this->createdAt = new DateTimeImmutable();
+        $this->updatedAt = new DateTimeImmutable();
     }
 
     /**
@@ -186,9 +185,9 @@ class User implements UserInterface
     /**
      * getCreatedAt
      *
-     * @return DateTimeInterface
+     * @return DateTimeImmutable
      */
-    public function getCreatedAt(): DateTimeInterface
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -196,11 +195,11 @@ class User implements UserInterface
     /**
      * setCreatedAt
      *
-     * @param DateTimeInterface $createdAt
+     * @param DateTimeImmutable $createdAt
      * 
      * @return self
      */
-    public function setCreatedAt(DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -210,9 +209,9 @@ class User implements UserInterface
     /**
      * getUpdatedAt
      *
-     * @return DateTimeInterface
+     * @return DateTimeImmutable
      */
-    public function getUpdatedAt(): DateTimeInterface
+    public function getUpdatedAt(): DateTimeImmutable
     {
         return $this->updatedAt;
     }
@@ -220,11 +219,11 @@ class User implements UserInterface
     /**
      * setUpdatedAt
      *
-     * @param DateTimeInterface  $updatedAt
+     * @param DateTimeImmutable $updatedAt
      * 
      * @return self
      */
-    public function setUpdatedAt(DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 

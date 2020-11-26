@@ -3,8 +3,7 @@
 namespace App\Tests\Entity;
 
 use App\Entity\User;
-use DateTime;
-use DateTimeInterface;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Validator\ConstraintViolation;
 
@@ -40,9 +39,9 @@ class UserTest extends WebTestCase
     public function testCreatedAt(): void
     {
         $user = new User();
-        $this->assertInstanceOf(DateTimeInterface::class, $user->getCreatedAt());
+        $this->assertInstanceOf(DateTimeImmutable::class, $user->getCreatedAt());
 
-        $createdAt = new DateTime('2020-11-03');
+        $createdAt = new DateTimeImmutable('2020-11-03');
         $user->setCreatedAt($createdAt);
         $this->assertEquals($createdAt, $user->getCreatedAt());
     }
@@ -50,9 +49,9 @@ class UserTest extends WebTestCase
     public function testUpdatedAt(): void
     {
         $user = new User();
-        $this->assertInstanceOf(DateTimeInterface::class, $user->getUpdatedAt());
+        $this->assertInstanceOf(DateTimeImmutable::class, $user->getUpdatedAt());
 
-        $updatedAt = new DateTime('2020-11-03');
+        $updatedAt = new DateTimeImmutable('2020-11-03');
         $user->setUpdatedAt($updatedAt);
         $this->assertEquals($updatedAt, $user->getUpdatedAt());
     }
