@@ -26,6 +26,7 @@ before_script:
   - curl -sS https://getcomposer.org/installer | php
   - mv composer.phar /usr/local/bin/composer
   - composer install --prefer-dist --no-ansi --no-interaction --no-progress
+  - composer require phpunit/phpunit
 
 
 stages:
