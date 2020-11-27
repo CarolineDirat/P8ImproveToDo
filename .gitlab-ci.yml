@@ -1,4 +1,4 @@
-image: php:7.3-cli
+image: php:7.4-cli
 
 variables:
   APP_DOMAIN: $APP_DOMAIN
@@ -22,9 +22,9 @@ before_script:
   - pecl install xdebug
   - docker-php-ext-enable xdebug
   - apt-get install -y libzip-dev zip
-  - apt install sqlite3 libsqlite3-dev -y 
+  - apt-get install sqlite3 libsqlite3-dev -y 
   #- apt-get install php7.3-sqlite3 libsqlite3-0 -y #libc6-udeb
-  - docker-php-ext-install pdo  pdo_sqlite zip #pdo_mysql
+  - docker-php-ext-install pdo pdo_sqlite zip #pdo_mysql
   - curl -sS https://getcomposer.org/installer | php
   - mv composer.phar /usr/local/bin/composer
   - composer install --prefer-dist --no-ansi --no-interaction --no-progress
