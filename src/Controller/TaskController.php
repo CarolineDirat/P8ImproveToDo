@@ -3,8 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Task;
-use App\Form\TaskType;
+use App\Form\AppFormFactoryInterface;
 use App\Repository\TaskRepository;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +14,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TaskController extends AbstractController
 {
+    /**
+     * addFormFactory.
+     *
+     * @var AppFormFactoryInterface
+     */
+    private AppFormFactoryInterface $appFormFactory;
+
+    public function __construct(AppFormFactoryInterface $appFormFactory)
+    {
+        $this->appFormFactory = $appFormFactory;
+    }
+
     /**
      * list all tasks.
      *
@@ -71,7 +84,7 @@ class TaskController extends AbstractController
     public function create(Request $request): Response
     {
         $task = new Task();
-        $form = $this->createForm(TaskType::class, $task);
+        $form = $this->appFormFactory->create('task', $task);
 
         $form->handleRequest($request);
 
@@ -101,11 +114,12 @@ class TaskController extends AbstractController
      */
     public function edit(Task $task, Request $request): Response
     {
-        $form = $this->createForm(TaskType::class, $task);
+        $form = $this->appFormFactory->create('task', $task);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $task->setUpdatedAt(new DateTimeImmutable());
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');

@@ -3,7 +3,7 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Task;
-use DateTime;
+use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Validator\ConstraintViolation;
 
@@ -15,8 +15,8 @@ class TaskTest extends WebTestCase
     public function testCreatedAt(): void
     {
         $task = new Task();
-        $this->assertInstanceOf(DateTime::class, $task->getCreatedAt());
-        $createdAt = new DateTime('2020-11-03');
+        $this->assertInstanceOf(DateTimeImmutable::class, $task->getCreatedAt());
+        $createdAt = new DateTimeImmutable('2020-11-03');
         $task->setCreatedAt($createdAt);
         $this->assertEquals($createdAt, $task->getCreatedAt());
     }
@@ -24,8 +24,8 @@ class TaskTest extends WebTestCase
     public function testUpdatedAt(): void
     {
         $task = new Task();
-        $this->assertInstanceOf(DateTime::class, $task->getUpdatedAt());
-        $updatedAt = new DateTime('2020-11-03');
+        $this->assertInstanceOf(DateTimeImmutable::class, $task->getUpdatedAt());
+        $updatedAt = new DateTimeImmutable('2020-11-03');
         $task->setUpdatedAt($updatedAt);
         $this->assertEquals($updatedAt, $task->getUpdatedAt());
     }

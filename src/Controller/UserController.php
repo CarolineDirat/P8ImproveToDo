@@ -3,15 +3,29 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\AppFormFactoryInterface;
+use App\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Form\FormInterface;
 
 class UserController extends AbstractController
 {
+    /**
+     * addFormFactory.
+     *
+     * @var AppFormFactoryInterface
+     */
+    private AppFormFactoryInterface $appFormFactory;
+
+    public function __construct(AppFormFactoryInterface $appFormFactory)
+    {
+        $this->appFormFactory = $appFormFactory;
+    }
+
     /**
      * list all users.
      *
@@ -29,27 +43,20 @@ class UserController extends AbstractController
      *
      * @Route("/users/create", name="user_create")
      *
-     * @param Request                      $request
-     * @param UserPasswordEncoderInterface $userPasswordEncoder
+     * @param Request $request
      *
      * @return Response
      */
-    public function create(Request $request, UserPasswordEncoderInterface $userPasswordEncoder): Response
+    public function new(Request $request, UserServiceInterface $userService): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->appFormFactory->create('user', $user);
 
+        /** @var FormInterface $form */
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $password = $userPasswordEncoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
-
-            $em->persist($user);
-            $em->flush();
-
-            $this->addFlash('success', "L'utilisateur a bien été ajouté.");
+            $userService->processNewUser($form);
 
             return $this->redirectToRoute('user_list');
         }
@@ -70,7 +77,7 @@ class UserController extends AbstractController
      */
     public function edit(User $user, Request $request, UserPasswordEncoderInterface $userPasswordEncoder): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->appFormFactory->create('user', $user);
 
         $form->handleRequest($request);
 
