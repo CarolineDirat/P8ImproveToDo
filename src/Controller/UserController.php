@@ -6,17 +6,16 @@ use App\Entity\User;
 use App\Form\AppFormFactoryInterface;
 use App\Service\UserServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Form\FormInterface;
 
 /**
- * UserController
- * 
+ * UserController.
+ *
  * @Route("/users", name="user_")
- * 
  */
 class UserController extends AbstractController
 {
@@ -58,7 +57,7 @@ class UserController extends AbstractController
         $user = new User();
         $form = $this->appFormFactory->create('user', $user);
 
-        /** @var FormInterface $form */
+        /* @var FormInterface $form */
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
