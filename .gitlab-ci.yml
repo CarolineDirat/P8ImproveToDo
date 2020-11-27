@@ -13,9 +13,9 @@ cache:
   paths:
     - vendor/
 
-#services:
-    #- name: mysql:5.7
-    #  alias: mysql
+services:
+    - name: mysql:5.7
+      alias: mysql
 
 before_script:
   - apt update -y
@@ -24,7 +24,7 @@ before_script:
   - apt-get install -y libzip-dev zip
   - apt-get install sqlite3 libsqlite3-dev -y 
   #- apt-get install php7.3-sqlite3 libsqlite3-0 -y #libc6-udeb
-  - docker-php-ext-install pdo pdo_sqlite zip #pdo_mysql
+  - docker-php-ext-install pdo pdo_sqlite pdo_mysql zip 
   - curl -sS https://getcomposer.org/installer | php
   - mv composer.phar /usr/local/bin/composer
   - composer install --prefer-dist --no-ansi --no-interaction --no-progress
@@ -41,7 +41,7 @@ phpunit-test:
     #- php bin/console doctrine:database:create --env=test
     #- php bin/console doctrine:migrations:migrate --env=test --no-interaction
     #- php bin/console doctrine:fixture:load --no-interaction --env=test
-    - php bin/phpunit --coverage-text --colors=never
+    - ./vendor/bin/simple-phpunit --coverage-text --colors=never
 
 behat-test:
   stage: test
