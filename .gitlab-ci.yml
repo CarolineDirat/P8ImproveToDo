@@ -22,8 +22,7 @@ before_script:
   - pecl install xdebug
   - docker-php-ext-enable xdebug
   - apt install -y libzip-dev zip
-  - apt install sqlite3-doc -y
-  - docker-php-ext-install pdo pdo_mysql zip
+  - docker-php-ext-install pdo pdo_mysql pdo_sqlite zip
   - curl -sS https://getcomposer.org/installer | php
   - mv composer.phar /usr/local/bin/composer
   - composer install --prefer-dist --no-ansi --no-interaction --no-progress
