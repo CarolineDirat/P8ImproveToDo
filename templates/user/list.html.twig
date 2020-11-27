@@ -2,14 +2,19 @@
 
 {% block header_img %}{% endblock %}
 
-{% block header_title %}<h1 class="my-4">Liste des utilisateurs</h1>{% endblock %}
+{% block header_title %}<h1 class="text-center">Liste des utilisateurs</h1>{% endblock %}
 
 {% block body %}
-    {% if users|length == 0 %}
-        <div class="alert alert-warning" role="alert">
-            Il n'y a pas encore d'utilisateur enregistré. <a href="{{ path('user_create') }}" class="btn btn-warning pull-right">Créer un utilisateur</a>
+    <div class="row">
+        <div class="col-12">
+            <a href="{{ path('user_create') }}" class="btn btn-primary mb-4">Créer un utilisateur</a>
+            {% if users|length == 0 %}
+                <div class="alert alert-warning my-3" role="alert">
+                    Il n'y a pas encore d'utilisateur enregistré. <a href="{{ path('user_create') }}" class="btn btn-warning pull-right">Créer un utilisateur</a>
+                </div>
+            {% else %}
         </div>
-    {% else %}
+    </div>
         <div class="row">
             <table class="table">
                 <thead>

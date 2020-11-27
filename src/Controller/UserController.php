@@ -12,6 +12,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * UserController
+ * 
+ * @Route("/users", name="user_")
+ * 
+ */
 class UserController extends AbstractController
 {
     /**
@@ -29,7 +35,7 @@ class UserController extends AbstractController
     /**
      * list all users.
      *
-     * @Route("/users", name="user_list")
+     * @Route("", name="list")
      *
      * @return Response
      */
@@ -41,7 +47,7 @@ class UserController extends AbstractController
     /**
      * create a user.
      *
-     * @Route("/users/create", name="user_create")
+     * @Route("/create", name="create")
      *
      * @param Request $request
      *
@@ -67,7 +73,7 @@ class UserController extends AbstractController
     /**
      * edit a user.
      *
-     * @Route("/users/{id}/edit", name="user_edit")
+     * @Route("/{id}/edit", name="edit")
      *
      * @param User                         $user
      * @param Request                      $request
