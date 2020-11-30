@@ -134,7 +134,7 @@ class FeatureContext extends MinkContext
         $entityManager = self::$container->get('doctrine')->getManager();
         $repository = self::$container->get('doctrine')->getRepository(User::class);
         /** @var User $user */
-        $user = $repository->findOneBy(['username' => 'user']);
+        $user = $repository->findOneBy(['username' => $username]);
         $entityManager->remove($user);
         $entityManager->flush();
     }
