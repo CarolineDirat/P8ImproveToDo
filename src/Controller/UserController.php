@@ -57,7 +57,7 @@ class UserController extends AbstractController
         $user = new User();
         $form = $this->appFormFactory->create('user', $user);
 
-        /* @var FormInterface $form */
+        /** @var FormInterface $form */
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
