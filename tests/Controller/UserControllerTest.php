@@ -3,6 +3,7 @@
 namespace App\Tests\Controller;
 
 use App\DataFixtures\AppFixtures;
+use App\Tests\LoginTrait;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -13,6 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 class UserControllerTest extends WebTestCase
 {
     use FixturesTrait;
+    use LoginTrait;
 
     private KernelBrowser $client;
 
@@ -20,6 +22,7 @@ class UserControllerTest extends WebTestCase
     {
         $this->client = static::createClient();
         $this->loadFixtures([AppFixtures::class]);
+        $this->logInAdmin();
     }
 
     public function testList(): void
@@ -30,11 +33,29 @@ class UserControllerTest extends WebTestCase
         $this->assertSame('Liste des utilisateurs', $crawler->filter('h1')->text());
     }
 
+    public function testListForbiddenToUser(): void
+    {
+        $this->client->request('GET', '/logout');
+        $this->logInUser();
+        $this->client->request('GET', '/users');
+
+        $this->assertFalse($this->client->getResponse()->isSuccessful());
+    }
+
     public function testNew(): void
     {
         $crawler = $this->client->request('GET', '/users/create');
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         $this->assertSame('Créer un utilisateur', $crawler->filter('h1')->text());
+    }
+
+    public function testNewForbiddenToUser(): void
+    {
+        $this->client->request('GET', '/logout');
+        $this->logInUser();
+        $this->client->request('GET', '/users/create');
+
+        $this->assertFalse($this->client->getResponse()->isSuccessful());
     }
 
     public function testNewUserForm(): void

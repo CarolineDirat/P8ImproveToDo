@@ -21,4 +21,6 @@ php-cs-fixer.phar
 selenium.jar
 geckodriver.exe
 
+
 /public/test-coverage/
+phpunit.xml.dist.bak

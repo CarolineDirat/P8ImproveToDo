@@ -1,5 +1,16 @@
 {% extends 'base.html.twig' %}
 
+{% block connection %}
+    <div class="row">
+        <div class="col-12 d-flex justify-content-between flex-wrap">                
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('user_list') }}" class="btn btn-secondary mt-2">Liste des utilisateurs</a>
+                <a href="{{ path('logout') }}" class="btn btn-danger mt-2">Se déconnecter</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
 {% block header_title %}<h1 class="my-4">Créer un utilisateur</h1>{% endblock %}
 {% block header_img %}{% endblock %}
 

@@ -23,31 +23,40 @@
     </head>
 
     <body>
-        <nav class="navbar navbar-light navbar-fixed-top" style="background-color: #e3f2fd;" role="navigation">
+
+        <nav class="navbar navbar-light fixed-top" style="background-color: #e3f2fd;" role="navigation">
             <div class="container">
-                <div class="navbar-header">
+                <div class="d-flex justify-content-start">
                     <a class="navbar-brand" href="{{ path('homepage') }}">To Do List app</a>
                     <img src="{{ asset('img/Logo_OpenClassrooms.png') }}" alt="OpenClassrooms" />
                 </div>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="d-flex justify-content-end">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a href="{{ path('user_list') }}" class="btn btn-primary mt-2 mr-2">Admin</a>
+                            </li>
+                        </ul>
+                    </div>
+                {% endif %}
             </div>
         </nav>
 
         <!-- Page Content -->
         <div class="container text-body">
+            {% block connection %}
             <div class="row">
-                <div class="col-md-9 col-lg-7 col-xl-6 mt-3 mb-2 d-flex justify-content-around flex-wrap">
-                    <a href="{{ path('user_create') }}" class="btn btn-primary mt-2 mr-2">Créer un utilisateur</a>
-                    <a href="{{ path('user_list') }}" class="btn btn-primary mt-2 mr-2">Liste des utilisateurs</a>
-
+                <div class="col-12 d-flex justify-content-end">                
                     {% if app.user %}
-                        <a href="{{ path('logout') }}" class="btn btn-danger mt-2">Se déconnecter</a>
+                        <a href="{{ path('logout') }}" class="btn btn-danger my-2">Se déconnecter</a>
                     {% endif %}
 
                     {% if not app.user and 'login' != app.request.attributes.get('_route') %}
-                        <a href="{{ path('login') }}" class="btn btn-success mt-2">Se connecter</a>
+                        <a href="{{ path('login') }}" class="btn btn-success my-2">Se connecter</a>
                     {% endif %}
                 </div>
             </div>
+            {% endblock %}
 
             <div class="row">
                 <div class="col-md-12">
@@ -70,11 +79,8 @@
 
             <br/>
 
-            <div class="row">
-                <div class="col-md-12">
-                    {% block body %}{% endblock %}
-                </div>
-            </div>
+            {% block body %}{% endblock %}
+
         </div>
         <!-- /.container -->
 
