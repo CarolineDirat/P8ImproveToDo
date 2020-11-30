@@ -2,6 +2,8 @@
 
 namespace App\Service;
 
+use App\Entity\User;
+use DateTimeImmutable;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -43,27 +45,72 @@ class UserService implements UserServiceInterface
      * processNewUser
      * Save a new user in database, with form data.
      *
-     * @param FormInterface<mixed> $form
+     * @param FormInterface<User> $form
      */
     public function processNewUser(FormInterface $form): void
     {
         $user = $form->getData();
-        $em = $this->managerRegistry->getManager();
-
-        $password = $this->encoder->encodePassword($user, $user->getPassword());
-        $user->setPassword($password);
-
         $role = $form->get('role')->getData();
 
+        $this->flashBag->add('error', "L'utilisateur n'a pas pu être ajouté.");
+
         if (in_array($role, self::APP_ROLES)) {
+            $em = $this->managerRegistry->getManager();
+            
             $user->setRoles([$role]);
+            $password = $this->encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
 
             $em->persist($user);
             $em->flush();
 
+            $this->flashBag->clear();
             $this->flashBag->add('success', "L'utilisateur a bien été ajouté.");
-        } else {
-            $this->flashBag->add('error', "L'utilisateur n'a pas pu être ajouté.");
+        }
+    }
+    
+    /**
+     * getRole
+     *
+     * @param  User $user
+     * 
+     * @return string
+     */
+    public function getRole(User $user): string
+    {
+        $roles = $user->getRoles();
+        $role = 'ROLE_USER';
+        if (in_array('ROLE_ADMIN', $roles, true)) {
+            $role = 'ROLE_ADMIN';
+        }
+
+        return $role;
+    }
+    
+    /**
+     * processEditUser
+     *
+     * @param FormInterface<User> $form
+     */
+    public function processEditUser(FormInterface $form): void
+    {
+        $user = $form->getData();
+        $role = $form->get('role')->getData();
+
+        $this->flashBag->add('error', "L'utilisateur n'a pas pu être modifié");
+
+        if (in_array($role, self::APP_ROLES)) {
+            $em = $this->managerRegistry->getManager();
+
+            $user->setRoles([$role]);
+            $password = $this->encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
+            $user->setUpdatedAt(new DateTimeImmutable());
+
+            $em->flush();
+
+            $this->flashBag->clear();
+            $this->flashBag->add('success', "L'utilisateur a bien été modifié");
         }
     }
 }
