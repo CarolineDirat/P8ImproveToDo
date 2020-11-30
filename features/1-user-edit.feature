@@ -1,21 +1,20 @@
-Feature: Creation of a new user
-    In order to create a new user
+Feature: Edit a user
+    In order to edit a user
     As an admin user
-    I fill in the creation form and validate it
+    I fill in the edition form and validate it
 
     Background:
         Given I am authenticated user as "admin" with "password"
     
-    Scenario: I create a user with good data
-        Given I am on "/users/create"
+    Scenario: I edit a user with good data
+        Given I am on "/users/2/edit"
         When I fill in the following
-                | user[username]         | user3             |
+                | user[username]         | user             |
                 | user[password][first]  | password         |
                 | user[password][second] | password         |
-                | user[email]            | user3@email.com   |
+                | user[email]            | user@email.com   |
                 | user[role]             | ROLE_ADMIN       |
-        And I press "Ajouter"
+        And I press "Modifier"
         And I follow redirect
         Then I see the alert message ".alert.alert-success"
         And I see the page with the title "Liste des utilisateurs"
-        And Delete user "user3"
