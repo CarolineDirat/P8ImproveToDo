@@ -36,7 +36,7 @@ phpunit-test:
   script:
     - php -d memory_limit=-1
     - php bin/console cache:clear --env=test
-    - ./vendor/bin/simple-phpunit --coverage-text --colors=never
+    - php bin/phpunit --coverage-text --colors=never
 
 behat-test:
   stage: test
