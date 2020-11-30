@@ -56,7 +56,7 @@ class UserService implements UserServiceInterface
 
         if (in_array($role, self::APP_ROLES)) {
             $em = $this->managerRegistry->getManager();
-            
+
             $user->setRoles([$role]);
             $password = $this->encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
@@ -68,12 +68,12 @@ class UserService implements UserServiceInterface
             $this->flashBag->add('success', "L'utilisateur a bien été ajouté.");
         }
     }
-    
+
     /**
-     * getRole
+     * getRole.
      *
-     * @param  User $user
-     * 
+     * @param User $user
+     *
      * @return string
      */
     public function getRole(User $user): string
@@ -86,9 +86,9 @@ class UserService implements UserServiceInterface
 
         return $role;
     }
-    
+
     /**
-     * processEditUser
+     * processEditUser.
      *
      * @param FormInterface<User> $form
      */

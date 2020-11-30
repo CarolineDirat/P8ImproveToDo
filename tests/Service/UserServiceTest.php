@@ -8,18 +8,20 @@ use App\Repository\UserRepository;
 use App\Service\UserService;
 use Doctrine\Persistence\ManagerRegistry;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
-use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * @internal
+ */
 class UserServiceTest extends WebTestCase
 {
     use FixturesTrait;
-    
+
     /**
-     * testGetRole
-     * 
+     * testGetRole.
+     *
      * @dataProvider provideUser
      */
     public function testGetRole(string $role, string $username): void
@@ -47,14 +49,13 @@ class UserServiceTest extends WebTestCase
             ->getMock()
         ;
         $userService = new UserService($managerRegistry, $encoder, $flashBag); /** @phpstan-ignore-line */
-        
         $roleUser = $userService->getRole($user);
 
-        $this->assertEquals($role,  $roleUser);
+        $this->assertEquals($role, $roleUser);
     }
-    
+
     /**
-     * provideUser
+     * provideUser.
      *
      * @return array<array<string>>
      */
@@ -64,6 +65,5 @@ class UserServiceTest extends WebTestCase
             ['ROLE_USER', 'user1'],
             ['ROLE_ADMIN', 'admin'],
         ];
-        
     }
 }

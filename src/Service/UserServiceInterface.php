@@ -16,7 +16,7 @@ interface UserServiceInterface
     public function processNewUser(FormInterface $form): void;
 
     /**
-     * processEditUser
+     * processEditUser.
      *
      * @param FormInterface<User> $form
      */
@@ -24,10 +24,10 @@ interface UserServiceInterface
 
     /**
      * getRole
-     * Gets user role ('ROLE_ADMIN' or 'ROLE_USER')
+     * Gets user role ('ROLE_ADMIN' or 'ROLE_USER').
      *
-     * @param  User $user
-     * 
+     * @param User $user
+     *
      * @return string
      */
     public function getRole(User $user): string;
