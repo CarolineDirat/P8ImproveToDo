@@ -50,6 +50,13 @@ class AppFixtures extends Fixture
         $user->setEmail('user1@email.com');
         $manager->persist($user);
 
+        // User with only ROLE_USER
+        $user = new User();
+        $user->setUsername('user2');
+        $user->setPassword($this->encoder->encodePassword($user, 'password'));
+        $user->setEmail('user2@email.com');
+        $manager->persist($user);
+
         // User with ROLE_ADMIN
         $user = new User();
         $user->setUsername('admin');

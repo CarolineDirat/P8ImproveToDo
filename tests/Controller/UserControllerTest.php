@@ -90,4 +90,37 @@ class UserControllerTest extends WebTestCase
             'user[role]' => 'admin',
         ]);
     }
+
+    public function testEdit(): void
+    {
+        $crawler = $this->client->request('GET', '/users/1/edit');
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
+        $this->assertSame('Modifier user1', $crawler->filter('h1')->text());
+    }
+
+    public function testEditForbiddenToUser(): void
+    {
+        $this->client->request('GET', '/logout');
+        $this->logInUser();
+        $this->client->request('GET', '/users/1/edit');
+
+        $this->assertFalse($this->client->getResponse()->isSuccessful());
+    }
+
+    public function testEditUserForm(): void
+    {
+        $crawler = $this->client->request('GET', '/users/1/edit');
+        $buttonCrawlerNode = $crawler->selectButton('Modifier');
+        $form = $buttonCrawlerNode->form([
+            'user[username]' => 'user',
+            'user[password][first]' => 'password',
+            'user[password][second]' => 'password',
+            'user[email]' => 'user@mail.com',
+            'user[role]' => 'ROLE_USER',
+        ]);
+        $this->client->submit($form);
+        $this->assertResponseRedirects('/users');
+        $this->client->followRedirect();
+        $this->assertSelectorExists('.alert.alert-success');
+    }
 }

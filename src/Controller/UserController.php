@@ -10,7 +10,6 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * UserController.
@@ -74,29 +73,33 @@ class UserController extends AbstractController
      *
      * @Route("/{id}/edit", name="edit")
      *
-     * @param User                         $user
-     * @param Request                      $request
-     * @param UserPasswordEncoderInterface $userPasswordEncoder
+     * @param User                 $user
+     * @param Request              $request
+     * @param UserServiceInterface $userService
      *
      * @return Response
      */
-    public function edit(User $user, Request $request, UserPasswordEncoderInterface $userPasswordEncoder): Response
+    public function edit(User $user, Request $request, UserServiceInterface $userService): Response
     {
         $form = $this->appFormFactory->create('user', $user);
+        $role = $userService->getRole($user);
 
+        /** @var FormInterface $form */
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $userPasswordEncoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
-
-            $this->getDoctrine()->getManager()->flush();
-
-            $this->addFlash('success', "L'utilisateur a bien été modifié");
+            $userService->processEditUser($form);
 
             return $this->redirectToRoute('user_list');
         }
 
-        return $this->render('user/edit.html.twig', ['form' => $form->createView(), 'user' => $user]);
+        return $this->render(
+            'user/edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'user' => $user,
+                'role' => $role,
+            ]
+        );
     }
 }

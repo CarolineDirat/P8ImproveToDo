@@ -2,8 +2,10 @@
 
 namespace App\Tests\Entity;
 
+use App\DataFixtures\AppFixtures;
 use App\Entity\User;
 use DateTimeImmutable;
+use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Validator\ConstraintViolation;
@@ -13,6 +15,8 @@ use Symfony\Component\Validator\ConstraintViolation;
  */
 class UserTest extends WebTestCase
 {
+    use FixturesTrait;
+
     public function testUsername(): void
     {
         $user = new User();
@@ -110,6 +114,13 @@ class UserTest extends WebTestCase
         $this->assertHasErrors($this->getValidUser()->setUsername('Jo'), 1);
     }
 
+    public function testInvalidUniqueUsername(): void
+    {
+        self::bootKernel();
+        $this->loadFixtures([AppFixtures::class]);
+        $this->assertHasErrors($this->getValidUser()->setUsername('user1'), 1);
+    }
+
     public function testInvalidBlankPassword(): void
     {
         $this->assertHasErrors($this->getValidUser()->setPassword(''), 2);
@@ -128,5 +139,12 @@ class UserTest extends WebTestCase
     public function testInvalidEmail(): void
     {
         $this->assertHasErrors($this->getValidUser()->setEmail('email'), 1);
+    }
+
+    public function testInvalidUniqueEmail(): void
+    {
+        self::bootKernel();
+        $this->loadFixtures([AppFixtures::class]);
+        $this->assertHasErrors($this->getValidUser()->setEmail('user1@email.com'), 1);
     }
 }
