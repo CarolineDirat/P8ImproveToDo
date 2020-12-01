@@ -35,7 +35,7 @@ class PagesTest extends WebTestCase
         $this->client->followRedirects();
         $this->client->request('GET', $url);
 
-        $this->assertTrue($this->client->getResponse()->isSuccessful());
+        $this->assertResponseIsSuccessful();
     }
 
     /**
@@ -48,7 +48,7 @@ class PagesTest extends WebTestCase
         $this->client->request('GET', $url);
 
         if ('/login' === $url) {
-            $this->assertTrue($this->client->getResponse()->isSuccessful());
+            $this->assertResponseIsSuccessful();
         }
         if ('/login' !== $url) {
             $this->assertFalse($this->client->getResponse()->isSuccessful());

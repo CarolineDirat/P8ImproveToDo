@@ -3,6 +3,7 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Task;
+use App\Entity\User;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Validator\ConstraintViolation;
@@ -18,6 +19,7 @@ class TaskTest extends WebTestCase
         $this->assertInstanceOf(DateTimeImmutable::class, $task->getCreatedAt());
         $createdAt = new DateTimeImmutable('2020-11-03');
         $task->setCreatedAt($createdAt);
+
         $this->assertEquals($createdAt, $task->getCreatedAt());
     }
 
@@ -27,6 +29,7 @@ class TaskTest extends WebTestCase
         $this->assertInstanceOf(DateTimeImmutable::class, $task->getUpdatedAt());
         $updatedAt = new DateTimeImmutable('2020-11-03');
         $task->setUpdatedAt($updatedAt);
+
         $this->assertEquals($updatedAt, $task->getUpdatedAt());
     }
 
@@ -35,6 +38,7 @@ class TaskTest extends WebTestCase
         $task = new Task();
         $title = 'Titre de la tâche';
         $task->setTitle($title);
+
         $this->assertEquals($title, $task->getTitle());
     }
 
@@ -43,7 +47,17 @@ class TaskTest extends WebTestCase
         $task = new Task();
         $content = 'Texte du contenu de la tâche';
         $task->setContent($content);
+
         $this->assertEquals($content, $task->getContent());
+    }
+
+    public function testUser(): void
+    {
+        $task = new Task();
+        $user = new User();
+        $task->setUser($user);
+
+        $this->assertEquals($user, $task->getUser());
     }
 
     public function testIsDone(): void
@@ -51,6 +65,7 @@ class TaskTest extends WebTestCase
         $task = new Task();
         $this->assertEquals(false, $task->isDone());
         $task->toggle(true);
+
         $this->assertEquals(true, $task->isDone());
     }
 
@@ -71,6 +86,7 @@ class TaskTest extends WebTestCase
         foreach ($errors as $error) {
             $messages[] = $error->getPropertyPath().' => '.$error->getMessage();
         }
+
         $this->assertCount($number, $errors, implode(', ', $messages));
     }
 
