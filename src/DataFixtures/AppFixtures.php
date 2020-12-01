@@ -74,7 +74,7 @@ class AppFixtures extends Fixture
             if (20 < $i && $i <= 30) {
                 $task->setUser($admin);
             }
-            if (40 < $i && $i <= 50) {
+            if (40 < $i) {
                 $task->setUser($user2);
             }
             $manager->persist($task);
