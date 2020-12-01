@@ -7,6 +7,6 @@ ToDoList
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/ae0cd12410f34ebcb7b62e502eb615ef)](https://www.codacy.com/gh/CarolineDirat/P8ImproveToDo/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CarolineDirat/P8ImproveToDo&amp;utm_campaign=Badge_Grade)
 
-Base du projet #8 : Améliorez un projet existant
+Projet #8 : Améliorez un projet existant
+Formation de "Développeu.r.se d'application PHP/Symfony" chez OpenClassrooms
 
-https://openclassrooms.com/projects/ameliorer-un-projet-existant-1
