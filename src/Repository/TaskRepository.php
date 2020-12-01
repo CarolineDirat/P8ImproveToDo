@@ -24,11 +24,13 @@ class TaskRepository extends ServiceEntityRepository
     {
         return $this
             ->createQueryBuilder('t')
+            ->addSelect('user')
+            ->leftJoin('t.user', 'user')
             ->where('t.isDone = :isDone')
             ->setParameter('isDone', $isDone)
             ->orderBy('t.updatedAt', 'DESC')
             ->getQuery()
-            ->getArrayResult()
+            ->getResult()
         ;
     }
 }

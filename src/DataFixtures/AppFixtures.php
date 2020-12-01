@@ -26,9 +26,37 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $date = (new DateTimeImmutable())->sub(new DateInterval('PT60H'));
+        // One User with only ROLE_USER
+        $user1 = new User();
+        $user1->setUsername('user1');
+        $user1->setPassword($this->encoder->encodePassword($user1, 'password'));
+        $user1->setEmail('user1@email.com');
+        $manager->persist($user1);
+
+        // One User with only ROLE_USER
+        $user2 = new User();
+        $user2->setUsername('user2');
+        $user2->setPassword($this->encoder->encodePassword($user2, 'password'));
+        $user2->setEmail('user2@email.com');
+        $manager->persist($user2);
+
+        // User with ROLE_ADMIN
+        $admin = new User();
+        $admin->setUsername('admin');
+        $admin->setPassword($this->encoder->encodePassword($admin, 'password'));
+        $admin->setEmail('admin@email.com');
+        $admin->setRoles(['ROLE_ADMIN']);
+        $manager->persist($admin);
+
+        // Anonymous user with only ROLE_USER
+        $anonymous = new User();
+        $anonymous->setUsername('Anonymous');
+        $anonymous->setPassword($this->encoder->encodePassword($anonymous, 'password'));
+        $anonymous->setEmail('anonymous@email.com');
+        $manager->persist($anonymous);
 
         // 51 tasks, 25 are done
+        $date = (new DateTimeImmutable())->sub(new DateInterval('PT60H'));
         for ($i = 1; $i <= 51; ++$i) {
             $task = new Task();
             $task->setTitle('Tâche n°'.$i);
@@ -40,30 +68,17 @@ class AppFixtures extends Fixture
             if (0 === $i % 2) {
                 $task->toggle(true);
             }
+            if (10 < $i && $i <= 20) {
+                $task->setUser($user1);
+            }
+            if (20 < $i && $i <= 30) {
+                $task->setUser($admin);
+            }
+            if (40 < $i) {
+                $task->setUser($user2);
+            }
             $manager->persist($task);
         }
-
-        // User with only ROLE_USER
-        $user = new User();
-        $user->setUsername('user1');
-        $user->setPassword($this->encoder->encodePassword($user, 'password'));
-        $user->setEmail('user1@email.com');
-        $manager->persist($user);
-
-        // User with only ROLE_USER
-        $user = new User();
-        $user->setUsername('user2');
-        $user->setPassword($this->encoder->encodePassword($user, 'password'));
-        $user->setEmail('user2@email.com');
-        $manager->persist($user);
-
-        // User with ROLE_ADMIN
-        $user = new User();
-        $user->setUsername('admin');
-        $user->setPassword($this->encoder->encodePassword($user, 'password'));
-        $user->setEmail('admin@email.com');
-        $user->setRoles(['ROLE_ADMIN']);
-        $manager->persist($user);
 
         $manager->flush();
     }

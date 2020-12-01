@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -76,10 +78,20 @@ class User implements UserInterface
      */
     private array $roles = [];
 
+    /**
+     * Bidirectional - One to Many.
+     *
+     * @ORM\OneToMany(targetEntity=Task::class, mappedBy="user", cascade={"persist"})
+     *
+     * @var Collection<int, Task>>
+     */
+    private Collection $tasks;
+
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
+        $this->tasks = new ArrayCollection();
     }
 
     /**
@@ -255,6 +267,52 @@ class User implements UserInterface
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * getTasks.
+     *
+     * @return Collection<int, Task>|Task[]
+     */
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+
+    /**
+     * addTask.
+     *
+     * @param Task $task
+     *
+     * @return self
+     */
+    public function addTask(Task $task): self
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks[] = $task;
+            $task->setUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * removeTask.
+     *
+     * @param Task $task
+     *
+     * @return self
+     */
+    public function removeTask(Task $task): self
+    {
+        if ($this->tasks->removeElement($task)) {
+            // set the owning side to null (unless already changed)
+            if ($task->getUser() === $this) {
+                $task->setUser(null);
+            }
+        }
 
         return $this;
     }

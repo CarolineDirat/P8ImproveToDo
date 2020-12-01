@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table
+ * @ORM\EntityListeners({"App\EventListener\TaskUserListener"})
  */
 class Task
 {
@@ -16,35 +17,56 @@ class Task
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @var int
      */
     private int $id;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     *
+     * @var DateTimeImmutable
      */
     private DateTimeImmutable $createdAt;
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     *
+     * @var DateTimeImmutable
      */
     private DateTimeImmutable $updatedAt;
 
     /**
      * @ORM\Column(type="string", unique=true)
      * @Assert\NotBlank(message="Vous devez saisir un titre.")
+     *
+     * @var string
      */
     private string $title;
 
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="Vous devez saisir du contenu.")
+     *
+     * @var string
      */
     private string $content;
 
     /**
      * @ORM\Column(type="boolean")
+     *
+     * @var bool
      */
     private bool $isDone;
+
+    /**
+     * Bidirectional - Many to One.
+     *
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tasks", cascade={"persist"})
+     *
+     * @var null|User
+     */
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -179,6 +201,30 @@ class Task
     public function toggle(bool $flag): self
     {
         $this->isDone = $flag;
+
+        return $this;
+    }
+
+    /**
+     * getUser.
+     *
+     * @return null|User
+     */
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    /**
+     * setUser.
+     *
+     * @param null|User $user
+     *
+     * @return self
+     */
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

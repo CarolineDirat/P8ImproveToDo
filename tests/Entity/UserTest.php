@@ -3,6 +3,7 @@
 namespace App\Tests\Entity;
 
 use App\DataFixtures\AppFixtures;
+use App\Entity\Task;
 use App\Entity\User;
 use DateTimeImmutable;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
@@ -76,6 +77,28 @@ class UserTest extends WebTestCase
         $this->assertTrue(in_array('ROLE_USER', $user->getRoles()));
         $this->assertTrue(in_array('ROLE_APP', $user->getRoles()));
         $this->assertEquals(['ROLE_APP', 'ROLE_USER'], $user->getRoles());
+    }
+
+    public function testAddTask(): void
+    {
+        $user = new User();
+        $task = new Task();
+        $user->addTask($task);
+
+        $this->assertContains($task, $user->getTasks(), 'Echec de User::testAddTask()');
+    }
+
+    public function testRemoveTask(): void
+    {
+        $user = new User();
+        $task1 = new Task();
+        $task2 = new Task();
+        $user->addTask($task1);
+        $user->addTask($task2);
+        $this->assertContains($task2, $user->getTasks());
+
+        $user->removeTask($task2);
+        $this->assertNotContains($task2, $user->getTasks(), 'Echec de User::removeTask()');
     }
 
     public function getValidUser(): User

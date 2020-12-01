@@ -38,6 +38,7 @@
                         </h4>
                     </div>
                     <p>{{ task.content }}</p>
+                    <p class="text-primary">{{ task.user.username }}</p>
                     <p class="font-italic text-secondary d-flex justify-content-end"><small>{{ task.updatedAt|date('d/m/Y h:i') }}</small></p>
                     <div class="d-flex justify-content-around flex-wrap row">
                         <a type="button" href="{{ path('task_toggle_ajax', {'id': task.id }) }}" 
