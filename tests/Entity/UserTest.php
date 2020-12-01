@@ -99,7 +99,6 @@ class UserTest extends WebTestCase
 
         $user->removeTask($task2);
         $this->assertNotContains($task2, $user->getTasks(), 'Echec de User::removeTask()');
-
     }
 
     public function getValidUser(): User

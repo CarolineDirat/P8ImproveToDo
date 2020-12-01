@@ -79,10 +79,10 @@ class User implements UserInterface
     private array $roles = [];
 
     /**
-     * Bidirectional - One to Many
-     * 
+     * Bidirectional - One to Many.
+     *
      * @ORM\OneToMany(targetEntity=Task::class, mappedBy="user", cascade={"persist"})
-     * 
+     *
      * @var Collection<int, Task>>
      */
     private Collection $tasks;
@@ -272,20 +272,20 @@ class User implements UserInterface
     }
 
     /**
-     * getTasks
-     * 
+     * getTasks.
+     *
      * @return Collection<int, Task>|Task[]
      */
     public function getTasks(): Collection
     {
         return $this->tasks;
     }
-    
+
     /**
-     * addTask
+     * addTask.
      *
-     * @param  Task $task
-     * 
+     * @param Task $task
+     *
      * @return self
      */
     public function addTask(Task $task): self
@@ -297,12 +297,12 @@ class User implements UserInterface
 
         return $this;
     }
-    
+
     /**
-     * removeTask
+     * removeTask.
      *
-     * @param  Task $task
-     * 
+     * @param Task $task
+     *
      * @return self
      */
     public function removeTask(Task $task): self

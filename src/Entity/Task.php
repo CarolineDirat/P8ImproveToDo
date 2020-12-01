@@ -17,21 +17,21 @@ class Task
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * 
-     * @var int 
+     *
+     * @var int
      */
     private int $id;
 
     /**
      * @ORM\Column(type="datetime_immutable")
-     * 
+     *
      * @var DateTimeImmutable
      */
     private DateTimeImmutable $createdAt;
 
     /**
      * @ORM\Column(type="datetime_immutable")
-     * 
+     *
      * @var DateTimeImmutable
      */
     private DateTimeImmutable $updatedAt;
@@ -39,7 +39,7 @@ class Task
     /**
      * @ORM\Column(type="string", unique=true)
      * @Assert\NotBlank(message="Vous devez saisir un titre.")
-     * 
+     *
      * @var string
      */
     private string $title;
@@ -47,24 +47,24 @@ class Task
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="Vous devez saisir du contenu.")
-     * 
+     *
      * @var string
      */
     private string $content;
 
     /**
      * @ORM\Column(type="boolean")
-     * 
+     *
      * @var bool
      */
     private bool $isDone;
 
     /**
-     * Bidirectional - Many to One
-     * 
+     * Bidirectional - Many to One.
+     *
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tasks", cascade={"persist"})
-     * 
-     * @var User|null
+     *
+     * @var null|User
      */
     private ?User $user = null;
 
@@ -204,22 +204,22 @@ class Task
 
         return $this;
     }
-    
+
     /**
-     * getUser
+     * getUser.
      *
-     * @return User|null
+     * @return null|User
      */
     public function getUser(): ?User
     {
         return $this->user;
     }
-    
+
     /**
-     * setUser
+     * setUser.
      *
-     * @param User|null $user
-     * 
+     * @param null|User $user
+     *
      * @return self
      */
     public function setUser(?User $user): self
