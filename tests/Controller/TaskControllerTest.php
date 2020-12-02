@@ -3,6 +3,7 @@
 namespace App\Tests\Controller;
 
 use App\DataFixtures\AppFixtures;
+use App\Entity\Task;
 use App\Repository\TaskRepository;
 use App\Tests\LoginTrait;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
@@ -116,8 +117,41 @@ class TaskControllerTest extends WebTestCase
         $this->assertSelectorNotExists('a[href="'.$uri.'"]');
 
         // checks the task's state has been changed
+        /** @var Task $task */
         $task = self::$container->get(TaskRepository::class)->find($id);
         $this->assertEquals($isDone, $task->isDone());
+    }
+
+    /**
+     * @dataProvider provideAjax
+     */
+    public function testToggleStateAjaxForbidden(string $list, string $uri, int $id, bool $isDone): void
+    {
+        $this->client->request('GET', '/tasks/filter'.$list);
+
+        // checks the task with $id is in the page
+        $this->assertSelectorExists('div[id="tasks-list-'.$id.'"]');
+
+        // prepares the content of AJAX request with wrong token
+        $content = self::$container
+            ->get('serializer')
+            ->serialize(
+                ['_token' => 'xxxxx'],
+                'json'
+            )
+        ;
+
+        // send the AJAX Request to TaskController::toggleStateAjax()
+        $this->client->xmlHttpRequest('POST', $uri, [], [], [], $content);
+
+        // checks the task's state hasn't been changed
+        /** @var Task $task */
+        $task = self::$container->get(TaskRepository::class)->find($id);
+        $this->assertEquals(!$isDone, $task->isDone());
+
+        // checks the task has disappeared from the page
+        $this->client->request('GET', '/tasks/filter'.$list);
+        $this->assertSelectorExists('div[id="tasks-list-'.$id.'"]');
     }
 
     /**
@@ -128,8 +162,8 @@ class TaskControllerTest extends WebTestCase
     public function provideAjax(): array
     {
         return [
-            ['/true', '/tasks/2/toggle-ajax', 2, false],
-            ['/false', '/tasks/1/toggle-ajax', 1, true],
+            ['/true', '/tasks/50/toggle-ajax', 50, false],
+            ['/false', '/tasks/51/toggle-ajax', 51, true],
         ];
     }
 
@@ -147,6 +181,27 @@ class TaskControllerTest extends WebTestCase
         $form = $buttonCrawlerNode->form([
             'task[title]' => 'Titre de la tâche',
             'task[content]' => 'Contenu de la tâche',
+        ]);
+        $this->client->submit($form);
+        $this->assertResponseRedirects('/tasks');
+        $this->client->followRedirect();
+        $this->assertSelectorExists('.alert.alert-success');
+    }
+
+    public function testEdit(): void
+    {
+        $crawler = $this->client->request('GET', '/tasks/22/edit');
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
+        $this->assertSame('Modifier la tâche "Tâche n°22"', $crawler->filter('h1')->text());
+    }
+
+    public function testEditTaskForm(): void
+    {
+        $crawler = $this->client->request('GET', '/tasks/22/edit');
+        $buttonCrawlerNode = $crawler->selectButton('Modifier');
+        $form = $buttonCrawlerNode->form([
+            'task[title]' => 'Titre modifié de la tâche',
+            'task[content]' => 'Contenu modifié de la tâche',
         ]);
         $this->client->submit($form);
         $this->assertResponseRedirects('/tasks');
