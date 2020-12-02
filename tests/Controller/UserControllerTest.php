@@ -42,14 +42,14 @@ class UserControllerTest extends WebTestCase
         $this->assertFalse($this->client->getResponse()->isSuccessful());
     }
 
-    public function testNew(): void
+    public function testCreate(): void
     {
         $crawler = $this->client->request('GET', '/users/create');
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         $this->assertSame('Créer un utilisateur', $crawler->filter('h1')->text());
     }
 
-    public function testNewForbiddenToUser(): void
+    public function testCreateForbiddenToUser(): void
     {
         $this->client->request('GET', '/logout');
         $this->logInUser();
@@ -58,7 +58,7 @@ class UserControllerTest extends WebTestCase
         $this->assertFalse($this->client->getResponse()->isSuccessful());
     }
 
-    public function testNewUserForm(): void
+    public function testCreateUserForm(): void
     {
         $crawler = $this->client->request('GET', '/users/create');
         $buttonCrawlerNode = $crawler->selectButton('Ajouter');
@@ -75,7 +75,7 @@ class UserControllerTest extends WebTestCase
         $this->assertSelectorExists('.alert.alert-success');
     }
 
-    public function testNewUserWithBadRole(): void
+    public function testCreateUserWithBadRole(): void
     {
         $crawler = $this->client->request('GET', '/users/create');
         $buttonCrawlerNode = $crawler->selectButton('Ajouter');

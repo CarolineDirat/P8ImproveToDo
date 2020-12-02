@@ -51,7 +51,7 @@ class UserController extends AbstractController
      *
      * @return Response
      */
-    public function new(Request $request, UserServiceInterface $userService): Response
+    public function create(Request $request, UserServiceInterface $userService): Response
     {
         $user = new User();
         $form = $this->appFormFactory->create('user', $user);
