@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Task;
 use App\Entity\User;
+use DateTimeImmutable;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
@@ -44,5 +45,18 @@ class TaskService implements TaskServiceInterface
         $em->flush();
 
         $this->flashBag->add('success', 'La tâche "'.$task->getTitle().'" a bien été ajoutée.');
+    }
+
+    /**
+     * processEditTask.
+     *
+     * @param Task $task
+     */
+    public function processEditTask(Task $task): void
+    {
+        $task->setUpdatedAt(new DateTimeImmutable());
+        $this->managerRegistry->getManager()->flush();
+
+        $this->flashBag->add('success', 'La tâche "'.$task->getTitle().'" a bien été modifiée.');
     }
 }

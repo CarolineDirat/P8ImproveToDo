@@ -7,7 +7,6 @@ use App\Entity\User;
 use App\Form\AppFormFactoryInterface;
 use App\Repository\TaskRepository;
 use App\Service\TaskServiceInterface;
-use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -106,22 +105,23 @@ class TaskController extends AbstractController
      *
      * @Route("/tasks/{id}/edit", name="task_edit")
      *
-     * @param Task    $task
-     * @param Request $request
+     * @param Task                 $task
+     * @param Request              $request
+     * @param TaskServiceInterface $taskService
      *
      * @return Response
      */
-    public function edit(Task $task, Request $request): Response
-    {
+    public function edit(
+        Task $task,
+        Request $request,
+        TaskServiceInterface $taskService
+    ): Response {
         $form = $this->appFormFactory->create('task', $task);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $task->setUpdatedAt(new DateTimeImmutable());
-            $this->getDoctrine()->getManager()->flush();
-
-            $this->addFlash('success', 'La tâche a bien été modifiée.');
+            $taskService->processEditTask($task);
 
             return $this->redirectToRoute('task_list_all');
         }
