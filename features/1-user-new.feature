@@ -9,10 +9,10 @@ Feature: Creation of a new user
     Scenario: I create a user with good data
         Given I am on "/users/create"
         When I fill in the following
-                | user[username]         | user3             |
+                | user[username]         | user3            |
                 | user[password][first]  | password         |
                 | user[password][second] | password         |
-                | user[email]            | user3@email.com   |
+                | user[email]            | user3@email.com  |
                 | user[role]             | ROLE_ADMIN       |
         And I press "Ajouter"
         And I follow redirect
