@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Task;
+use App\Entity\User;
 use App\Form\AppFormFactoryInterface;
 use App\Repository\TaskRepository;
 use App\Service\TaskServiceInterface;
@@ -90,7 +91,9 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $taskService->processNewTask($task, $this->getUser());
+            /** @var User $user */
+            $user = $this->getUser();
+            $taskService->processNewTask($task, $user);
 
             return $this->redirectToRoute('task_list_all');
         }
