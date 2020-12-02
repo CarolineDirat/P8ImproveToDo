@@ -4,12 +4,15 @@ namespace App\Entity;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
  * @ORM\Table
  * @ORM\EntityListeners({"App\EventListener\TaskUserListener"})
+ *
+ * @UniqueEntity("title", message="Le nom de tâche <{{ value }}> est déjà utilisé.")
  */
 class Task
 {
@@ -38,7 +41,9 @@ class Task
 
     /**
      * @ORM\Column(type="string", unique=true)
+     *
      * @Assert\NotBlank(message="Vous devez saisir un titre.")
+     * @Assert\Length(max=40, maxMessage="Le titre de la tâche ne peut pas contenir plus de {{ limit }} caractères.")
      *
      * @var string
      */
@@ -46,6 +51,7 @@ class Task
 
     /**
      * @ORM\Column(type="text")
+     *
      * @Assert\NotBlank(message="Vous devez saisir du contenu.")
      *
      * @var string

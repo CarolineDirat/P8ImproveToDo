@@ -15,7 +15,7 @@ class TaskService implements TaskServiceInterface
      * @var ManagerRegistry
      */
     private ManagerRegistry $managerRegistry;
-    
+
     /**
      * session.
      *
