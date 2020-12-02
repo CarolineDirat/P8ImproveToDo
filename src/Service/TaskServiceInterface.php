@@ -14,4 +14,11 @@ interface TaskServiceInterface
      * @param User $user
      */
     public function processNewTask(Task $task, User $user): void;
+
+    /**
+     * processEditTask.
+     *
+     * @param Task $task
+     */
+    public function processEditTask(Task $task): void;
 }
