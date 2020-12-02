@@ -31,7 +31,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=25, unique=true)
      *
      * @Assert\NotBlank(message="Vous devez saisir un nom d'utilisateur.")
-     * @Assert\Length(min=3, minMessage="Votre nom d'utilisateur doit contenir au moins {{ limit }} caractères")
+     * @Assert\Length(min=3, minMessage="Votre nom d'utilisateur doit contenir au moins {{ limit }} caractères.")
      *
      * @var string
      */
@@ -41,7 +41,7 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      *
      * @Assert\NotBlank(message="Vous devez saisir un mot de passe.")
-     * @Assert\Length(min=8, minMessage="Votre mot de passe doit contenir au moins {{ limit }} caractères")
+     * @Assert\Length(min=8, minMessage="Votre mot de passe doit contenir au moins {{ limit }} caractères.")
      *
      * @var string
      */

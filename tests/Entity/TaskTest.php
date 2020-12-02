@@ -2,9 +2,11 @@
 
 namespace App\Tests\Entity;
 
+use App\DataFixtures\AppFixtures;
 use App\Entity\Task;
 use App\Entity\User;
 use DateTimeImmutable;
+use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Validator\ConstraintViolation;
 
@@ -13,6 +15,8 @@ use Symfony\Component\Validator\ConstraintViolation;
  */
 class TaskTest extends WebTestCase
 {
+    use FixturesTrait;
+
     public function testCreatedAt(): void
     {
         $task = new Task();
@@ -82,7 +86,7 @@ class TaskTest extends WebTestCase
         self::bootKernel();
         $errors = self::$container->get('validator')->validate($task);
         $messages = [];
-        /*@var ConstraintViolation $error */
+        /** @var ConstraintViolation $error */
         foreach ($errors as $error) {
             $messages[] = $error->getPropertyPath().' => '.$error->getMessage();
         }
@@ -98,6 +102,21 @@ class TaskTest extends WebTestCase
     public function testInvalidBlankTitleTask(): void
     {
         $this->assertHasErrors($this->getValidTask()->setTitle(''), 1);
+    }
+
+    public function testInvalidLengthTitleTask(): void
+    {
+        $this->assertHasErrors(
+            $this->getValidTask()->setTitle('Titre de la tâche de plus de 40 caractères.'),
+            1
+        );
+    }
+
+    public function testInvalidUniqueTitleTask(): void
+    {
+        self::bootKernel();
+        $this->loadFixtures([AppFixtures::class]);
+        $this->assertHasErrors($this->getValidTask()->setTitle('Tâche n°1'), 1);
     }
 
     public function testInvalidBlankContentTask(): void

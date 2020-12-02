@@ -132,4 +132,25 @@ class TaskControllerTest extends WebTestCase
             ['/false', '/tasks/1/toggle-ajax', 1, true],
         ];
     }
+
+    public function testCreate(): void
+    {
+        $crawler = $this->client->request('GET', '/tasks/create');
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
+        $this->assertSame('Créer une tâche', $crawler->filter('h1')->text());
+    }
+
+    public function testCreateTaskForm(): void
+    {
+        $crawler = $this->client->request('GET', '/tasks/create');
+        $buttonCrawlerNode = $crawler->selectButton('Ajouter');
+        $form = $buttonCrawlerNode->form([
+            'task[title]' => 'Titre de la tâche',
+            'task[content]' => 'Contenu de la tâche',
+        ]);
+        $this->client->submit($form);
+        $this->assertResponseRedirects('/tasks');
+        $this->client->followRedirect();
+        $this->assertSelectorExists('.alert.alert-success');
+    }
 }
