@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Task;
 use App\Form\AppFormFactoryInterface;
 use App\Repository\TaskRepository;
+use App\Service\TaskServiceInterface;
 use DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -81,7 +82,7 @@ class TaskController extends AbstractController
      *
      * @return Response
      */
-    public function create(Request $request): Response
+    public function create(Request $request, TaskServiceInterface $taskService): Response
     {
         $task = new Task();
         $form = $this->appFormFactory->create('task', $task);
@@ -89,12 +90,7 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($task);
-            $em->flush();
-
-            $this->addFlash('success', 'La tâche a bien été ajoutée.');
+            $taskService->processNewTask($task, $this->getUser());
 
             return $this->redirectToRoute('task_list_all');
         }
