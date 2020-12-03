@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class TaskController extends AbstractController
 {
@@ -93,7 +92,7 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var User $user */
             $user = $this->getUser();
-            $taskService->processNewTask($task, $user);
+            $taskService->processNew($task, $user);
 
             return $this->redirectToRoute('task_list_all');
         }
@@ -122,7 +121,7 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $taskService->processEditTask($task);
+            $taskService->processEdit($task);
 
             return $this->redirectToRoute('task_list_all');
         }
@@ -209,23 +208,18 @@ class TaskController extends AbstractController
      *
      * @return Response
      */
-    public function delete(Task $task): Response
+    public function delete(Task $task, TaskServiceInterface $taskService): Response
     {
         /** @var User $user */
         $user = $this->getUser();
         if ($user->hasRole('ROLE_ADMIN')) {
-            $message ='Suppression refusée : vous ne pouvez supprimer que vos propres tâches et celles de l\'utilisateur Anonymous".';
+            $message = 'Suppression refusée : vous ne pouvez supprimer que vos propres tâches et celles de l\'utilisateur Anonymous".';
             $this->denyAccessUnlessGranted('delete', $task, $message);
         }
-        
+
         $this->denyAccessUnlessGranted('delete', $task, 'Suppression refusée : vous ne pouvez supprimer que vos propres tâches.');
 
-        $title = $task->getTitle();
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($task);
-        $em->flush();
-
-        $this->addFlash('success', 'Votre tâche "'.$title.'" a bien été supprimée.');
+        $taskService->processDelete($task);
 
         return $this->redirectToRoute('task_list_all');
     }
