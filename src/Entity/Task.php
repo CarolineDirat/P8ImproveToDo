@@ -10,7 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table
- * @ORM\EntityListeners({"App\EventListener\TaskUserListener"})
  *
  * @UniqueEntity("title", message="Le nom de tâche <{{ value }}> est déjà utilisé.")
  */

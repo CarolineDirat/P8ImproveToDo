@@ -6,8 +6,6 @@ use App\DataFixtures\AppFixtures;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Repository\UserRepository;
-use App\Security\TaskVoter;
-use App\Tests\LoginTrait;
 use Doctrine\Persistence\ManagerRegistry;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use LogicException;
@@ -22,7 +20,6 @@ use Symfony\Component\Security\Core\Security;
  */
 class TaskVoterTest extends WebTestCase
 {
-    use LoginTrait;
     use FixturesTrait;
 
     /**
