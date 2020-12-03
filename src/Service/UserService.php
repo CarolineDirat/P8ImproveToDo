@@ -58,7 +58,7 @@ class UserService implements UserServiceInterface
             $em = $this->managerRegistry->getManager();
 
             $user->setRoles([$role]);
-            $password = $this->encoder->encodePassword($user, $user->getPassword());
+            $password = $this->encoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
             $em->persist($user);
@@ -103,7 +103,7 @@ class UserService implements UserServiceInterface
             $em = $this->managerRegistry->getManager();
 
             $user->setRoles([$role]);
-            $password = $this->encoder->encodePassword($user, $user->getPassword());
+            $password = $this->encoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
             $user->setUpdatedAt(new DateTimeImmutable());
 
