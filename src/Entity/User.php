@@ -272,6 +272,22 @@ class User implements UserInterface
     }
 
     /**
+     * hasRole.
+     *
+     * @param string $role
+     *
+     * @return bool
+     */
+    public function hasRole(string $role): bool
+    {
+        if (in_array($role, $this->getRoles(), true)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * getTasks.
      *
      * @return Collection<int, Task>|Task[]

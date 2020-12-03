@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class TaskController extends AbstractController
 {
@@ -210,11 +211,21 @@ class TaskController extends AbstractController
      */
     public function delete(Task $task): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
+        if ($user->hasRole('ROLE_ADMIN')) {
+            $message ='Suppression refusée : vous ne pouvez supprimer que vos propres tâches et celles de l\'utilisateur Anonymous".';
+            $this->denyAccessUnlessGranted('delete', $task, $message);
+        }
+        
+        $this->denyAccessUnlessGranted('delete', $task, 'Suppression refusée : vous ne pouvez supprimer que vos propres tâches.');
+
+        $title = $task->getTitle();
         $em = $this->getDoctrine()->getManager();
         $em->remove($task);
         $em->flush();
 
-        $this->addFlash('success', 'La tâche a bien été supprimée.');
+        $this->addFlash('success', 'Votre tâche "'.$title.'" a bien été supprimée.');
 
         return $this->redirectToRoute('task_list_all');
     }
