@@ -213,7 +213,7 @@ class TaskController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         if ($user->hasRole('ROLE_ADMIN')) {
-            $message = 'Suppression refusée : vous ne pouvez supprimer que vos propres tâches et celles de l\'utilisateur Anonymous".';
+            $message = 'Suppression refusée : vous ne pouvez supprimer que vos propres tâches et celles de l\'utilisateur "Anonymous".';
             $this->denyAccessUnlessGranted('delete', $task, $message);
         }
 

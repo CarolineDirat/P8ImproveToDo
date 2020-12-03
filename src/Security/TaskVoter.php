@@ -5,6 +5,7 @@ namespace App\Security;
 use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
+use LogicException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
@@ -83,7 +84,7 @@ class TaskVoter extends Voter
                 return $this->canDelete($task, $user);
         }
 
-        throw new \LogicException('This code should not be reached!');
+        throw new LogicException('This code should not be reached!');
     }
 
     private function canDelete(Task $task, User $user): bool

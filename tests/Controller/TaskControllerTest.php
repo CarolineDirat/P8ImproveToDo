@@ -9,6 +9,7 @@ use App\Tests\LoginTrait;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @internal
@@ -207,5 +208,50 @@ class TaskControllerTest extends WebTestCase
         $this->assertResponseRedirects('/tasks');
         $this->client->followRedirect();
         $this->assertSelectorExists('.alert.alert-success');
+    }
+
+    public function testDeleteByUserAuthor(): void
+    {
+        $this->client->request('GET', '/tasks/15/delete');
+        $this->assertResponseRedirects('/tasks');
+        $this->client->followRedirect();
+        $this->assertSelectorExists('.alert.alert-success');
+    }
+
+    public function testDeleteByAdminAuthor(): void
+    {
+        $this->logInAdmin();
+        $this->client->request('GET', '/tasks/25/delete');
+        $this->assertResponseRedirects('/tasks');
+        $this->client->followRedirect();
+        $this->assertSelectorExists('.alert.alert-success');
+    }
+
+    public function testDeleteAnonymousByAdmin(): void
+    {
+        $this->logInAdmin();
+        $this->client->request('GET', '/tasks/5/delete');
+        $this->assertResponseRedirects('/tasks');
+        $this->client->followRedirect();
+        $this->assertSelectorExists('.alert.alert-success');
+    }
+
+    public function testDeleteForbiddenToUser(): void
+    {
+        $this->client->catchExceptions(false);
+        $this->expectException(AccessDeniedException::class);
+        $this->expectExceptionCode(403);
+        $this->expectExceptionMessage('Suppression refusée : vous ne pouvez supprimer que vos propres tâches.');
+        $this->client->request('GET', '/tasks/45/delete');
+    }
+
+    public function testDeleteForbiddenToAdmin(): void
+    {
+        $this->logInAdmin();
+        $this->client->catchExceptions(false);
+        $this->expectException(AccessDeniedException::class);
+        $this->expectExceptionCode(403);
+        $this->expectExceptionMessage('Suppression refusée : vous ne pouvez supprimer que vos propres tâches et celles de l\'utilisateur "Anonymous".');
+        $this->client->request('GET', '/tasks/45/delete');
     }
 }
