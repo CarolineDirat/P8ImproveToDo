@@ -56,7 +56,7 @@ class UserController extends AbstractController
         $user = new User();
         $form = $this->appFormFactory->create('user', $user);
 
-        /** @var FormInterface $form */
+        /** @var FormInterface<User> $form */
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -84,7 +84,7 @@ class UserController extends AbstractController
         $form = $this->appFormFactory->create('user', $user);
         $role = $userService->getRole($user);
 
-        /** @var FormInterface $form */
+        /** @var FormInterface<User> $form */
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
