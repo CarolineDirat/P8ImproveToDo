@@ -205,53 +205,91 @@ class TaskControllerTest extends WebTestCase
             'task[content]' => 'Contenu modifié de la tâche',
         ]);
         $this->client->submit($form);
+
         $this->assertResponseRedirects('/tasks');
         $this->client->followRedirect();
+
         $this->assertSelectorExists('.alert.alert-success');
     }
 
     public function testDeleteByUserAuthor(): void
     {
-        $this->client->request('GET', '/tasks/15/delete');
+        $crawler = $this->client->request('GET', '/tasks');
+        $form = $crawler->filter('button[id="delete-task-15"]')->form();
+        $this->client->submit($form);
+
         $this->assertResponseRedirects('/tasks');
         $this->client->followRedirect();
+
         $this->assertSelectorExists('.alert.alert-success');
     }
 
     public function testDeleteByAdminAuthor(): void
     {
         $this->logInAdmin();
-        $this->client->request('GET', '/tasks/25/delete');
+        $crawler = $this->client->request('GET', '/tasks');
+        $form = $crawler->filter('button[id="delete-task-25"]')->form();
+        $this->client->submit($form);
+
         $this->assertResponseRedirects('/tasks');
         $this->client->followRedirect();
+
         $this->assertSelectorExists('.alert.alert-success');
     }
 
     public function testDeleteAnonymousByAdmin(): void
     {
         $this->logInAdmin();
-        $this->client->request('GET', '/tasks/5/delete');
+        $crawler = $this->client->request('GET', '/tasks');
+        $form = $crawler->filter('button[id="delete-task-5"]')->form();
+        $this->client->submit($form);
+
         $this->assertResponseRedirects('/tasks');
         $this->client->followRedirect();
+
         $this->assertSelectorExists('.alert.alert-success');
     }
 
     public function testDeleteForbiddenToUser(): void
     {
         $this->client->catchExceptions(false);
+
+        $crawler = $this->client->request('GET', '/tasks');
+        $form = $crawler->filter('button[id="delete-task-45"]')->form();
+
         $this->expectException(AccessDeniedException::class);
         $this->expectExceptionCode(403);
         $this->expectExceptionMessage('Suppression refusée : vous ne pouvez supprimer que vos propres tâches.');
-        $this->client->request('GET', '/tasks/45/delete');
+
+        $this->client->submit($form);
     }
 
     public function testDeleteForbiddenToAdmin(): void
     {
         $this->logInAdmin();
         $this->client->catchExceptions(false);
+
+        $crawler = $this->client->request('GET', '/tasks');
+        $form = $crawler->filter('button[id="delete-task-45"]')->form();
+
         $this->expectException(AccessDeniedException::class);
         $this->expectExceptionCode(403);
         $this->expectExceptionMessage('Suppression refusée : vous ne pouvez supprimer que vos propres tâches et celles de l\'utilisateur "Anonymous".');
-        $this->client->request('GET', '/tasks/45/delete');
+
+        $this->client->submit($form);
+    }
+
+    public function testDeleteByUserAuthorWithWrongToken(): void
+    {
+        $crawler = $this->client->request('GET', '/tasks');
+        $form = $crawler->filter('button[id="delete-task-15"]')->form();
+        $form['token'] = 'xxxxx';
+        $this->client->submit($form);
+
+        $this->assertResponseRedirects('/tasks');
+        $this->client->followRedirect();
+
+        $this->assertSelectorExists('.alert.alert-danger');
+        $this->assertSelectorTextContains('.alert.alert-danger', 'Oops ! La suppression est refusée. Veuillez vous connecter.');
     }
 }

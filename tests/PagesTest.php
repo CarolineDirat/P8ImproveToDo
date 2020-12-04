@@ -30,10 +30,10 @@ class PagesTest extends WebTestCase
      *
      * @param string $url
      */
-    public function testRedirectIsSuccessFull(string $url): void
+    public function testRedirectIsSuccessFull(string $method, string $url): void
     {
         $this->client->followRedirects();
-        $this->client->request('GET', $url);
+        $this->client->request($method, $url);
 
         $this->assertResponseIsSuccessful();
     }
@@ -43,9 +43,9 @@ class PagesTest extends WebTestCase
      *
      * @dataProvider provideUrls
      */
-    public function testForbiddenToAnonymous(string $url): void
+    public function testForbiddenToAnonymous(string $method, string $url): void
     {
-        $this->client->request('GET', $url);
+        $this->client->request($method, $url);
 
         if ('/login' === $url) {
             $this->assertResponseIsSuccessful();
@@ -63,19 +63,19 @@ class PagesTest extends WebTestCase
     public function provideUrls(): array
     {
         return [
-            ['/'],
-            ['/login'],
-            ['/tasks'],
-            ['/tasks/filter/true'],
-            ['/tasks/filter/false'],
-            ['/tasks/create'],
-            ['/tasks/51/edit'],
-            ['/tasks/51/toggle'],
-            ['/tasks/51/toggle-ajax'],
-            ['/tasks/51/delete'],
-            ['/users'],
-            ['/users/create'],
-            ['/users/1/edit'],
+            ['GET', '/'],
+            ['GET', '/login'],
+            ['GET', '/tasks'],
+            ['GET', '/tasks/filter/true'],
+            ['GET', '/tasks/filter/false'],
+            ['GET', '/tasks/create'],
+            ['GET', '/tasks/51/edit'],
+            ['GET', '/tasks/51/toggle'],
+            ['GET', '/tasks/51/toggle-ajax'],
+            ['DELETE', '/tasks/51/delete'],
+            ['GET', '/users'],
+            ['GET', '/users/create'],
+            ['GET', '/users/1/edit'],
         ];
     }
 }

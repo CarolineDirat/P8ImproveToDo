@@ -202,24 +202,29 @@ class TaskController extends AbstractController
     /**
      * delete a task.
      *
-     * @Route("/tasks/{id}/delete", name="task_delete")
+     * @Route("/tasks/{id}/delete", name="task_delete", methods={"DELETE"})
      *
      * @param Task $task
      *
      * @return Response
      */
-    public function delete(Task $task, TaskServiceInterface $taskService): Response
+    public function delete(Task $task, Request $request, TaskServiceInterface $taskService): Response
     {
-        /** @var User $user */
-        $user = $this->getUser();
-        if ($user->hasRole('ROLE_ADMIN')) {
-            $message = 'Suppression refusée : vous ne pouvez supprimer que vos propres tâches et celles de l\'utilisateur "Anonymous".';
-            $this->denyAccessUnlessGranted('delete', $task, $message);
+        $submittedToken = $request->request->get('token');
+        if ($this->isCsrfTokenValid('delete-task-'.$task->getId(), $submittedToken)) {
+            /** @var User $user */
+            $user = $this->getUser();
+            if ($user->hasRole('ROLE_ADMIN')) {
+                $message = 'Suppression refusée : vous ne pouvez supprimer que vos propres tâches et celles de l\'utilisateur "Anonymous".';
+                $this->denyAccessUnlessGranted('delete', $task, $message);
+            }
+
+            $this->denyAccessUnlessGranted('delete', $task, 'Suppression refusée : vous ne pouvez supprimer que vos propres tâches.');
+
+            $taskService->processDelete($task);
+        } else {
+            $this->addFlash('error', 'La suppression est refusée. Veuillez vous connecter.');
         }
-
-        $this->denyAccessUnlessGranted('delete', $task, 'Suppression refusée : vous ne pouvez supprimer que vos propres tâches.');
-
-        $taskService->processDelete($task);
 
         return $this->redirectToRoute('task_list_all');
     }
