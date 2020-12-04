@@ -1,5 +1,5 @@
-Feature: Edition of a new task
-    In order to edit a new task
+Feature: Edition of a task
+    In order to edit a task
     As an authenticated user
     I fill in the edition form and validate it
 
