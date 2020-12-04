@@ -1,4 +1,4 @@
-<form action="{{ path('task_delete', {'id': task.id }) }}" method="DELETE">
+<form action="{{ path('task_delete', {'id': task.id }) }}" method="POST">
     <input type="hidden" name="token" value="{{ csrf_token('delete-task-'~ task.id) }}"/>
-    <button id="delete-task-{{ task.id }}" class="btn btn-danger btn-sm mt-1">Supprimer</button>
+    <button type="submit" id="delete-task-{{ task.id }}" class="btn btn-danger btn-sm mt-1">Supprimer</button>
 </form>

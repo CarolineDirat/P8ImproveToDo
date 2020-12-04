@@ -72,7 +72,7 @@ class PagesTest extends WebTestCase
             ['GET', '/tasks/51/edit'],
             ['GET', '/tasks/51/toggle'],
             ['GET', '/tasks/51/toggle-ajax'],
-            ['DELETE', '/tasks/51/delete'],
+            ['POST', '/tasks/51/delete'],
             ['GET', '/users'],
             ['GET', '/users/create'],
             ['GET', '/users/1/edit'],
