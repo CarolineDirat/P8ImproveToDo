@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   phpstan_src:
-    name: phpstan_src
+    name: Phpstan_src
     runs-on: ubuntu-latest
     steps:
       - name: Checkout project v2
@@ -16,8 +16,9 @@ jobs:
       - run: composer install
       - run: php -d memory_limit=-1
 
-      - name: Run phpstan on src
-        uses: actions-x/phpstan@v1
+      - name: OSCAR PHPStan
+        uses: docker://oskarstark/phpstan-ga
+        env:
+          REQUIRE_DEV: true
         with:
-          useBundled: 1
-          configPath: phpstan-ci-src.neon
+          args: analyze --configuration phpstan-ci-src.neon

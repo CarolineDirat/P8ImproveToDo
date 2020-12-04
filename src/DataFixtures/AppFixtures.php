@@ -8,42 +8,29 @@ use DateInterval;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
-    /**
-     * encoder.
-     *
-     * @var UserPasswordEncoderInterface
-     */
-    private UserPasswordEncoderInterface $encoder;
-
-    public function __construct(UserPasswordEncoderInterface $encoder)
-    {
-        $this->encoder = $encoder;
-    }
-
     public function load(ObjectManager $manager): void
     {
         // One User with only ROLE_USER
         $user1 = new User();
         $user1->setUsername('user1');
-        $user1->setPassword($this->encoder->encodePassword($user1, 'password'));
+        $user1->setPlainPassword('password');
         $user1->setEmail('user1@email.com');
         $manager->persist($user1);
 
         // One User with only ROLE_USER
         $user2 = new User();
         $user2->setUsername('user2');
-        $user2->setPassword($this->encoder->encodePassword($user2, 'password'));
+        $user2->setPlainPassword('password');
         $user2->setEmail('user2@email.com');
         $manager->persist($user2);
 
         // User with ROLE_ADMIN
         $admin = new User();
         $admin->setUsername('admin');
-        $admin->setPassword($this->encoder->encodePassword($admin, 'password'));
+        $admin->setPlainPassword('password');
         $admin->setEmail('admin@email.com');
         $admin->setRoles(['ROLE_ADMIN']);
         $manager->persist($admin);
@@ -51,7 +38,7 @@ class AppFixtures extends Fixture
         // Anonymous user with only ROLE_USER
         $anonymous = new User();
         $anonymous->setUsername('Anonymous');
-        $anonymous->setPassword($this->encoder->encodePassword($anonymous, 'password'));
+        $anonymous->setPlainPassword('password');
         $anonymous->setEmail('anonymous@email.com');
         $manager->persist($anonymous);
 

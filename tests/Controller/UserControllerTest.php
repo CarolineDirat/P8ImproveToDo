@@ -64,8 +64,8 @@ class UserControllerTest extends WebTestCase
         $buttonCrawlerNode = $crawler->selectButton('Ajouter');
         $form = $buttonCrawlerNode->form([
             'user[username]' => 'user',
-            'user[password][first]' => 'password',
-            'user[password][second]' => 'password',
+            'user[plainPassword][first]' => 'password',
+            'user[plainPassword][second]' => 'password',
             'user[email]' => 'user@mail.com',
             'user[role]' => 'ROLE_USER',
         ]);
@@ -84,8 +84,8 @@ class UserControllerTest extends WebTestCase
 
         $buttonCrawlerNode->form([
             'user[username]' => 'user',
-            'user[password][first]' => 'password',
-            'user[password][second]' => 'password',
+            'user[plainPassword][first]' => 'password',
+            'user[plainPassword][second]' => 'password',
             'user[email]' => 'user@mail.com',
             'user[role]' => 'admin',
         ]);
@@ -113,8 +113,8 @@ class UserControllerTest extends WebTestCase
         $buttonCrawlerNode = $crawler->selectButton('Modifier');
         $form = $buttonCrawlerNode->form([
             'user[username]' => 'user',
-            'user[password][first]' => 'password',
-            'user[password][second]' => 'password',
+            'user[plainPassword][first]' => 'password',
+            'user[plainPassword][second]' => 'password',
             'user[email]' => 'user@mail.com',
             'user[role]' => 'ROLE_USER',
         ]);

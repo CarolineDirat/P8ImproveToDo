@@ -36,7 +36,7 @@ class TaskService implements TaskServiceInterface
      * @param Task $task
      * @param User $user
      */
-    public function processNewTask(Task $task, User $user): void
+    public function processNew(Task $task, User $user): void
     {
         $task->setUser($user);
         $em = $this->managerRegistry->getManager();
@@ -52,11 +52,26 @@ class TaskService implements TaskServiceInterface
      *
      * @param Task $task
      */
-    public function processEditTask(Task $task): void
+    public function processEdit(Task $task): void
     {
         $task->setUpdatedAt(new DateTimeImmutable());
         $this->managerRegistry->getManager()->flush();
 
         $this->flashBag->add('success', 'La tâche "'.$task->getTitle().'" a bien été modifiée.');
+    }
+
+    /**
+     * processDelete.
+     *
+     * @param Task $task
+     */
+    public function processDelete(Task $task): void
+    {
+        $title = $task->getTitle();
+        $em = $this->managerRegistry->getManager();
+        $em->remove($task);
+        $em->flush();
+
+        $this->flashBag->add('success', 'La tâche "'.$title.'" a bien été supprimée.');
     }
 }

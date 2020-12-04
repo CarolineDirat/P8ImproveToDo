@@ -21,7 +21,7 @@ class AppFormFactory implements AppFormFactoryInterface
      * @param object               $entity
      * @param array<string, mixed> $options
      *
-     * @return null|FormInterface<string, mixed>
+     * @return null|FormInterface<object>
      */
     public function create(string $name, object $entity, array $options = []): ?FormInterface
     {

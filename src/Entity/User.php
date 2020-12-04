@@ -40,12 +40,20 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string")
      *
-     * @Assert\NotBlank(message="Vous devez saisir un mot de passe.")
-     * @Assert\Length(min=8, minMessage="Votre mot de passe doit contenir au moins {{ limit }} caractères.")
-     *
      * @var string
      */
     private string $password;
+
+    /**
+     * plainPassword.
+     *
+     * @Assert\NotBlank(message="Vous devez saisir un mot de passe.")
+     * @Assert\Length(min=8, minMessage="Votre mot de passe doit contenir au moins {{ limit }} caractères.")
+     * @Assert\Length(max=4096)
+     *
+     * @var string
+     */
+    private string $plainPassword;
 
     /**
      * @ORM\Column(type="string", length=60, unique=true)
@@ -191,8 +199,7 @@ class User implements UserInterface
      */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = 'xxxxxxxx';
     }
 
     /**
@@ -272,6 +279,22 @@ class User implements UserInterface
     }
 
     /**
+     * hasRole.
+     *
+     * @param string $role
+     *
+     * @return bool
+     */
+    public function hasRole(string $role): bool
+    {
+        if (in_array($role, $this->getRoles(), true)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * getTasks.
      *
      * @return Collection<int, Task>|Task[]
@@ -313,6 +336,30 @@ class User implements UserInterface
                 $task->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * Get plainPassword.
+     *
+     * @return string
+     */
+    public function getPlainPassword(): string
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * Set plainPassword.
+     *
+     * @param string $plainPassword plainPassword
+     *
+     * @return self
+     */
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }

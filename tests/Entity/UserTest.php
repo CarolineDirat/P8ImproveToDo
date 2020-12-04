@@ -39,6 +39,14 @@ class UserTest extends WebTestCase
         $this->assertEquals($password, $user->getPassword());
     }
 
+    public function testPlainPassword(): void
+    {
+        $user = new User();
+        $plainPassword = 'password';
+        $user->setPlainPassword($plainPassword);
+        $this->assertEquals($plainPassword, $user->getPlainPassword());
+    }
+
     public function testEmail(): void
     {
         $user = new User();
@@ -105,7 +113,7 @@ class UserTest extends WebTestCase
     {
         return (new User())
             ->setUsername('username')
-            ->setPassword('password')
+            ->setPlainPassword('password')
             ->setEmail('username@mail.com')
         ;
     }
@@ -144,14 +152,24 @@ class UserTest extends WebTestCase
         $this->assertHasErrors($this->getValidUser()->setUsername('user1'), 1);
     }
 
-    public function testInvalidBlankPassword(): void
+    public function testInvalidBlankPlainPassword(): void
     {
-        $this->assertHasErrors($this->getValidUser()->setPassword(''), 2);
+        $this->assertHasErrors($this->getValidUser()->setPlainPassword(''), 2);
     }
 
-    public function testInvalidLengthPassword(): void
+    public function testInvalidMinLengthPlainPassword(): void
     {
-        $this->assertHasErrors($this->getValidUser()->setPassword('000'), 1);
+        $this->assertHasErrors($this->getValidUser()->setPlainPassword('000'), 1);
+    }
+
+    public function testInvalidMaxLengthPlainPassword(): void
+    {
+        $password = 'x';
+        for ($i = 0; $i < 5000; ++$i) {
+            $password .= (string) $i;
+        }
+
+        $this->assertHasErrors($this->getValidUser()->setPlainPassword($password), 1);
     }
 
     public function testInvalidBlankEmail(): void

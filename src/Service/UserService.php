@@ -55,12 +55,9 @@ class UserService implements UserServiceInterface
         $this->flashBag->add('error', "L'utilisateur n'a pas pu être ajouté.");
 
         if (in_array($role, self::APP_ROLES)) {
-            $em = $this->managerRegistry->getManager();
-
             $user->setRoles([$role]);
-            $password = $this->encoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
 
+            $em = $this->managerRegistry->getManager();
             $em->persist($user);
             $em->flush();
 
@@ -103,7 +100,7 @@ class UserService implements UserServiceInterface
             $em = $this->managerRegistry->getManager();
 
             $user->setRoles([$role]);
-            $password = $this->encoder->encodePassword($user, $user->getPassword());
+            $password = $this->encoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
             $user->setUpdatedAt(new DateTimeImmutable());
 

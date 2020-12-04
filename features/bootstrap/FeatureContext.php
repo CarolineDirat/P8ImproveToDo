@@ -1,5 +1,6 @@
 <?php
 
+use App\DataFixtures\AppFixtures;
 use App\Entity\User;
 use App\Kernel;
 use Behat\Behat\Tester\Exception\PendingException;
@@ -8,6 +9,15 @@ use Behat\Mink\Driver\BrowserKitDriver;
 use Behat\Mink\Driver\Selenium2Driver;
 use Behat\Mink\Exception\UnsupportedDriverActionException;
 use Behat\MinkExtension\Context\MinkContext;
+use Behat\Testwork\Hook\Scope\BeforeSuiteScope;
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
+use Doctrine\Common\DataFixtures\Loader;
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\SchemaTool;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\BrowserKit\Client;
 use WebDriver\Exception\NoAlertOpenError;
 
@@ -35,6 +45,39 @@ class FeatureContext extends MinkContext
      */
     public function __construct()
     {
+    }
+
+    /**
+     * @BeforeSuite
+     */
+    public static function prepare(BeforeSuiteScope $scope): void
+    {
+        // prepare system for test suite
+        // before it runs
+        self::bootstrapSymfony();
+
+        /** @var Registry $doctrine */
+        $doctrine = self::$container->get('doctrine');
+
+        /** @var ObjectManager[] $managers */
+        $managers = $doctrine->getManagers();
+
+        foreach ($managers as $manager) {
+            if ($manager instanceof EntityManagerInterface) {
+                $schemaTool = new SchemaTool($manager);
+                $schemaTool->dropDatabase();
+                $schemaTool->createSchema($manager->getMetadataFactory()->getAllMetadata());
+            }
+        }
+
+        /** @var EntityManager $em */
+        $em = self::$container->get('doctrine.orm.default_entity_manager');
+
+        $loader = new Loader();
+        $loader->addFixture(new AppFixtures());
+        $purger = new ORMPurger($em);
+        $executor = new ORMExecutor($em, $purger);
+        $executor->execute($loader->getFixtures());
     }
 
     /**

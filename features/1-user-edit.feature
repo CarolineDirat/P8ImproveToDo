@@ -9,11 +9,11 @@ Feature: Edit a user
     Scenario: I edit a user with good data
         Given I am on "/users/2/edit"
         When I fill in the following
-                | user[username]         | user             |
-                | user[password][first]  | password         |
-                | user[password][second] | password         |
-                | user[email]            | user@email.com   |
-                | user[role]             | ROLE_ADMIN       |
+                | user[username]              | user             |
+                | user[plainPassword][first]  | password         |
+                | user[plainPassword][second] | password         |
+                | user[email]                 | user@email.com   |
+                | user[role]                  | ROLE_ADMIN       |
         And I press "Modifier"
         And I follow redirect
         Then I see the alert message ".alert.alert-success"

@@ -5,4 +5,5 @@ parameters:
 	ignoreErrors:
 		- '#Cannot call method [a-zA-Z]+\(\) on \(iterable<string, mixed>&Symfony\\Component\\Form\\FormInterface\)\|null\.#'
 	reportUnmatchedIgnoredErrors: false
+	checkGenericClassInNonGenericObjectType: false
 	

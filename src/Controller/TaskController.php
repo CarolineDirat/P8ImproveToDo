@@ -92,7 +92,7 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var User $user */
             $user = $this->getUser();
-            $taskService->processNewTask($task, $user);
+            $taskService->processNew($task, $user);
 
             return $this->redirectToRoute('task_list_all');
         }
@@ -121,7 +121,7 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $taskService->processEditTask($task);
+            $taskService->processEdit($task);
 
             return $this->redirectToRoute('task_list_all');
         }
@@ -202,19 +202,29 @@ class TaskController extends AbstractController
     /**
      * delete a task.
      *
-     * @Route("/tasks/{id}/delete", name="task_delete")
+     * @Route("/tasks/{id}/delete", name="task_delete", methods={"DELETE"})
      *
      * @param Task $task
      *
      * @return Response
      */
-    public function delete(Task $task): Response
+    public function delete(Task $task, Request $request, TaskServiceInterface $taskService): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($task);
-        $em->flush();
+        $submittedToken = $request->request->get('token');
+        if ($this->isCsrfTokenValid('delete-task-'.$task->getId(), $submittedToken)) {
+            /** @var User $user */
+            $user = $this->getUser();
+            if ($user->hasRole('ROLE_ADMIN')) {
+                $message = 'Suppression refusée : vous ne pouvez supprimer que vos propres tâches et celles de l\'utilisateur "Anonymous".';
+                $this->denyAccessUnlessGranted('delete', $task, $message);
+            }
 
-        $this->addFlash('success', 'La tâche a bien été supprimée.');
+            $this->denyAccessUnlessGranted('delete', $task, 'Suppression refusée : vous ne pouvez supprimer que vos propres tâches.');
+
+            $taskService->processDelete($task);
+        } else {
+            $this->addFlash('error', 'La suppression est refusée. Veuillez vous connecter.');
+        }
 
         return $this->redirectToRoute('task_list_all');
     }
