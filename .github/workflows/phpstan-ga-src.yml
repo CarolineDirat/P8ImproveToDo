@@ -16,7 +16,7 @@ jobs:
       - run: composer install
       - run: php -d memory_limit=-1
 
-      - name: PHPStan
+      - name: OSCAR PHPStan
         uses: docker://oskarstark/phpstan-ga
         env:
           REQUIRE_DEV: true

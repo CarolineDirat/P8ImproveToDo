@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   Phpstan_tests:
-    name: phpstan_tests
+    name: Phpstan_tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout project v2
@@ -17,7 +17,7 @@ jobs:
       - run: composer require phpunit/phpunit --dev ^9
       - run: php -d memory_limit=-1
 
-      - name: PHPStan
+      - name: OSCAR PHPStan
         uses: docker://oskarstark/phpstan-ga
         env:
           REQUIRE_DEV: true
