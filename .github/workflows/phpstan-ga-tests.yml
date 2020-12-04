@@ -17,7 +17,7 @@ jobs:
       - run: composer require phpunit/phpunit --dev ^9
       - run: php -d memory_limit=-1
 
-      - name: OSCAR PHPStan
+      - name: OSKAR PHPStan
         uses: docker://oskarstark/phpstan-ga
         env:
           REQUIRE_DEV: true
