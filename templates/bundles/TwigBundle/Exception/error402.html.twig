@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block header_title %}<h1 class="h1-error mt-2">Oops ! Une erreur est survenue</h1>{% endblock %}
+
+{% block header_img %}{% endblock %}
+
+{% block body %}
+    <div class="jumbotron jumbotron-error">
+        <h3 class="mb-4 text-danger">{{ exception.statusCode }} - {{ exception.statusText }}</h3>
+        <p class="mt-4">
+            <a href="{{ path('homepage') }}">retourner à la page d'accueil.</a>.
+        </p>
+    </div>
+{% endblock %}
