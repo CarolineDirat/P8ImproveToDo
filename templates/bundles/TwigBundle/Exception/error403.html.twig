@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block header_title %}<h1 class="h1-error mt-2">Oops ! Vous n'avez pas les droits !</h1>{% endblock %}
+
+{% block header_img %}{% endblock %}
+
+{% block body %}
+    <div class="jumbotron jumbotron-error">
+        <h4 class="text-danger">
+            {{ exception.statusCode }} - {{ exception.statusText }}
+        </h4>
+        <p class="mt-4">
+            <a href="{{ path('homepage') }}">Retourner à la page d'accueil.</a>.
+        </p>
+        <p>
+            <a href="{{ path('task_list_all') }}" class="btn btn-sm btn-info mr-2 mt-2">Retourner à la liste de toutes tâches.</a>.
+        </p>
+        <p>
+            <a href="{{ path('task_list', {'isDone': 'false'}) }}" class="btn btn-sm btn-info mr-2 mt-2">Retourner à la liste des tâches à faire.</a>.
+        </p>
+        <p>
+            <a href="{{ path('task_list', {'isDone': 'true'}) }}" class="btn btn-sm btn-info mr-2 mt-2">Retourner à la liste des tâches terminées.</a>.
+        </p>
+
+    </div>
+{% endblock %}

@@ -3,7 +3,7 @@ name: static_analysis
 on: [push]
 
 jobs:
-  phpstan_src:
+  Phpstan_src:
     name: Phpstan_src
     runs-on: ubuntu-latest
     steps:
@@ -16,7 +16,7 @@ jobs:
       - run: composer install
       - run: php -d memory_limit=-1
 
-      - name: OSCAR PHPStan
+      - name: OSKAR PHPStan
         uses: docker://oskarstark/phpstan-ga
         env:
           REQUIRE_DEV: true
