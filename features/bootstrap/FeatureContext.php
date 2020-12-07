@@ -196,7 +196,7 @@ class FeatureContext extends MinkContext
      */
     public function iSeeTheButton($text): void
     {
-        $this->assertElementContainsText('button', 'Se connecter');
+        $this->assertElementContainsText('button', $text);
     }
 
     /**
