@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,9 +43,12 @@ class SecurityController extends AbstractController
      * logout.
      *
      * @Route("/logout", name="logout")
+     *
+     * @codeCoverageIgnore
      */
     public function logout(): void
     {
         // This code is never executed.
+        throw new Exception('Don\'t forget to activate logout in security.yaml');
     }
 }

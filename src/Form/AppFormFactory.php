@@ -30,9 +30,9 @@ class AppFormFactory implements AppFormFactoryInterface
             'task' => TaskType::class,
         ];
 
-        $formType = $formTypes[$name];
+        if (in_array($name, array_keys($formTypes))) {
+            $formType = $formTypes[$name];
 
-        if (!empty($formType)) {
             return $this->formFactory->create($formType, $entity, $options);
         }
 
