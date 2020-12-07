@@ -190,6 +190,16 @@ class FeatureContext extends MinkContext
     }
 
     /**
+     * @Then I see the button :text
+     *
+     * @param mixed $text
+     */
+    public function iSeeTheButton($text): void
+    {
+        $this->assertElementContainsText('button', 'Se connecter');
+    }
+
+    /**
      * Returns current active mink session.
      *
      * @throws UnsupportedDriverActionException
