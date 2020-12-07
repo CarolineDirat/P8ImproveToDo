@@ -12,6 +12,7 @@
 .phpunit
 .phpunit.result.cache
 /phpunit.xml
+phpunit.xml.dist.bak
 ###< symfony/phpunit-bridge ###
 
 php-cs-fixer.phar
@@ -20,7 +21,3 @@ php-cs-fixer.phar
 
 selenium.jar
 geckodriver.exe
-
-
-/public/test-coverage/
-phpunit.xml.dist.bak

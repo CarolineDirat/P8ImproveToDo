@@ -50,6 +50,23 @@ class SecurityControllerTest extends WebTestCase
         $this->assertEquals('Se connecter', $crawler->filter('button')->text(null, false));
     }
 
+    public function testLoginFormWithBadCsrfToken(): void
+    {
+        $crawler = $this->client->request('GET', '/login');
+        $form = $crawler->selectButton('Se connecter')->form();
+        $form['_username'] = 'user1';
+        $form['_password'] = 'password';
+        $form['_csrf_token'] = 'xxxx';
+        $crawler = $this->client->submit($form);
+
+        $this->assertTrue($this->client->getResponse()->isRedirect());
+        $this->client->followRedirect();
+
+        $this->assertSelectorExists('.alert.alert-danger');
+        $this->assertEquals('Se connecter', $this->client->getCrawler()->filter('button')->text(null, false));
+        $this->assertNotEquals('Bienvenue sur Todo List, ', $this->client->getCrawler()->filter('button')->text(null, false));
+    }
+
     public function testLinkLogout(): void
     {
         $this->logInUser();
