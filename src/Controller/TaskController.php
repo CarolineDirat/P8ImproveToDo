@@ -159,7 +159,7 @@ class TaskController extends AbstractController
             return $this->redirectToRoute('task_list_all');
         }
 
-        $this->addFlash('error', 'Le token CSRF est invalide !');
+        $this->addFlash('error', 'Accès refusé !');
 
         return $this->redirectToRoute('task_list_all');
     }
