@@ -37,7 +37,8 @@
                     <p class="text-primary">{{ task.user.username }}</p>
                     <p class="font-italic text-secondary d-flex justify-content-end"><small>Modifié le {{ task.updatedAt|date('d/m/Y à h:i') }}</small></p>
                     <div class="d-flex justify-content-around flex-wrap row">
-                        <form action="{{ path('task_toggle', {'id': task.id }) }}">
+                        <form action="{{ path('task_toggle', {'id': task.id }) }}" method="post">
+                            <input type="hidden" name="token" value="{{ csrf_token('toggle-token-' ~ task.id) }}"/>
                             <button class="btn btn-info btn-sm mt-1" id="toggle-form-{{ task.id }}">
                                 {% if not task.isDone %}Marquer comme faite{% else %}Marquer non terminée{% endif %}
                             </button>

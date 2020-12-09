@@ -71,10 +71,25 @@ class TaskControllerListTest extends WebTestCase
         $this->assertResponseRedirects('/tasks');
         $crawler = $this->client->followRedirect();
 
-        $this->assertTrue($this->client->getResponse()->isSuccessful());
-
-        $this->assertSelectorExists('.alert-success');
         $this->assertSame('Liste des tâches', $crawler->filter('h1')->text());
+        $this->assertSelectorExists('.alert-success');
+    }
+
+    /**
+     * @dataProvider provideTaskId
+     */
+    public function testToggleStateWithBadToken(string $id): void
+    {
+        $crawler = $this->client->request('GET', '/tasks');
+        $form = $crawler->selectButton('toggle-form-'.$id)->form();
+        $form['token'] = 'xxxxx';
+        $this->client->submit($form);
+
+        $this->assertResponseRedirects('/tasks');
+        $crawler = $this->client->followRedirect();
+
+        $this->assertSame('Liste des tâches', $crawler->filter('h1')->text());
+        $this->assertSelectorExists('.alert-danger');
     }
 
     /**

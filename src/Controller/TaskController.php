@@ -137,22 +137,29 @@ class TaskController extends AbstractController
      *
      * @Route("/tasks/{id}/toggle", name="task_toggle")
      *
-     * @param Task $task
+     * @param Task    $task
+     * @param Request $request
      *
      * @return Response
      */
-    public function toggleState(Task $task): Response
+    public function toggleState(Task $task, Request $request): Response
     {
-        $task->toggle(!$task->isDone());
-        $this->getDoctrine()->getManager()->flush();
+        if ($this->isCsrfTokenValid('toggle-token-'.$task->getId(), $request->request->get('token'))) {
+            $task->toggle(!$task->isDone());
+            $this->getDoctrine()->getManager()->flush();
 
-        $message = sprintf('La tâche %s a bien été marquée comme non terminée.', $task->getTitle());
+            $message = sprintf('La tâche "%s" a bien été marquée comme non terminée.', $task->getTitle());
 
-        if (true === $task->isDone()) {
-            $message = sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle());
+            if (true === $task->isDone()) {
+                $message = sprintf('La tâche "%s" a bien été marquée comme faite.', $task->getTitle());
+            }
+
+            $this->addFlash('success', $message);
+
+            return $this->redirectToRoute('task_list_all');
         }
 
-        $this->addFlash('success', $message);
+        $this->addFlash('error', 'Le token CSRF est invalide !');
 
         return $this->redirectToRoute('task_list_all');
     }
