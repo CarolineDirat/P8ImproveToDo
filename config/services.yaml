@@ -34,7 +34,6 @@ services:
         tags:
             - { name: 'doctrine.orm.entity_listener', event: 'postLoad', entity: 'App\Entity\Task' }
     
-    
     App\EventListener\UserPasswordListener:
         tags:
             - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\User' }       
