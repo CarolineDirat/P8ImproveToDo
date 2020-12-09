@@ -49,6 +49,7 @@ class UserService implements UserServiceInterface
      */
     public function processNewUser(FormInterface $form): void
     {
+        /** @var User $user */
         $user = $form->getData();
         $role = $form->get('role')->getData();
 
@@ -62,7 +63,7 @@ class UserService implements UserServiceInterface
             $em->flush();
 
             $this->flashBag->clear();
-            $this->flashBag->add('success', "L'utilisateur a bien été ajouté.");
+            $this->flashBag->add('success', 'L\'utilisateur "'.$user->getUsername().'" a bien été ajouté.');
         }
     }
 
@@ -91,6 +92,7 @@ class UserService implements UserServiceInterface
      */
     public function processEditUser(FormInterface $form): void
     {
+        /** @var User $user */
         $user = $form->getData();
         $role = $form->get('role')->getData();
 
@@ -107,7 +109,7 @@ class UserService implements UserServiceInterface
             $em->flush();
 
             $this->flashBag->clear();
-            $this->flashBag->add('success', "L'utilisateur a bien été modifié");
+            $this->flashBag->add('success', 'L\'utilisateur "'.$user->getUsername().'" a bien été modifié');
         }
     }
 }
