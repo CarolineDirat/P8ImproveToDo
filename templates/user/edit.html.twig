@@ -15,24 +15,23 @@
 {% block header_img %}{% endblock %}
 
 {% block body %}
-
     <div class="row">
         <div class="col-12">
             {{ form_start(form, {'action' : path('user_edit', {'id': user.id})}) }}
                 <div class="form-group">
-                {{ form_label(form.username)}}
-                {{ form_widget(form.username) }}
+                    {{ form_label(form.username)}}
+                    {{ form_widget(form.username) }}
                 </div>
                 <div class="form-group">
-                {{ form_widget(form.plainPassword) }}
+                    {{ form_widget(form.plainPassword) }}
                 </div>
                 <div class="form-group">
-                {{ form_label(form.email)}}
-                {{ form_widget(form.email) }}
+                    {{ form_label(form.email)}}
+                    {{ form_widget(form.email) }}
                 </div>
                 <div class="form-group">
-                {{ form_label(form.role) }}
-                {{ form_widget(form.role, {'value': role}) }}
+                    {{ form_label(form.role) }}
+                    {{ form_widget(form.role, {'value': role}) }}
                 </div>
 
                 {{ form_rest(form) }}
