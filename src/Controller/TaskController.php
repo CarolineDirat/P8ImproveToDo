@@ -221,12 +221,11 @@ class TaskController extends AbstractController
         if ($this->isCsrfTokenValid('delete-task-'.$task->getId(), $submittedToken)) {
             /** @var User $user */
             $user = $this->getUser();
+            $message = 'Suppression refusée : vous ne pouvez supprimer que vos propres tâches.';
             if ($user->hasRole('ROLE_ADMIN')) {
                 $message = 'Suppression refusée : vous ne pouvez supprimer que vos propres tâches et celles de l\'utilisateur "Anonymous".';
-                $this->denyAccessUnlessGranted('delete', $task, $message);
             }
-
-            $this->denyAccessUnlessGranted('delete', $task, 'Suppression refusée : vous ne pouvez supprimer que vos propres tâches.');
+            $this->denyAccessUnlessGranted('delete', $task, $message);
 
             $taskService->processDelete($task);
         } else {
