@@ -1,0 +1,28 @@
+<?php
+
+$finder = PhpCsFixer\Finder::create()
+    ->exclude('vendor/')
+    ->exclude('templates/')
+    ->exclude('bin/')
+    ->exclude('config/')
+    ->exclude('migrations/')
+    ->exclude('translations/')
+    ->exclude('var/')
+    ->in(__DIR__)
+;
+
+return PhpCsFixer\Config::create()
+    ->setRules([
+        '@PSR1' => true,
+        '@PSR2' => true,
+        '@Symfony' => true,
+        '@PhpCsFixer' => true,
+        '@DoctrineAnnotation' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'no_superfluous_phpdoc_tags' => false,
+        'php_unit_test_class_requires_covers' => false,
+        'hash_to_slash_comment' => false,
+        'single_line_comment_style' => false,
+    ])
+    ->setFinder($finder)
+;

@@ -16,7 +16,6 @@ phpunit.xml.dist.bak
 ###< symfony/phpunit-bridge ###
 
 php-cs-fixer.phar
-.php_cs.dist
 .php_cs.cache
 
 selenium.jar
