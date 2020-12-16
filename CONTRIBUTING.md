@@ -156,9 +156,7 @@ L'ouverture de la pull request déclenche les vérifications par les intégratio
 - **Github Action** qui lance trois vérifications (d'après les fichiers de configuration dans .github/workflows/) avec :
   
   - **static_analysis/Phpstan_src** qui lance phpstan sur le dossier src/
-  
   - **static_analysis/Phpstan_tests** qui lance phpstan sur le dossier tests/
-  
   - **CI/security_checker** qui vérifie la sécurité des dépendances
 
 - **ci/gitlab/gitlab.com** qui lance les tests PHPUnit, d'après la configuration dans le fichier .gitlab-ci.yml
@@ -167,7 +165,7 @@ Le résultat des vérifications vous donne une idée du respect du processus de 
 
 Heureusement, tant que la pull request est ouverte, vous avez la possiblité d'ajouter de nouvelles validations (commits).
 
-Lorsqu'une intégration continue n'est pas validée, cliquer sur le lien _Détails_ de celle-ci pour obtenir les informations sur cet échec de vérification. Sur votre branche de contribution, en local, effectuez les modifications nécessaires pour régler le problème. Poussez à nouveau la branche de contribution, ce qui relancera les intégrations continues.
+Lorsqu'une intégration continue n'est pas validée, cliquer sur le lien *Détails* de celle-ci pour obtenir les informations sur cet échec de vérification. Sur votre branche de contribution, en local, effectuez les modifications nécessaires pour régler le problème. Poussez à nouveau la branche de contribution, ce qui relancera les intégrations continues.
 
 **Faites votre possible** pour que **toutes les vérifications** des intégrations continues **passent au vert** (avec la mention "All checks have passed") **avant de passer à l'étape suivante :**
 
@@ -210,20 +208,20 @@ Si vous voyez quelque chose comme "La requête de tirage ne peut pas être fusio
 
 Une méthode conseillée est de fusionner la branche cible dans votre branche de contribution :
 
- 1. Ajouter le dépôt original comme nouveau dépôt distant.
- 2. Récupérer la branche cible que vous fusionnerez dans votre branche de contribution
- 3. Corriger les conflits
- 4. Pousser la branche de contribution sur la même branche de contribution pour laquelle vous avez ouvert la requête de tirage.
+1. Ajouter le dépôt original comme nouveau dépôt distant.
+2. Récupérer la branche cible que vous fusionnerez dans votre branche de contribution
+3. Corriger les conflits
+4. Pousser la branche de contribution sur la même branche de contribution pour laquelle vous avez ouvert la requête de tirage.
 
 **Par exemple**, considérons que l’auteur original de P8ImproveToDo ait fait des modifications qui créent un conflit dans votre requête de tirage. Pour l'exemple, on nomme **contrib** la branche de contribution.
 
 Examinons les étapes à réaliser pour régler les conflits :
 
-**(1) Ajouter le dépôt original comme dépôt distant sous le nom « upstream ».**
+(1) **Ajouter le dépôt original comme dépôt distant sous le nom « upstream ».**
 
     git remote add upstream https://github.com/CarolineDirat/P8ImproveToDo 
 
-**(2) Récupère les derniers travaux depuis ce dépôt distant.**
+(2) **Récupère les derniers travaux depuis ce dépôt distant.**
 
     $ git fetch upstream 
     remote: Counting objects: 3, done.
@@ -233,7 +231,7 @@ Examinons les étapes à réaliser pour régler les conflits :
     From https://github.com/CarolineDirat/P8ImproveToDo
     * [new branch]      master     -> upstream/master
 
-**(3) Fusionner la branche principale dans la branche de contribution**:
+(3) **Fusionner la branche principale dans la branche de contribution**:
 C'est-à-dire que l'on fusionne les modifications de la branche par défaut en amont - dans ce cas, upstream/master - dans votre branche locale par défaut. Cela synchronise la branche par défaut de votre fork avec le référentiel en amont, sans perdre vos modifications locales.
 
     $ git merge upstream/master
@@ -241,15 +239,15 @@ C'est-à-dire que l'on fusionne les modifications de la branche par défaut en a
     CONFLICT (content): Merge conflict in fichier.php
     Automatic merge failed; fix conflicts and then commit the result.
 
-**(4) Correction des conflits créés** (ici, dans fichier.php)
+(4) **Correction des conflits créés** (ici, dans fichier.php)
 
-**(5) Valider les modifications apportées (commit)**
+(5) **Valider les modifications apportées (commit)**
 
     $ git commit
     [contrib 3c8d735] Merge remote-tracking branch 'upstream/master' \
         into contrib-bis
 
-**(6) Pousse sur la même branche de contribution.**
+(6) **Pousse sur la même branche de contribution.**
 
     $ git push origin contrib
     Counting objects: 6, done.
