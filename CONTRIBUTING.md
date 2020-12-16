@@ -171,7 +171,7 @@ Lorsqu'une intégration continue n'est pas validée, cliquer sur le lien *Détai
 
 - Les analyses par **phpstan** des dossiers src/ et tests/, lancée par Github Action, ne doivent générer aucune erreur ou warning.
 - Les tests **PHPUnit** lancés sur gitlab doivent tous réussir.
-- Il est possible que **Codacy** vous donne du fil à retordre, l'important est de garder la note à A.
+- Il est possible que **Codacy** vous donne du fil à retordre, l'important est d'optimiser le code PHP, CSS, HTML et Javascript.
 
 | Veuillez ne pas modifier les fichiers de configuration des intégrations continues : .gitlab-ci.yml, phpstan-ci-src.neon, phpstan-ci-tests.neon et les fichiers dans .github/workflows. |
 |----|
