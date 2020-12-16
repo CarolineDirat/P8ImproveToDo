@@ -37,10 +37,4 @@ phpunit-test:
     - php -d memory_limit=-1
     - php bin/console cache:clear --env=test
     - php -d xdebug.mode=coverage bin/phpunit --coverage-text --colors=never
-      #coverage: '/^\s*Lines:\s*\d+.\d+\%/'
-
-behat-test:
-  stage: test
-  script:
-    - echo "I don't know how run behat yet..."
 
