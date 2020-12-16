@@ -52,7 +52,7 @@ Cet outil va non seulement repérer les problèmes de normes de codage (en s'app
 
 ## Processus de qualité
 
-#### L'outil PHPStan
+### L'outil PHPStan
 
 L'outil PHPStan est installé comme dépendance sur le projet, en mode développement. Ainsi, au cours du développement, vous pouvez détecter des bugs issus d'erreurs de codage grâce à la commande :
 
@@ -152,10 +152,13 @@ Pour valider la création de la pull request, après avoir renseigné le titre e
 L'ouverture de la pull request déclenche les vérifications par les intégrations continues du projet :
 
 - **Codacy Static Code Analysis** qui évalue la qualité de code (dont la complexité et la présence de duplications)
+
 - **Github Action** qui lance trois vérifications (d'après les fichiers de configuration dans .github/workflows/) avec :
   
   - **static_analysis/Phpstan_src** qui lance phpstan sur le dossier src/
+  
   - **static_analysis/Phpstan_tests** qui lance phpstan sur le dossier tests/
+  
   - **CI/security_checker** qui vérifie la sécurité des dépendances
 
 - **ci/gitlab/gitlab.com** qui lance les tests PHPUnit, d'après la configuration dans le fichier .gitlab-ci.yml
@@ -197,7 +200,7 @@ Maintenant, le propriétaire peut soit continuer la discussion, soit rejeter la 
 
 Pour résumer le processus de contribution, une branche de contribution est créée sur le projet dupliqué, une pull request est ouverte dessus, une discussion s’engage, du travail additionnel peut être ajouté sur la branche et à la fin, la requête est soit fermée, soit fusionnée par le propriétaire du projet source.
 
-## Et en cas de conflits ?
+## Et en cas de conflits
 
 ### Synchronisation de la branche master mise à jour avec celle de votre projet dupliqué
 
@@ -207,10 +210,10 @@ Si vous voyez quelque chose comme "La requête de tirage ne peut pas être fusio
 
 Une méthode conseillée est de fusionner la branche cible dans votre branche de contribution :
 
-1. Ajouter le dépôt original comme nouveau dépôt distant.
-2. Récupérer la branche cible que vous fusionnerez dans votre branche de contribution
-3. Corriger les conflits
-4. Pousser la branche de contribution sur la même branche de contribution pour laquelle vous avez ouvert la requête de tirage.
+ 1. Ajouter le dépôt original comme nouveau dépôt distant.
+ 2. Récupérer la branche cible que vous fusionnerez dans votre branche de contribution
+ 3. Corriger les conflits
+ 4. Pousser la branche de contribution sur la même branche de contribution pour laquelle vous avez ouvert la requête de tirage.
 
 **Par exemple**, considérons que l’auteur original de P8ImproveToDo ait fait des modifications qui créent un conflit dans votre requête de tirage. Pour l'exemple, on nomme **contrib** la branche de contribution.
 
@@ -283,11 +286,11 @@ Cela fonctionne, **mais c’est un peu fastidieux** d’avoir à épeler l’URL
 
 - **Vous pouvez automatiser ce travail avec un peu de configuration :**
 
-````
+```git
 git remote add todo https://github.com/CarolineDirat/P8ImproveToDo (1)
 git branch --set-upstream-to=todo/master master (2)
 git config --local remote.pushDefault origin (3)
-````
+```
 
 (1) Ajouter le dépôt source et lui donner un nom : **todo**.
 (2) Paramétrer votre branche master pour suivre la branche master du dépôt distant **todo**.
