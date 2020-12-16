@@ -12,9 +12,9 @@ Projet initial à améliorer : <https://github.com/saro0h/projet8-TodoList>
 
 - Corrections d'anomalies
 - Ajout de nouvelles fonctionnalités
-- Implémentation de tests automatisés (avec PHPUnit et Behat) - [lien]()
-- Documentation technique - implémentation de l'authentification - [lien]()
-- Documentation technique de contribution - [lien]()
+- Implémentation de tests automatisés (avec PHPUnit et Behat)
+- Documentation technique - [Implémentation de l'authentification](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/doc/Documentation_Technique_authentification.pdf)
+- Documentation technique de contribution - [CONTRIBUTING.md](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/CONTRIBUTING.md)
 - Audit de qualité de code - [lien]()
 - Audit de qualité de performance - [lien]()
 
@@ -31,6 +31,8 @@ L'installation du projet P8ImproveToDo nécessite :
 - Une **base de données MySQL** que vous pouvez éventuellement gérer avec un outils de base de données (comme *phpmyadmin* ou *DBeaver*...).
 
 - Symfony utilise l'**URL rewriting**, donc sur Apache, vous devez activer le module *rewrite_module* dans le fichier http.conf.
+  
+- **Java** : <https://www.java.com/fr/> [pour lancer selenium.jar, nécessaire aux tests fonctionnels de Behat qui nécessitent Javascript.]
 
 - Installer [**Symfony CLI**](https://symfony.com/download) : Cela crée un binaire appelé **symfony** qui fournit tous les outils dont vous avez besoin pour développer et exécuter votre application Symfony localement.
 
@@ -57,10 +59,10 @@ Les instructions qui suivent vous guident pour installer le projet, sur un serve
 1. **Cloner le projet** depuis GitHub, à la racine de votre serveur local, avec la commande :
 
 ```
-git clone https://github.com/CarolineDirat/P7APIBileMo.git directoryName
+git clone https://github.com/CarolineDirat/P8ImproveToDo.git directoryName
 ```
 
-*directoryName* est le nom que vous donnez au dossier cloné. Si vous ne précisez pas directoryName, le projet sera cloné dans le dossier P8ImproveToDo. Pour obtenir par exemple : C:/wamp/www/P7APIBileMo dans Wampserver
+*directoryName* est le nom que vous donnez au dossier cloné. Si vous ne précisez pas directoryName, le projet sera cloné dans le dossier P8ImproveToDo. Pour obtenir par exemple : C:/wamp/www/P8ImproveToDo dans Wampserver
 
 Puis placer vous à la racine du projet, dans le dossier créé :
 
@@ -96,7 +98,7 @@ Par exemple :
 
 ```
 DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name_dev?serverVersion=5.7"
-APP_DOMAIN=http://p7apibilemo
+APP_DOMAIN=http://p8improvetodo
 ```
 
 ---
@@ -143,6 +145,16 @@ Il y a  3 utilisateurs, dont un administrateur avec le role "ROLE_ADMIN" (qui pe
 
   Puis il y a 51 tâches dont 25 sont marquées comme faites. Certaines tâches ont pour auteur user1, d'autres user2, d'autres admin, et d'autres sans auteur.
 
- ---
+---
 
- 9. Vous pouvez désormais vous rendre à l'accueil du site, sur l'URI "/". Vous pouvez alors vous connecter en tant que user1, ou user2 ou admin pour accéder à la gestion des tâches. Seul l'utilisateur admin a accès à la gestion des utilisateurs (via le bouton "Admin" dans la barre de navigation).
+9. Vous pouvez désormais vous rendre à l'accueil du site, sur l'URI "/". Vous pouvez alors vous connecter en tant que user1, ou user2 ou admin pour accéder à la gestion des tâches. Seul l'utilisateur admin a accès à la gestion des utilisateurs (via le bouton "Admin" dans la barre de navigation).
+
+---
+
+### Rapport de couverture de code
+
+Vous pouvez accéder au rapport de couverture de code sur l'URI "/test-coverage/index.html".
+
+### Contribuer au projet
+
+Pour contribuer au projet, veuillez suivre les consignes détaillées dans le fihier CONTRIBUTING.md, à la racine du projet.
