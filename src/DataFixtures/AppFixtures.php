@@ -14,32 +14,20 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         // One User with only ROLE_USER
-        $user1 = new User();
-        $user1->setUsername('user1');
-        $user1->setPlainPassword('password');
-        $user1->setEmail('user1@email.com');
+        $user1 = $this->createUser('user1', 'password', 'user1@email.com');
         $manager->persist($user1);
 
         // One User with only ROLE_USER
-        $user2 = new User();
-        $user2->setUsername('user2');
-        $user2->setPlainPassword('password');
-        $user2->setEmail('user2@email.com');
+        $user2 = $this->createUser('user2', 'password', 'user2@email.com');
         $manager->persist($user2);
 
         // User with ROLE_ADMIN
-        $admin = new User();
-        $admin->setUsername('admin');
-        $admin->setPlainPassword('password');
-        $admin->setEmail('admin@email.com');
+        $admin = $this->createUser('admin', 'password', 'admin@email.com');
         $admin->setRoles(['ROLE_ADMIN']);
         $manager->persist($admin);
 
         // Anonymous user with only ROLE_USER
-        $anonymous = new User();
-        $anonymous->setUsername('Anonymous');
-        $anonymous->setPlainPassword('password');
-        $anonymous->setEmail('anonymous@email.com');
+        $anonymous = $this->createUser('Anonymous', 'password', 'anonymous@email.com');
         $manager->persist($anonymous);
 
         // 51 tasks, 25 are done
@@ -68,5 +56,15 @@ class AppFixtures extends Fixture
         }
 
         $manager->flush();
+    }
+
+    public function createUser(string $username, string $password, string $email): User
+    {
+        $user = new User();
+        $user->setUsername($username);
+        $user->setPlainPassword($password);
+        $user->setEmail($email);
+
+        return $user;
     }
 }
