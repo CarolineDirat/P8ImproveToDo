@@ -29,8 +29,6 @@ Vous réaliserez votre contribution au projet **sur votre branche de contributio
 
 #### Respecter les [meilleures pratiques de Symfony](https://symfony.com/doc/current/best_practices.html)
 
-Et bien évidemment, respecter la **Programmation Orientée Objet** et **l'architecture** du framework **Symfony**.
-
 #### Commentez le code du dossier src/ via [PHPDoc](https://docs.phpdoc.org/3.0/guide/index.html)
 
 dans des DocBlocks précédant les méthodes, et éventuellement les classes.
