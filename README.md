@@ -1,7 +1,7 @@
 ToDoList
 ========
 
-[![pipeline status](https://gitlab.com/Squirrel-Jo/P8ImproveToDo/badges/develop/pipeline.svg)](https://gitlab.com/Squirrel-Jo/P8ImproveToDo/-/commits/develop) [![coverage report](https://gitlab.com/Squirrel-Jo/P8ImproveToDo/badges/develop/coverage.svg)](https://gitlab.com/Squirrel-Jo/P8ImproveToDo/-/commits/develop) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/ae0cd12410f34ebcb7b62e502eb615ef)](https://www.codacy.com/gh/CarolineDirat/P8ImproveToDo/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CarolineDirat/P8ImproveToDo&amp;utm_campaign=Badge_Grade)
+[![pipeline status](https://gitlab.com/Squirrel-Jo/P8ImproveToDo/badges/develop/pipeline.svg)](https://gitlab.com/Squirrel-Jo/P8ImproveToDo/-/commits/develop) [![coverage report](https://gitlab.com/Squirrel-Jo/P8ImproveToDo/badges/develop/coverage.svg)](https://gitlab.com/Squirrel-Jo/P8ImproveToDo/-/commits/develop) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/ae0cd12410f34ebcb7b62e502eb615ef)](https://www.codacy.com/gh/CarolineDirat/P8ImproveToDo/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CarolineDirat/P8ImproveToDo&amp;utm_campaign=Badge_Grade)[![Maintainability](https://api.codeclimate.com/v1/badges/489d8e2b6b95f91bead6/maintainability)](https://codeclimate.com/github/CarolineDirat/P8ImproveToDo/maintainability)
 
 ## Intructions pour installer le projet P8ImproveToDo
 
@@ -13,7 +13,7 @@ Projet initial à améliorer : <https://github.com/saro0h/projet8-TodoList>
 - Corrections d'anomalies
 - Ajout de nouvelles fonctionnalités
 - Implémentation de tests automatisés (avec PHPUnit et Behat)
-- Documentation technique - [Implémentation de l'authentification](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/doc/Documentation_Technique_authentification.pdf)
+- Documentation technique - [Implémentation de l'authentification](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/doc/Technical_Documentation_Authentication.pdf)
 - Documentation technique de contribution - [CONTRIBUTING.md](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/CONTRIBUTING.md)
 - Audit de qualité de code - [lien]()
 - Audit de qualité de performance - [lien]()

@@ -123,6 +123,9 @@
     "fabpot/goutte": {
         "version": "v3.3.1"
     },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.1"
+    },
     "guzzlehttp/guzzle": {
         "version": "6.5.5"
     },
@@ -243,6 +246,9 @@
     },
     "symfony/dependency-injection": {
         "version": "v4.4.16"
+    },
+    "symfony/deprecation-contracts": {
+        "version": "v2.2.0"
     },
     "symfony/doctrine-bridge": {
         "version": "v4.4.16"

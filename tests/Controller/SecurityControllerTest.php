@@ -74,7 +74,6 @@ class SecurityControllerTest extends WebTestCase
         $this->client->clickLink('Se déconnecter');
         $this->client->followRedirect();
 
-        $this->assertSelectorExists('button');
         $this->assertSelectorTextContains('button', 'Se connecter');
     }
 
@@ -85,7 +84,6 @@ class SecurityControllerTest extends WebTestCase
         $this->assertTrue($this->client->getResponse()->isRedirect());
         $this->client->followRedirect();
 
-        $this->assertSelectorExists('button');
         $this->assertSelectorTextContains('button', 'Se connecter');
     }
 }
