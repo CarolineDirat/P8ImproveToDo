@@ -12,11 +12,11 @@ Projet initial à améliorer : <https://github.com/saro0h/projet8-TodoList>
 
 - Corrections d'anomalies
 - Ajout de nouvelles fonctionnalités
-- Implémentation de tests automatisés (avec PHPUnit et Behat)
+- Implémentation de tests automatisés (avec PHPUnit et Behat), avec intégration continue des tests PHPUnit sur GitLab
 - Documentation technique - [Implémentation de l'authentification](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/doc/Technical_Documentation_Authentication.pdf)
 - Documentation technique de contribution - [CONTRIBUTING.md](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/CONTRIBUTING.md)
-- Audit de qualité de code - [lien]()
-- Audit de qualité de performance - [lien]()
+- Audit de qualité de code - [Audit_Quality.pdf](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/Documentation/Audit_Quality.pdf)
+- Audit de qualité de performance - [Audit_Performance.pdf](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/Documentation/Audit_Performance.pdf)
 
 ### Prérequis
 
@@ -153,8 +153,8 @@ Il y a  3 utilisateurs, dont un administrateur avec le role "ROLE_ADMIN" (qui pe
 
 ### Rapport de couverture de code
 
-Vous pouvez accéder au rapport de couverture de code sur l'URI "/test-coverage/index.html".
+Une fois l'application installée, vous pouvez accéder au rapport de couverture de code sur l'URI "/test-coverage/index.html".
 
 ### Contribuer au projet
 
-Pour contribuer au projet, veuillez suivre les consignes détaillées dans le fihier CONTRIBUTING.md, à la racine du projet.
+Pour contribuer au projet, veuillez suivre les consignes détaillées dans le fihier [CONTRIBUTING.md](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/CONTRIBUTING.md), à la racine du projet.
