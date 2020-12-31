@@ -192,7 +192,7 @@ Le propriétaire du projet sera notifié à nouveau des modifications du contrib
 
 Maintenant, le propriétaire peut soit continuer la discussion, soit rejeter la contribution en fermant la pull request, soit l'accepter en mergeant la branche de contribution dans la branche master.
 
-## Etape 8 : Le propriétaire du projet fusionne (merge) ou ferme (close) la requête de tirage
+## Etape 8 : Le propriétaire du projet fusionne (merge) ou ferme (close) la pull request
 
 Pour résumer le processus de contribution, une branche de contribution est créée sur le projet dupliqué, une pull request est ouverte dessus, une discussion s’engage, du travail additionnel peut être ajouté sur la branche et à la fin, la requête est soit fermée, soit fusionnée par le propriétaire du projet source.
 
