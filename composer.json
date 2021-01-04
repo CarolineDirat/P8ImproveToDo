@@ -33,6 +33,10 @@
         "symfony/yaml": "4.4.*"
     },
     "require-dev": {
+        "symfony/maker-bundle": "^1.23",
+        "symfony/phpunit-bridge": "^5.1",
+        "symfony/browser-kit": "4.4.*",
+        "symfony/css-selector": "4.4.*",
         "behat/behat": "^3.8",
         "behat/mink-extension": "^2.3",
         "behat/mink-goutte-driver": "^1.2",
@@ -40,12 +44,8 @@
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "liip/test-fixtures-bundle": "^1.10",
         "phpstan/phpstan": "^0.12.54",
-        "symfony/browser-kit": "4.4.*",
-        "symfony/css-selector": "4.4.*",
-        "symfony/maker-bundle": "^1.23",
-        "symfony/phpunit-bridge": "^5.1",
-        "symfony/stopwatch": "^4.4",
-        "symfony/web-profiler-bundle": "^4.4"
+        "symfony/web-profiler-bundle": "^4.4",
+        "symfony/stopwatch": "^4.4"
     },
     "config": {
         "preferred-install": {

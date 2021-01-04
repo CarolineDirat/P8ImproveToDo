@@ -127,6 +127,11 @@ Il faut vous assurer que votre code respecte le processus de qualité du projet.
     java -jar selenium.jar
     ./vendor/bin/behat
 
+**Aussi :**
+
+| Veuillez ne pas modifier les fichiers de configuration des intégrations continues : .gitlab-ci.yml, phpstan-ci-src.neon, phpstan-ci-tests.neon et les fichiers dans .github/workflows. |
+|----|
+
 ## Etape 5 : Proposez votre contribution via la "pull request"
 
 ### 5.1. Pousser sur le dépôt dupliqué
@@ -145,36 +150,7 @@ Pour le moment, votre contribution n’est disponible que sur votre copie du dé
 
 Pour valider la création de la pull request, après avoir renseigné le titre et la description, **cliquer sur le bouton "Create pull request"** : le propriétaire du projet que vous avez dupliqué reçoit alors une notification qui lui indique que quelqu’un suggère une modification. Il pourra alors se rendre sur la pull request qui est aussi crée sur le dépôt source, et lui donnant accès à toutes les informations disponibles dans une pull request.
 
-## Etape 6 : Valider les intégrations continues
-
-L'ouverture de la pull request déclenche les vérifications par les intégrations continues du projet :
-
-- **Codacy Static Code Analysis** qui évalue la qualité de code (dont la complexité et la présence de duplications)
-
-- **Github Action** qui lance trois vérifications (d'après les fichiers de configuration dans .github/workflows/) avec :
-  
-  - **static_analysis/Phpstan_src** qui lance phpstan sur le dossier src/
-  - **static_analysis/Phpstan_tests** qui lance phpstan sur le dossier tests/
-  - **CI/security_checker** qui vérifie la sécurité des dépendances
-
-- **ci/gitlab/gitlab.com** qui lance les tests PHPUnit, d'après la configuration dans le fichier .gitlab-ci.yml
-
-Le résultat des vérifications vous donne une idée du respect du processus de qualité décrit ci-avant.
-
-Heureusement, tant que la pull request est ouverte, vous avez la possiblité d'ajouter de nouvelles validations (commits).
-
-Lorsqu'une intégration continue n'est pas validée, cliquer sur le lien *Détails* de celle-ci pour obtenir les informations sur cet échec de vérification. Sur votre branche de contribution, en local, effectuez les modifications nécessaires pour régler le problème. Poussez à nouveau la branche de contribution, ce qui relancera les intégrations continues.
-
-**Faites votre possible** pour que **toutes les vérifications** des intégrations continues **passent au vert** (avec la mention "All checks have passed") **avant de passer à l'étape suivante :**
-
-- Les analyses par **phpstan** des dossiers src/ et tests/, lancée par Github Action, ne doivent générer aucune erreur ou warning.
-- Les tests **PHPUnit** lancés sur gitlab doivent tous réussir.
-- Il est possible que **Codacy** vous donne du fil à retordre, l'important est d'optimiser le code PHP, CSS, HTML et Javascript.
-
-| Veuillez ne pas modifier les fichiers de configuration des intégrations continues : .gitlab-ci.yml, phpstan-ci-src.neon, phpstan-ci-tests.neon et les fichiers dans .github/workflows. |
-|----|
-
-## Etape 7 : Itérations sur la pull request
+## Etape 6 : Itérations sur la pull request
 
 **Une fois la pull request ouverte, vous avez la possibilité de discuter avec le propriétaire.**
 
@@ -184,7 +160,9 @@ En effet, le propriétaire du projet peut regarder les modifications suggérées
 
 Une fois que le mainteneur a commenté, la personne qui a ouvert la requête de tirage (et en fait toute personne surveillant le dépôt) recevra une notification.
 
-Maintenant, le contributeur sait ce qu’il doit faire pour que ses modifications soient intégrées. Il lui suffit d'effectuer les correctifs sur la branche de contribution, de les valider (commits) et de repousser à nouveau la branche sur le dépôt dupliqué :
+Maintenant, le contributeur sait ce qu’il doit faire pour que ses modifications soient intégrées.
+**Heureusement, tant que la pull request est ouverte, vous avez la possiblité d'ajouter de nouvelles validations (commits).**
+Il lui suffit donc d'effectuer les correctifs sur la branche de contribution, de les valider (commits) et de repousser à nouveau la branche sur le dépôt dupliqué :
 
     git push origin ma-branche-de-contribution
 
@@ -192,7 +170,7 @@ Le propriétaire du projet sera notifié à nouveau des modifications du contrib
 
 Maintenant, le propriétaire peut soit continuer la discussion, soit rejeter la contribution en fermant la pull request, soit l'accepter en mergeant la branche de contribution dans la branche master.
 
-## Etape 8 : Le propriétaire du projet fusionne (merge) ou ferme (close) la requête de tirage
+## Etape 8 : Le propriétaire du projet fusionne (merge) ou ferme (close) la pull request
 
 Pour résumer le processus de contribution, une branche de contribution est créée sur le projet dupliqué, une pull request est ouverte dessus, une discussion s’engage, du travail additionnel peut être ajouté sur la branche et à la fin, la requête est soit fermée, soit fusionnée par le propriétaire du projet source.
 

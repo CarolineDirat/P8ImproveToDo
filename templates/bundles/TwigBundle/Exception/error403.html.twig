@@ -7,7 +7,7 @@
 {% block body %}
     <div class="jumbotron jumbotron-error">
         <h4 class="text-danger">
-            {{ exception.statusCode }} - {{ exception.statusText }}
+            {{ exception.statusCode }} - {{ exception.message }}
         </h4>
         <p class="mt-4">
             <a href="{{ path('homepage') }}">Retourner à la page d'accueil.</a>.
