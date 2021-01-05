@@ -42,6 +42,7 @@ class UserType extends AbstractType
                     ],
                     'required' => true,
                     'mapped' => false,
+                    'label' => 'Rôle',
                 ]
             )
         ;
