@@ -78,11 +78,12 @@ composer install
 ---
 
 3. Créer le **virtualhost** sur Wampserver. Attention, le virtualhost doit pointer sur le dossier **public/**
+
 Par exemple : C:/wamp/www/P7APIBileMo/public
 
 ---
 
-4. **Installer à la racine du projet** les exécutables **selenium.jar** (<https://www.selenium.dev/downloads/>) et **geckodriver.exe** (<https://github.com/mozilla/geckodriver/releases/tag/v0.28.0>) pour exécuter les tests fonctionnel de Behat qui nécessitent JavaScript.
+4. **Installer à la racine du projet** les exécutables **selenium.jar** (<https://www.selenium.dev/downloads/>) et **geckodriver.exe** (<https://github.com/mozilla/geckodriver/releases/tag/v0.28.0>) pour exécuter les tests fonctionnels de Behat qui nécessitent JavaScript.
 
 **NB :** *geckodriver.exe* correspond à l'utilisation du navigateur [Mozilla Firefox](https://www.mozilla.org/fr/firefox/new/) qui doit donc être installé sur votre ordinateur.
 Si vous utilisez un autre navigateur, voir la  [documentation de selenium](https://www.selenium.dev/downloads/) pour installer son driver correspondant.
@@ -157,4 +158,4 @@ Une fois l'application installée, vous pouvez accéder au rapport de couverture
 
 ### Contribuer au projet
 
-Pour contribuer au projet, veuillez suivre les consignes détaillées dans le fihier [CONTRIBUTING.md](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/CONTRIBUTING.md), à la racine du projet.
+Pour contribuer au projet, veuillez suivre les consignes détaillées dans le fichier [CONTRIBUTING.md](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/CONTRIBUTING.md), à la racine du projet.
