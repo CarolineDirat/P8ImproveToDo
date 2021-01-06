@@ -12,10 +12,10 @@ Projet initial à améliorer : <https://github.com/saro0h/projet8-TodoList>
 - Implémentation de tests automatisés (avec PHPUnit et Behat)
 - Intégration continue sur Github de Codacy, phpstan et la vérification des vumnérabilités
 - Intégration continue sur GitLab des tests via PHPUnit
-- Documentation technique - [Implémentation de l'authentification](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/doc/Technical_Documentation_Authentication.pdf)
+- Documentation technique - [Implémentation de l'authentification](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/Documentation/fr/Technical_Documentation_Authentication_fr.pdf)
 - Documentation technique de contribution - [CONTRIBUTING.md](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/CONTRIBUTING.md)
-- Audit de qualité de code - [Audit_Quality.pdf](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/Documentation/Audit_Quality.pdf)
-- Audit de performance de code - [Audit_Performance.pdf](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/Documentation/Audit_Performance.pdf)
+- Audit de qualité de code - [Audit_Quality.pdf](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/Documentation/fr/Audit_Quality_fr.pdf)
+- Audit de performance de code - [Audit_Performance.pdf](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/Documentation/fr/Audit_Performance_fr.pdf)
 
 ## Instructions pour installer le projet P8ImproveToDo
 
