@@ -1,26 +1,30 @@
-ToDoList
-========
+# ToDoList
 
 [![pipeline status](https://gitlab.com/Squirrel-Jo/P8ImproveToDo/badges/develop/pipeline.svg)](https://gitlab.com/Squirrel-Jo/P8ImproveToDo/-/commits/develop) [![coverage report](https://gitlab.com/Squirrel-Jo/P8ImproveToDo/badges/develop/coverage.svg)](https://gitlab.com/Squirrel-Jo/P8ImproveToDo/-/commits/develop) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/ae0cd12410f34ebcb7b62e502eb615ef)](https://www.codacy.com/gh/CarolineDirat/P8ImproveToDo/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CarolineDirat/P8ImproveToDo&amp;utm_campaign=Badge_Grade)[![Maintainability](https://api.codeclimate.com/v1/badges/489d8e2b6b95f91bead6/maintainability)](https://codeclimate.com/github/CarolineDirat/P8ImproveToDo/maintainability)
 
-## Intructions pour installer le projet P8ImproveToDo
+## Student Project : Improve an existing application
 
-### Projet n°8 : Améliorez un projet existant
+Project n°8 of "PHP/Symfony Application Developer" course on OpenClassrooms
 
-Formation de "Développeu.r.se d'application PHP/Symfony" chez OpenClassrooms
-Projet initial à améliorer : <https://github.com/saro0h/projet8-TodoList>
+The initial project to improve : <https://github.com/saro0h/projet8-TodoList>
 
-- Corrections d'anomalies
-- Ajout de nouvelles fonctionnalités
-- Implémentation de tests automatisés (avec PHPUnit et Behat), avec intégration continue des tests PHPUnit sur GitLab
-- Documentation technique - [Implémentation de l'authentification](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/doc/Technical_Documentation_Authentication.pdf)
-- Documentation technique de contribution - [CONTRIBUTING.md](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/CONTRIBUTING.md)
-- Audit de qualité de code - [Audit_Quality.pdf](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/Documentation/Audit_Quality.pdf)
-- Audit de qualité de performance - [Audit_Performance.pdf](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/Documentation/Audit_Performance.pdf)
+### The improvements
 
-### Prérequis
+- Correct anomalies.
+- Add new features.
+- Implementation of automated tests (with PHPUnit and Behat)
+- Continuous integration on GitHub of Codacy, phpstan and checking security vulnerabilities
+- Continuous integration on GitLab of PHPUnit tests on GitLab
+- Technical documentation - [Implementation of authentication](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/doc/Technical_Documentation_Authentication.pdf)
+- Technical documentation of how contribute to the project - [CONTRIBUTING.md](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/CONTRIBUTING.md)
+- Code quality audit - [Audit_Quality.pdf](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/Documentation/Audit_Quality.pdf)
+- Code performance audit - [Audit_Performance.pdf](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/Documentation/Audit_Performance.pdf)
 
-L'installation du projet P8ImproveToDo nécessite :
+## Instructions to install the P8ImproveToDo project
+
+### Requirements
+
+P8ImproveToDo installation needs :
 
 - **Composer** : getcomposer.org/
 
@@ -28,48 +32,50 @@ L'installation du projet P8ImproveToDo nécessite :
 
 - **PHP 7.4.*** : wwww.php.net
 
-- Une **base de données MySQL** que vous pouvez éventuellement gérer avec un outils de base de données (comme *phpmyadmin* ou *DBeaver*...).
+- **MySQL database** that you can eventually manage with a database tool (as *phpmyadmin* or *DBeaver*...).
 
-- Symfony utilise l'**URL rewriting**, donc sur Apache, vous devez activer le module *rewrite_module* dans le fichier http.conf.
+- Symfony use the **URL rewriting**, then on Apache server, you must enable the *rewrite_module* module in the http.conf file.
   
-- **Java** : <https://www.java.com/fr/> [pour lancer selenium.jar, nécessaire aux tests fonctionnels de Behat qui nécessitent Javascript.]
+- **Java** : <https://www.java.com/fr/> [to run selenium.jar, needed to functional tests of Behat that need Javascript.]
 
-- Installer [**Symfony CLI**](https://symfony.com/download) : Cela crée un binaire appelé **symfony** qui fournit tous les outils dont vous avez besoin pour développer et exécuter votre application Symfony localement.
+- Installation of [**Symfony CLI**](https://symfony.com/download) : That's create a binary named **symfony**  which provides all tools you need to develop and execute locally your Symfony application.
 
-Le binaire **symfony**  fournit également un outil pour vérifier si votre ordinateur répond à toutes les exigences pour Symfony. Ouvrez votre terminal de console et exécutez cette commande :
+The **symfony** binary provides also a tool to check if your computer meets all requirements. Open your console terminal and run this command :
 
 ```
 symfony check:requirements
 ```
 
-    # Par exemple, vous devrez préciser dans php.ini :
-    memory_limit = 128M
-    realpath_cache_size = 5M
-    # activation of [opcache] PHP extension:
-    opcache.enable=On
-    opcache.enable_cli=On
+````
+# By example, you might specify in the php.ini file:
+memory_limit = 128M
+realpath_cache_size = 5M
+# activation of [opcache] PHP extension:
+opcache.enable=On
+opcache.enable_cli=On
+````
 
-### Installation sur un server local
+### Installation on a local server
 
 ---
-Les instructions qui suivent vous guident pour installer le projet, sur un serveur HTTP Apache (par exemple avec Wampserver). Voir la [documentation de Symfony](https://symfony.com/doc/current/setup.html#running-symfony-applications).
+The following instructions lead you to install the project on a HTTP server Apache(by example with Wampserser on Windows). See the [Symfony documentation](https://symfony.com/doc/current/setup.html#running-symfony-applications).
 
 ---
 
-1. **Cloner le projet** depuis GitHub, à la racine de votre serveur local, avec la commande :
+1. **Clone the project** from GitHub, at the root of your local server, with the command :
 
 ```
 git clone https://github.com/CarolineDirat/P8ImproveToDo.git directoryName
 ```
 
-*directoryName* est le nom que vous donnez au dossier cloné. Si vous ne précisez pas directoryName, le projet sera cloné dans le dossier P8ImproveToDo. Pour obtenir par exemple : C:/wamp/www/P8ImproveToDo dans Wampserver
+*directoryName* is the name you give to the cloned repository. If you don't specify directoryName, the project will be cloned in the P8ImproveToDo directory. To obtain by example : C:/wamp/www/P8ImproveToDo in Wampserver
 
-Puis placer vous à la racine du projet, dans le dossier créé :
+Then go to the root of the project, in the created repository :
 
     cd directoryName
 ---
 
-2. **A la racine du projet** (par exemple C:/wamp/www/P8ImproveToDo>), utilisez Composer pour charger les dossiers **vendor/** et **var/**, avec la commande :
+2. **At the root of the project** (by example C:/wamp/www/P8ImproveToDo>), use Composer to load  **vendor/** et **var/** directories, with the command :
 
 ````
 composer install
@@ -77,25 +83,25 @@ composer install
 
 ---
 
-3. Créer le **virtualhost** sur Wampserver. Attention, le virtualhost doit pointer sur le dossier **public/**
+3. Create the **virtualhost** on Wampserver. Warning, the virtualhost must point on the **public/** directory.
 
-Par exemple : C:/wamp/www/P7APIBileMo/public
+By example : C:/wamp/www/P8ImproveToDo/public
 
 ---
 
-4. **Installer à la racine du projet** les exécutables **selenium.jar** (<https://www.selenium.dev/downloads/>) et **geckodriver.exe** (<https://github.com/mozilla/geckodriver/releases/tag/v0.28.0>) pour exécuter les tests fonctionnels de Behat qui nécessitent JavaScript.
+4. **Install** at the root of the project **selenium.jar** (<https://www.selenium.dev/downloads/>) and **geckodriver.exe** executables (<https://github.com/mozilla/geckodriver/releases/tag/v0.28.0>) to execute the functional tests of Behat which need JavaScript.
 
-**NB :** *geckodriver.exe* correspond à l'utilisation du navigateur [Mozilla Firefox](https://www.mozilla.org/fr/firefox/new/) qui doit donc être installé sur votre ordinateur.
-Si vous utilisez un autre navigateur, voir la  [documentation de selenium](https://www.selenium.dev/downloads/) pour installer son driver correspondant.
+**NB :** *geckodriver.exe* is corresponding to [Mozilla Firefox](https://www.mozilla.org/fr/firefox/new/) browser that is must be installed on your computer.
+If you use another browser, see the [selenium documentation](https://www.selenium.dev/downloads/) to install the corresponding driver.
 
 ---
 
 5. [Overriding Environment Values via .env.local](https://symfony.com/doc/current/configuration.html#overriding-environment-values-via-env-local) :
 
-A la racine du projet, créez le fichier **.env.dev.local** pour définir vos variables d'environnement (voir le fichier **.env**) :
-**DATABASE_URL** (d'après les données d'accès à votre base de données MySQL) et **APP_DOMAIN** (d'après votre virtualhost).
+At the root of the project, creates the **.env.dev.local** file to specify yours environment values (see the **.env** file) :
+**DATABASE_URL** (according to the access data to your MYSQL database) and **APP_DOMAIN** (according to your virtualhost).
 
-Par exemple :
+By example :
 
 ```
 DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name_dev?serverVersion=5.7"
@@ -104,39 +110,39 @@ APP_DOMAIN=http://p8improvetodo
 
 ---
 
-6. Assurez-vous que vous êtes en **mode développement** avec **APP_ENV=dev** dans le fichier **.env**
+6. Make sure you are in **development mode** with **APP_ENV=dev** in the **.env** file.
 
 ---
 
-7. Maintenant que vos paramètres de connexion sont définis, Doctrine peut **créer** pour vous **la base de données** db_name_dev, avec la commande :
+7. Now that your connection parameters are defined, Doctrine can **create** for you **the database** db_name_dev, with the command:
 
 ````
 php bin/console doctrine:database:create
 ````
 
-Cela crée la base de données nommée "db_name_dev" que vous avez précisée dans la variable d'environnement DATABASE_URL, dans le fichier .env.dev.local.
+That's create the database named "db_name_dev" that you can specify in the DATABASE_URL environment value, in the .env.dev.local file.
 
-Alors vous pouvez **créer les tables** dans la base de données avec la commande :
+Then you can **create tables** in the database with the command :
 
 ````
 php bin/console doctrine:migrations:migrate
 ````
 
-Répondre "yes" à la question : "WARNING! You are about to execute a database migration that could result in schema changes and data loss. Are you sure you wish to continue? (yes/no) [yes]:"
+Answers "yes" to the question : "WARNING! You are about to execute a database migration that could result in schema changes and data loss. Are you sure you wish to continue? (yes/no) [yes]:"
 
 ---
 
-8. Charger les **données unitiales** pour le mode développement
+8. Load the **initial data** for the development mode.
 
-Les données initiales sont chargées depuis le fichier [src/DataFixtures/AppFixtures.php](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/src/DataFixtures/AppFixtures.php) grâce à la commande :
+The initial data are loaded from the [src/DataFixtures/AppFixtures.php](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/src/DataFixtures/AppFixtures.php) file thanks to the command :
 
 ````
 php bin/console doctrine:fixtures:load
 ````
 
-Répondre "yes" à la question : "Careful, database "db_name_dev" will be purged. Do you want to continue? (yes/no) [no]:"
+Answers "yes" to the question : "Careful, database "db_name_dev" will be purged. Do you want to continue? (yes/no) [no]:"
 
-Il y a  3 utilisateurs, dont un administrateur avec le role "ROLE_ADMIN" (qui permet d'accéder à la gestion des utilisateurs) :
+There are 3 users, including 1 administrator with the "ROLE_ADMIN" role (which allows access to users management) :
 
  username | password
 ----------|---------
@@ -144,18 +150,18 @@ Il y a  3 utilisateurs, dont un administrateur avec le role "ROLE_ADMIN" (qui pe
   user2   | password
   admin   | password
 
-  Puis il y a 51 tâches dont 25 sont marquées comme faites. Certaines tâches ont pour auteur user1, d'autres user2, d'autres admin, et d'autres sans auteur.
+  Then there are 51 tasks, including 25 are marked as done. Some tasks have for author user1, others for user2, others for admin, and others without author.
 
 ---
 
-9. Vous pouvez désormais vous rendre à l'accueil du site, sur l'URI "/". Vous pouvez alors vous connecter en tant que user1, ou user2 ou admin pour accéder à la gestion des tâches. Seul l'utilisateur admin a accès à la gestion des utilisateurs (via le bouton "Admin" dans la barre de navigation).
+9. You can now go to the homepage, on the "/" URI. You can then log as user1, or user2 or admin to access the tasks management. Only the admin user has access to the users management (via the "Admin" button in the navigation bar).
 
 ---
 
-### Rapport de couverture de code
+### The code coverage report
 
-Une fois l'application installée, vous pouvez accéder au rapport de couverture de code sur l'URI "/test-coverage/index.html".
+Once the app is installed, you can access the code coverage report on the "/test-coverage/index.html" URI.
 
-### Contribuer au projet
+### To contribute to the project
 
-Pour contribuer au projet, veuillez suivre les consignes détaillées dans le fichier [CONTRIBUTING.md](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/CONTRIBUTING.md), à la racine du projet.
+To contribute to the project, please follow the instructions detailed in the [CONTRIBUTING.md](https://github.com/CarolineDirat/P8ImproveToDo/blob/master/CONTRIBUTING.md) file, at the root of the project.
