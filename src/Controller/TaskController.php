@@ -183,10 +183,10 @@ class TaskController extends AbstractController
             $task->toggle(!$task->isDone());
             $this->getDoctrine()->getManager()->flush();
 
-            $message = sprintf('La tâche %s est maintenant marquée comme non terminée.', $task->getTitle());
+            $message = sprintf('La tâche "%s" est maintenant marquée comme non terminée.', $task->getTitle());
 
             if (true === $task->isDone()) {
-                $message = sprintf('La tâche %s est maintenant marquée comme faite.', $task->getTitle());
+                $message = sprintf('La tâche "%s" est maintenant marquée comme faite.', $task->getTitle());
             }
 
             return $this->json(
