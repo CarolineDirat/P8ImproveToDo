@@ -8,7 +8,7 @@ $(function () {
     const toggleLinks = $('.toggle-link');
 
     const deleteTask = function(data) {
-        $('#tasks-list-' + data.taskId).remove();
+        $('#tasks-list-' + data.taskId).hide('slow');
     }
 
     toggleLinks.click(function(e) {
@@ -23,7 +23,7 @@ $(function () {
             })
         }).done(function(data) {
             deleteTask(data);
-            alert(data.message);
+            console.log(data.message);
         }).fail(function(data){
             alert(data.responseJSON.message);
         });
